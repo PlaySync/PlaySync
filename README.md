@@ -1,1 +1,4 @@
-# 3308SP21_024_2
+# Team PlaySync
+
+Building a cross-platform Playlist Synchronization Toolset
+
