@@ -1,0 +1,9 @@
+- worked on milestone 2 
+  - designed wireframes/general website layout
+  - completed (rough draft) of project plan with general start/finish dates for each main component
+  - divvied up tasks 
+  
+- for next time:
+  - start on any front end dev
+  - find more APIs / figure out current APIs
+  
