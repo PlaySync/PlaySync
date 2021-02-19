@@ -1,31 +1,31 @@
 body {
-	background-color: #314e52;
-	font-family: "Abel";
-	color: #f7f6e7;
+  background-color: #314e52;
+  font-family: "Abel";
+  color: #f7f6e7;
 }
 
 .mainContainer {
-	max-width: 1200px;
-	margin: 0 auto;
-	text-align: center;
-	padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
 }
 
 .navBar {
-	padding-top: 15px;
+  padding-top: 15px;
 }
 
 .navBar li {
-	padding: 0;
-	display: inline;
+  padding: 0;
+  display: inline;
 }
 
 .navBar li:not(:last-child) {
-	border-right: 1px solid #f7f6e7;
+  border-right: 1px solid #f7f6e7;
 }
 
 .navBar li:not(:first-child) {
-	border-left: 1px solid #f7f6e7;
+  border-left: 1px solid #f7f6e7;
 }
 
 .navBar ul {
@@ -46,15 +46,15 @@ body {
 }
 
 .logo i {
-	position: relative;
-	top: -5px;
-	color: #f2a154;
+  position: relative;
+  top: -5px;
+  color: #f2a154;
 }
 
 .info {
-	margin: 0;
-	padding: 30px 0 30px 0;
-	text-align: justify;
+  margin: 0;
+  padding: 30px 0 30px 0;
+  text-align: justify;
 }
 
 .button {
