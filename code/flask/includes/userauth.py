@@ -1,22 +1,26 @@
 import hashlib
+from includes.psql_conn import psql_read_user_psw, psql_read_user
 
-def check_cookies_DB(uname: str, passwd: str):
+# Define all user authentication functions here.
+
+# Check if user:sha224(psw) from database matches uname:passwd
+def check_cookies_DB(user: str, passwd: str):
     # Connect to PostgreSQL
     # Check if uid:passwd exists in table
     # Return Username on success, None on fail
-    return "alphauser"
+    if psql_read_user_psw(user, passwd):
+        return user
+    return None
 
-def check_user_DB(user: str, passwd: str):
+def check_user_exist(user: str):
     # Connect to PostgreSQL
-    # Check if user:sha256(passwd) exists in table
-    # Return Username on success, None on fail
-    return "alphauser"
+    # Check if user exists in table
+    if psql_read_user(user):
+        return user
+    return None
 
-def valid_token(token: str):
-    # verify uid validity 
-    return True
-
+# Check if `user` cookie is valid. Return None if not. Otherwise return uname.
 def valid_user(user: str):
-    uname = user.split(':')[0]
-    passwd = user.split(':')[1]
-    return check_cookies_DB(uname, passwd)
+    uname = user.split(':')[1]
+    passwd = user.split(':')[0]
+    return check_cookies_DB(uname, passwd) # If matches DB entry
