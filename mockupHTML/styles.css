@@ -49,6 +49,7 @@ body {
   position: relative;
   top: -5px;
   color: #f2a154;
+
 }
 
 .info {
@@ -94,4 +95,24 @@ body {
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.carousel-inner {
+  border-radius: 25px;
+  background-color: rgba(0,0,0,0);
+  overflow: hidden;
+
+}
+
+.carousel-item {
+  background-color: black; 
+}
+
+.carousel-item img {
+  opacity: 0.4; 
+}
+
+.carousel-caption {
+  margin-bottom: 25%;
+  font-size: xx-large;
 }
