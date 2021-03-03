@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-    <body>
-        <form class="loginform" action="/useradd" method="post">
-            <div class="mb-1">
-                <label for="username" class="sr-only">Username</label>
-                <input class="form-control" type="text" id="username" placeholder="User" name="uname">
-            </div>
-            <div class="mb-1">
-                <label for="password" class="sr-only">Password</label>
-                <input class="form-control" type="password" id="password" placeholder="Password" name="psw">
-            </div>
-            <div class="mb-1">
-                <label for="email" class="sr-only">Email</label>
-                <input class="form-control" type="email" id="email" placeholder="Email" name="email">
-            </div>
-            <button class="login-button">Log In</button>
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="registerContainer">
+	<form class="loginform" action="/useradd" method="post">
+		<div class="form-group mb-3 row">
+			<label for="username" class="sr-only">Username</label>
+			<input type="text" class="form-control" name="uname" id="username" placeholder="Username">
+		</div>
+		<div class="form-group mb-3 row">
+			<label for="email" class="sr-only">Email</label>
+			<input class="form-control" type="email" id="email" placeholder="Email" name="email">
+		</div>
+		<div class="form-group mb-3 row">
+			<label for="password" class="sr-only">Password</label>
+			<input class="form-control" type="password" id="password" placeholder="Password" name="psw">
+		</div>
+		<button style="display: inline" class="signup-button">Sign Up</button>
+	</form>
+<!-- 	<form style="display: inline" action="/useradd" method="post">
+		<button class="signup-button">Sign Up</button>
+	</form> -->
+</div>
+{% endblock %}
