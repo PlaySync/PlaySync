@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Author: Logan O'Brien
+     PlaySync About Page
+     2/19/2021 -->
+
+<!-- I used this website for the color design (https://colorhunt.co/palette/258333). We can could easily change it, but I think this one looks pretty nice. -->
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlaySync About Us</title>
+<!-- Maybe turn this orange(#f2a154) if we decide to keep the logo (https://icons.getbootstrap.com/icons/music-note-list/) -->
+    <link rel='icon' href='music-note-list.svg' type='image/svg'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Using Google Fonts API here, should prevent cross system issues? Using Abel, could change but I like this one -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+  <head>
+
+  <body>
+
+    <div class="mainContainer">
+
+    <div class="row">
+      <div class="col-sm-4 logo text-md-left text-sm-center">
+        <h1><i style="position: relative; top: -5px;" class="bi bi-music-note-list"></i><span style="position: relative;"> PlaySync </span></h1>
+      </div>
+
+      <div class="col-sm-4 navBar text-sm-center">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#button">Button</a></li>
+          <li><a href="about">About</a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-4 login text-md-right text-sm-center">
+        <form style="display: inline" action="./login" method="get">
+          <button class="button"><span>Login</span></button>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-top: 1px solid white">
+
+    <div class="info">
+      <p>
+        PlaySync is a software tool used to migrate/synchronize playlists across multiple music streaming platforms. These platforms may include but are not limited to, Spotify, Apple Music, Pandora, Amazon Music, and YouTube Music. This tool requires users to log in to their respective music platform accounts and specify which platform they wish to migrate from and which platform to migrate to. Users must specify which playlists they wish to migrate. Users may view the contents of each playlist before transferring.
+        <br/>
+        <br/>
+        PlaySync software allows users to sync their playlists across platforms. Additionally, PlaySync gives users the option to do a one-time sync, or, to have playlist's sync automatically at a given time interval. Users may also share playlists with other users. PlaySync is not resposible for loss of music or playlist files. Please use PlaySync at your own risk and back up files before attempting every transfer.
+        <br/>
+        <br/>
+        <a href="https://github.com/CSCI-3308-CU-Boulder/3308SP21_024_2">PlaySync Project Github</a> (should we link the project github? I believe it's private currently)<br/>
+        <h3>Creator Information</h3>
+        <br/>
+        <ul>
+          <li><a id="gitlinks" class="button" href="https://github.com/erlo6186" role="button"><span>Erica Lowrey</span></a></li><br/>
+          <li><a id="gitlinks" class="button" href="https://github.com/Gaukas" role="button"><span>Gaukas Wang</span></a></li><br/>
+          <li><a id="gitlinks" class="button" href="https://github.com/kamc3446" role="button"><span>Kaitlin McConnell</span></a></li><br/>
+          <li><a id="gitlinks" class="button" href="https://github.com/captainlogan1" role="button"><span>Logan O'Brien</span></a></li><br/>
+        </ul>
+      </p>
+    </div>
+<!-- This footer should move with the web page sizes -->
+    <footer>
+      <hr style="border-top: 1px solid white">
+      <span>- Footer</span>
+    </footer>
+    </div>
+  </body>
+</html>

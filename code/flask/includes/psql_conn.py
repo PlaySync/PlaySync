@@ -66,3 +66,17 @@ def psql_read_user(username: str):
     cur.close()
     conn.close()
     return check_ret
+
+# 
+def psql_write_user(username: str, password: str, email: str):
+    conn = psql_conn()
+    cur = conn.cursor()
+    print("Inserting", username, password, email)
+    if email=='':
+        cur.execute('INSERT INTO t_user(username, passwd_sha256, mail_optin) VALUES (%s, %s, %s)', (username, password, 'FALSE'))
+    else:
+        cur.execute('INSERT INTO t_user(username, passwd_sha256, mail_optin, emailaddr) VALUES (%s, %s, %s, %s)', (username, password, 'TRUE', email))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None
