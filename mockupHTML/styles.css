@@ -181,3 +181,11 @@ body {
 .registerContainer label {
   font-size: larger;
 }
+
+.valid {
+  color: #f7f6e7;
+}
+
+.invalid {
+  color: #f2a154;
+}
