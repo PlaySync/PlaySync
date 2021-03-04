@@ -1,0 +1,202 @@
+body {
+  background-color: #314e52;
+  font-family: "Abel";
+  color: #f7f6e7;
+}
+
+.mainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+}
+
+.navBar {
+  padding-top: 15px;
+}
+
+.navBar li {
+  padding: 0;
+  display: inline;
+}
+
+.navBar li:not(:last-child) {
+  border-right: 1px solid #f7f6e7;
+}
+
+.navBar li:not(:first-child) {
+  border-left: 1px solid #f7f6e7;
+}
+
+.navBar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navBar li a {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #e7e6e1;
+}
+
+.navBar li a:hover {
+  background-color: #f2a154;
+  color: #f7f6e7;
+}
+
+.logo i {
+  position: relative;
+  top: -5px;
+  color: #f2a154;
+}
+
+.info {
+  margin: 0;
+  padding: 30px 0 30px 0;
+  text-align: justify;
+}
+
+.button {
+  border-radius: 4px;
+  background-color: #e7e6e1;
+  border: none;
+  color: #314e52;
+  text-align: center;
+/*  font-size: 14px;*/
+  padding: 7px;
+  width: 80px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.carousel-inner {
+  border-radius: 25px;
+  background-color: rgba(0,0,0,0);
+  overflow: hidden;
+}
+
+.carousel-item {
+  background-color: black; 
+}
+
+.carousel-item img {
+  opacity: 0.4; 
+}
+
+.carousel-caption {
+  margin-bottom: 25%;
+  font-size: xx-large;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/*added css*/
+
+.login-container {
+  padding: 30px;
+}
+
+.mainLogin {
+  margin: auto;
+  width: 40%;
+}
+
+.loginform {
+  margin: 10px;
+  width: 80%;
+  padding: 10px;
+}
+
+.login-button {
+  border-radius: 4px;
+  background-color: #f2a154;
+  border: none;
+  color: #f7f6e7;
+  text-align: center;
+  padding: 7px;
+  width: 80px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.login-button:hover {
+  background-color: #69aeb3;
+}
+
+.vertical-line {
+  border-left: 1px solid #f7f6e7;
+}
+
+.thirdPartyLogin {
+  margin: auto;
+  width: 40%;
+}
+
+.thirdPartyLogin button {
+  background-color: #e7e6e1;
+  border: none;
+  color: #314e52;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 4px;
+  width: 100%;
+}
+
+.signup-container {
+  padding-top: 30px;
+}
+
+.signup-button {
+  border-radius: 4px;
+  background-color: #f2a154;
+  border: none;
+  color: #f7f6e7;
+  text-align: center;
+  padding: 7px;
+  width: 80px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.signup-button:hover {
+  background-color: #69aeb3;
+}
+
+.registerContainer {
+  margin: 20px;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.registerContainer label {
+  font-size: larger;
+}
