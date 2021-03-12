@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from psycopg2 import sql
 import psycopg2
 
 def config(filename='includes/database.ini', section='postgresql'):
@@ -45,8 +46,12 @@ def psql_read_user_psw(username: str, password: str):
     check_ret = False    
     conn = psql_conn()
     cur = conn.cursor()
-    print("Finding", username, password)
-    cur.execute('SELECT * FROM t_user WHERE username=\''+username+'\' AND passwd_sha256=\''+password+'\'')
+    # print("Finding", username, password)
+    query = psycopg2.sql.SQL("SELECT * FROM {tbl} WHERE {col1}=%s AND {col2}=%s").format(
+        tbl=sql.Identifier('t_user'),
+        col1=sql.Identifier('username'),
+        col2=sql.Identifier('passwd_sha256'))
+    cur.execute(query, (username, password, ))
     row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
     if row is not None: # found row
         check_ret = True
@@ -60,6 +65,10 @@ def psql_read_user(username: str):
     conn = psql_conn()
     cur = conn.cursor()
     cur.execute('SELECT * FROM t_user WHERE username=\''+username+'\'')
+    query = psycopg2.sql.SQL("SELECT * FROM {tbl} WHERE {col1}=%s").format(
+        tbl=sql.Identifier('t_user'),
+        col1=sql.Identifier('username'))
+    cur.execute(query, (username, ))
     row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
     if row is not None: # found row
         check_ret = True
