@@ -1,0 +1,7 @@
+Thursday 0318
+
+Cory: ER diagram preferred for DB section
+Cory: Sugestions on arch diagram.
+====
+
+Team: Updated Milestone4 doc accordingly
