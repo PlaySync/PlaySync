@@ -1,0 +1,23 @@
+Thursday 0225
+
+What is NOT a feature:
+- A page with nothing work
+
+These are 3 features:
+- UI of Reg page
+- DB of Registration
+- Backend for Reg
+
+
+
+Friday 0219
+
+Production: 
+- Domain registered: freesync.studio
+- Test Server @ 128.199.7.254 is up! Thanks Logan! 
+- Nginx installed & managed by Gaukas. PHP & NodeJS to come.
+- ED25519 SSH private key distributed. Please test it out. Termius is recommended.
+
+Frontend:
+- First HTML template uploaded by Logan.
+- May update color scheme in the future?

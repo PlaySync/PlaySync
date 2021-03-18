@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="login-container">
+            <h1 style="padding-bottom: 20px">Log In to Your Account</h1>
+            <div class="row justify-content-md-center">
+                <div class="mainLogin">
+                    <form class="loginform" action="/userauth" method="post">
+                    <div class="mb-1">
+                        <label for="enterEmail" class="sr-only">Email Address</label>
+                        <input class="form-control" type="text" id="enterEmail" placeholder="Email" name="uname">
+                    </div>
+                    <div class="mb-1">
+                        <label for="enterPassword" class="sr-only">Password</label>
+                        <input class="form-control" type="password" id="enterPassword" placeholder="Password" name="psw">
+                    </div>
+                    <button class="login-button">Log In</button>
+                    </form>
+                </div>
+                <div class="vertical-line"></div>
+                <div class="thirdPartyLogin">
+                    <form action="#">
+                        <button class="partyLogin-button">Login with Spotify</button>
+                    </form>
+                    <form action="#">
+                        <button class="partyLogin-button">Login with YouTube Music</button>
+                    </form>
+                    <form action="#">
+                        <button class="partyLogin-button">Login with __</button>
+                    </form>
+                </div>
+            </div>
+            <div class="signup-container">
+                <p>Don't have an account?</p>
+                <form style="display: inline" action="/signup">
+                    <button class="signup-button">Sign Up</button>
+                </form>
+            </div>
+        </div>
+{% endblock %}

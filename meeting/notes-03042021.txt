@@ -1,0 +1,16 @@
+Thursday 0304
+
+Cory: Don't use SHA-256 for password hashing.
+Cory: *laugh*
+Cory: Label the DB and Web Server type.
+
+
+Thursday 0225
+
+What is NOT a feature:
+- A page with nothing work
+
+These are 3 features:
+- UI of Reg page
+- DB of Registration
+- Backend for Reg

@@ -87,6 +87,25 @@ body {
   transition: 0.5s;
 }
 
+.carousel-inner {
+  border-radius: 25px;
+  background-color: rgba(0,0,0,0);
+  overflow: hidden;
+}
+
+.carousel-item {
+  background-color: black; 
+}
+
+.carousel-item img {
+  opacity: 0.4; 
+}
+
+.carousel-caption {
+  margin-bottom: 25%;
+  font-size: xx-large;
+}
+
 .button:hover span {
   padding-right: 25px;
 }
@@ -109,6 +128,8 @@ body {
 
 .loginform {
   margin: 10px;
+  width: 80%;
+  padding: 10px;
 }
 
 .login-button {

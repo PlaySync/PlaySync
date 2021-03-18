@@ -1,0 +1,7 @@
+Thursday 0311
+
+Cory: Major wireframes and database designs are fine.
+Cory: Database relationship diagram is preferred.
+====
+
+Team: Revised Arch diagram, uploaded all current progress to ProjectMilestone4 (Live on Google Drive).

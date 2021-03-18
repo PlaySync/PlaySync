@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<body onload="valid()">
+<div class="registerContainer">
+    <form class="signupform" action="/useradd" method="post">
+        <div class="form-group mb-3 row">
+            <label for="registerUser" class="form-label">Username</label>
+            <input type="text" class="form-control" name="uname" id="registerUser" placeholder="Username">
+            <p id="nameCheck" class="form-text invalid">Name field cannot be empty.</p>
+        </div>
+        <div class="form-group mb-5 row">
+            <label for="registerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="registerEmail" placeholder="Email Address">
+        </div>
+        <div class="form-group mb-3 row">
+            <label for="registerPass" class="form-label">Password</label>
+            <input type="password" class="form-control" name="psw" id="registerPass" placeholder="Password">
+            <p class="form-text">Password must contain:</p>
+            <p id="lower" class="form-text invalid">&nbsp;A lowercase letter,</p>
+            <p id="upper" class="form-text invalid">&nbsp;an uppercase letter,</p>
+            <p id="number" class="form-text invalid">&nbsp;a number,</p>
+            <p id="length" class="form-text invalid">&nbsp;and at least 8 characters.</p>
+        </div>
+        <div class="form-group mb-3 row">
+            <label for="confirmPass" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirmPass" id="confirmPass" placeholder="Confirm Password">
+            <p id="match" class="form-text invalid">Password and confirm password must match.</p>
+        </div>
+        <button style="display: inline" id="signupRegisterButton" class="signup-button" disabled >Sign Up</button>
+    </form>
+</div>
+{% endblock %}
