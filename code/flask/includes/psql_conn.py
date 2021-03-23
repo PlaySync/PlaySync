@@ -91,7 +91,7 @@ def psql_write_user(username: str, password: str, email: str):
     return None
 
 #
-def sql_get_uid(username: str):
+def psql_get_uid(username: str):
     user_id = -1   
     conn = psql_conn()
     cur = conn.cursor()
@@ -113,10 +113,10 @@ def psql_check_auth(uid: int, auth_type: str):
     conn = psql_conn()
     cur = conn.cursor()
     # cur.execute('SELECT * FROM t_auth WHERE uid=\''+username+'\'')
-    query = psycopg2.sql.SQL("SELECT uid, auth_body FROM {tbl} WHERE auth_type=%s AND {col1}=%d").format(
+    query = psycopg2.sql.SQL("SELECT uid,auth_body FROM {tbl} WHERE auth_type=%s AND {col1}=%s").format(
         tbl=sql.Identifier('t_auth'),
         col1=sql.Identifier('uid'))
-    cur.execute(query, (auth_type, uid, ))
+    cur.execute(query, (auth_type, uid))
     row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
     if row is not None: # found row
         auth_body = row[1]

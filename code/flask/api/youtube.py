@@ -31,11 +31,11 @@ class youtube_music_tasker:
             library_playlists = self.api.get_library_playlists(limit=50) # Hopefully, no one has 50+ playlists. 
             for pl in library_playlists:
                 # Only showing non-empty well-formed playlists
-                if 'count' in pl and pl['count']>0 and 'playlistId' in pl and 'title' in pl and 'thumbnails' in pl:
+                if 'count' in pl and int(pl['count'])>0 and 'playlistId' in pl and 'title' in pl and 'thumbnails' in pl:
                     playlist = {}
                     playlist['id']=pl['playlistId']
                     playlist['title']=pl['title']
-                    if len(pl['thumbnails']>0):
+                    if len(pl['thumbnails'])>0:
                         playlist['thumbnail']=pl['thumbnails'][0]['url']
                     else:
                         playlist['thumbnail']=DEFAULT_IMG_URL            
@@ -64,13 +64,13 @@ class youtube_music_tasker:
 
         try:
             pl_detail = self.api.get_playlist(playlistId=playlist_id)
-            if len(pl_detail)>0 and 'tracks' in pl_detail[0]:
-                for track in pl_detail[0]['tracks']:
+            if 'tracks' in pl_detail:
+                for track in pl_detail['tracks']:
                     if 'title' in track:
                         new_track = {'title':track['title'], 'artist':'any', 'album':'any'}
                         if 'artists' in track and len(track['artists'])>0:
                             new_track['artist'] = track['artists'][0]['name']
-                        if 'album' in track and 'name' in track['album']:
+                        if 'album' in track and track['album'] != None and name in track['album']:
                             new_track['album'] = track['album']['name']
                         list_of_song.append(new_track)
         except Exception as e:
@@ -95,7 +95,7 @@ class youtube_music_tasker:
             print("Unexpected Error in new_playlist:", e)
             return (-2, 0, 0) # Didn't crash gracefully
 
-    def search_song(self, song_title:str, song_artist:str='', song_misc:str=''):
+    def search_song(self, song_title:str, song_artist:str="", song_misc:str=""):
         song_list = []
         try:
             search_results = self.api.search(query = song_title + song_artist + song_misc, limit=10)
