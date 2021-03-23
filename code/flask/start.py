@@ -9,6 +9,7 @@ app.register_blueprint(logout_page)
 app.register_blueprint(signup_page)
 app.register_blueprint(useradd_page)
 app.register_blueprint(about_page)
+app.register_blueprint(youtube_operation)
 
 # @app.route('/')
 # def index():
