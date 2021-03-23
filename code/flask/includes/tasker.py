@@ -1,4 +1,4 @@
-from api.youtube import youtube_music_tasker as ytmusic
+from api.youtube import youtube_music_tasker
 
 ############ Notice ############
 ''' 

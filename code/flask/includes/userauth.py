@@ -28,3 +28,6 @@ def valid_user(user: str):
 def add_user(user: str, passwd: str, email: str = ''):
     psql_write_user(user, passwd, email) # If matches DB entry
     return None
+
+def get_uid(username: str):
+    return psql_get_uid(username)

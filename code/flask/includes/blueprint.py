@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, abort, request, make_response, redirect
 from jinja2 import TemplateNotFound
+import json
 from includes.userauth import *
+from includes.api_auth import *
+from includes.tasker import *
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -10,6 +13,7 @@ userauth_page = Blueprint('userauth_page', __name__, template_folder='templates'
 signup_page = Blueprint('signup_page', __name__, template_folder='templates')
 useradd_page = Blueprint('useradd_page', __name__, template_folder='templates')
 about_page = Blueprint('about_page', __name__, template_folder='templates')
+youtube_operation = Blueprint('youtube_operation', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -100,3 +104,61 @@ def useradd():
 @about_page.route('/about')
 def about():
     return render_template('about.html')
+
+# POST: user=$cookies['user']&op=$operation&param=$parameters
+@youtube_operation.route('/youtube', methods=['POST'])
+def youtube_ops():
+    json_response = {}
+    user = request.form.get('user')
+    if user != "" and valid_user(user) != None:
+        # Valid operation
+        uid = get_uid(valid_user(user))
+        # Get header saved in db
+        auth_body = psql_check_auth(uid, "ytmusic")
+        if auth_body == "":
+            json_response['status'] = "fail"
+            json_response['message'] = "invalid auth"
+            return json.dumps(json_response)
+        else:
+            credential = credential_youtube(auth_body)
+            ytapi=youtube_music_tasker(credential[1])
+            # Handle the op
+            op = request.form.get('op')
+            # playlist - unparameterized
+            # songlist - POST parameterized as playlistid=c0dedeadbeef
+            # newlist - POST parameterized as name=cafebabe&desc=beefcode&access=PRIVATE&tracks=id-id-id-id
+            # searchsong - POST parameterized as title=beefbabe&artist=deadbee&misc=abadcafe}
+            if op == "playlist": # Show playlist
+                return ytapi.show_playlist()
+            elif op == "songlist":
+                return ytapi.show_song_in_playlist(request.form.get('playlistid'))
+            elif op == "newlist":
+                new_name = request.form.get('name')
+                new_desc = request.form.get('desc')
+                # new_access = request.form.get('access')
+                new_tracks=request.form.get('playlistid').split('-')
+                ret_tuple = ytapi.new_playlist(playlist_name=new_name, desc=new_desc, tracks=new_tracks)
+                if ret_tuple[0] == -1:
+                    json_response['status'] = "fail"
+                    json_response['message'] = "creation failed"
+                    return json.dumps(json_response)
+                elif ret_tuple[0] == -2:
+                    json_response['status'] = "crash"
+                    json_response['message'] = "crashed in creation"
+                    return json.dumps(json_response)
+                else:
+                    json_response['status'] = "success"
+                    json_response['newlistid'] = ret_tuple[1]
+                    json_response['message'] = ret_tuple[2]
+                    return json.dumps(json_response)
+            elif op == "searchsong":
+                title = request.form.get('title')
+                artist = request.form.get('artist')
+                misc = request.form.get('misc')
+                return search_song(song_title=title, song_artist=artist, song_misc=misc)
+            else:
+                json_response['status'] = "fail"
+                json_response['message'] = "unknown op"
+                return json.dumps(json_response)
+    else:
+        abort(403)
