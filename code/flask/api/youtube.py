@@ -70,7 +70,7 @@ class youtube_music_tasker:
                         new_track = {'title':track['title'], 'artist':'any', 'album':'any'}
                         if 'artists' in track and len(track['artists'])>0:
                             new_track['artist'] = track['artists'][0]['name']
-                        if 'album' in track and track['album'] != None and name in track['album']:
+                        if 'album' in track and track['album'] != None and 'name' in track['album']:
                             new_track['album'] = track['album']['name']
                         list_of_song.append(new_track)
         except Exception as e:
