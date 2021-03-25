@@ -64,7 +64,7 @@ def psql_read_user(username: str):
     check_ret = False    
     conn = psql_conn()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM t_user WHERE username=\''+username+'\'')
+    # cur.execute('SELECT * FROM t_user WHERE username=\''+username+'\'')
     query = psycopg2.sql.SQL("SELECT * FROM {tbl} WHERE {col1}=%s").format(
         tbl=sql.Identifier('t_user'),
         col1=sql.Identifier('username'))
@@ -85,6 +85,51 @@ def psql_write_user(username: str, password: str, email: str):
         cur.execute('INSERT INTO t_user(username, passwd_sha256, mail_optin) VALUES (%s, %s, %s)', (username, password, 'FALSE'))
     else:
         cur.execute('INSERT INTO t_user(username, passwd_sha256, mail_optin, emailaddr) VALUES (%s, %s, %s, %s)', (username, password, 'TRUE', email))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None
+
+#
+def psql_get_uid(username: str):
+    user_id = -1   
+    conn = psql_conn()
+    cur = conn.cursor()
+    # cur.execute('SELECT * FROM t_user WHERE username=\''+username+'\'')
+    query = psycopg2.sql.SQL("SELECT uid, username FROM {tbl} WHERE {col1}=%s").format(
+        tbl=sql.Identifier('t_user'),
+        col1=sql.Identifier('username'))
+    cur.execute(query, (username, ))
+    row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
+    if row is not None: # found row
+        user_id = row[0]
+    cur.close()
+    conn.close()
+    return user_id
+
+# 
+def psql_check_auth(uid: int, auth_type: str):
+    auth_body=""
+    conn = psql_conn()
+    cur = conn.cursor()
+    # cur.execute('SELECT * FROM t_auth WHERE uid=\''+username+'\'')
+    query = psycopg2.sql.SQL("SELECT uid,auth_body FROM {tbl} WHERE auth_type=%s AND {col1}=%s").format(
+        tbl=sql.Identifier('t_auth'),
+        col1=sql.Identifier('uid'))
+    cur.execute(query, (auth_type, uid))
+    row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
+    if row is not None: # found row
+        auth_body = row[1]
+    cur.close()
+    conn.close()
+    return auth_body
+
+# 
+def psql_write_auth(uid: int, auth_type: str, auth_body: str):
+    conn = psql_conn()
+    cur = conn.cursor()
+    print("Inserting", uid, auth_type, auth_body)
+    cur.execute('INSERT INTO t_auth(uid, auth_type, auth_body) VALUES (%s, %s, %s)', (uid, auth_type, auth_body))
     conn.commit()
     cur.close()
     conn.close()

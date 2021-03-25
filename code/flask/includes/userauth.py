@@ -1,5 +1,5 @@
 import hashlib
-from includes.psql_conn import psql_read_user_psw, psql_read_user, psql_write_user
+from includes.psql_conn import *
 
 # Define all user authentication functions here.
 
@@ -28,3 +28,6 @@ def valid_user(user: str):
 def add_user(user: str, passwd: str, email: str = ''):
     psql_write_user(user, passwd, email) # If matches DB entry
     return None
+
+def get_uid(username: str):
+    return psql_get_uid(username)
