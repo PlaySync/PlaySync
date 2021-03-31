@@ -266,24 +266,6 @@ body {
   margin: 5px;
 }
 
-.song-box {
-  border-radius: 25px;
-  border-color: 2px solid white;
-  /*display: flex;
-  flex-direction: column;*/
-  display: inline-flex;
-  height: 100px;
-  max-height: 100px;
-  overflow: auto;
-}
-
-.song-item {
-  display: inline-flex;
-  justify-content: center;
-  padding-top: 10px;
-  margin: auto;
-}
-
 .status-box {
   background-color: #131416;
   border-radius: 25px;
@@ -293,6 +275,15 @@ body {
   overflow: auto;
   padding: 20px;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-item {
+  display: inline-flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  margin: auto;
 }
 
 .fake-code {
