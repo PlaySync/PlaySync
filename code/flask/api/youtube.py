@@ -113,4 +113,11 @@ class youtube_music_tasker:
             print("Unexpected Error in search_song:", e)
         
         return json.dumps(song_list)
-       
+
+    def add_songs(self, playlist_id:str, tracks=[]):
+        try:
+            status = self.api.add_playlist_items(playlist_id, tracks)
+            return (0, playlist_id, status) # Creation successful, add status attached
+        except Exception as e:
+            print("Unexpected Error in add_songs:", e)
+            return (-2, 0, 0) # Didn't crash gracefully
