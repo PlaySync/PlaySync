@@ -3,6 +3,8 @@ from includes.const import *
 import json
 from datetime import datetime
 
+# DEFAULT_IMG_URL_YOUTUBE = "#"
+
 def youtube_music_auth(raw_header: str):
     return YTMusic.setup(headers_raw=raw_header)
 
@@ -38,7 +40,7 @@ class youtube_music_tasker:
                     if len(pl['thumbnails'])>0:
                         playlist['thumbnail']=pl['thumbnails'][0]['url']
                     else:
-                        playlist['thumbnail']=DEFAULT_IMG_URL            
+                        playlist['thumbnail']=DEFAULT_IMG_URL
                     list_of_playlist.append(playlist)
         except Exception as e:
             print("Unexpected Error in show_playlist:", e)
@@ -121,3 +123,19 @@ class youtube_music_tasker:
         except Exception as e:
             print("Unexpected Error in add_songs:", e)
             return (-2, 0, 0) # Didn't crash gracefully
+    
+    def del_songs(self, playlist_id:str, tracks=[]):
+        try:
+            if len(tracks) > 0:
+                status = self.api.remove_playlist_items(playlist_id, videos=tracks)
+                return status
+        except Exception as e:
+            return "UNCAUGHT ERROR"+str(e)
+        return "NULL"
+
+    def del_playlist(self, playlist_id:str):
+        try:
+            status = self.api.delete_playlist(playlist_id)
+            return status
+        except Exception as e:
+            return "UNCAUGHT ERROR"+str(e)
