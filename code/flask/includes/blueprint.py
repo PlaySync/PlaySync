@@ -15,6 +15,8 @@ signup_page = Blueprint('signup_page', __name__, template_folder='templates')
 useradd_page = Blueprint('useradd_page', __name__, template_folder='templates')
 about_page = Blueprint('about_page', __name__, template_folder='templates')
 youtube_operation = Blueprint('youtube_operation', __name__, template_folder='templates')
+authadd_page = Blueprint('authadd_page', __name__, template_folder='templates')
+authget_page = Blueprint('authget_page', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -106,6 +108,45 @@ def useradd():
 def about():
     return render_template('about.html')
 
+# POST: auth_type=sometype&auth_body=somebody
+# Should be urlencoded
+@authadd_page.route('/authadd', methods=['POST'])
+def authadd():
+    if 'user' in request.cookies: # Logged in
+        user = valid_user(request.cookies.get('user'))
+            
+        if user != None:
+            if "auth_type" in request.form and "auth_body" in request.form:
+                uid = psql_get_uid(user)                
+                psql_write_auth(uid, unquote(request.form.get('auth_type')), unquote(request.form.get('auth_body')))
+                return "addok"
+        else: # Invalid Login Info
+            return "badlogin"
+    else: # Not Logged In
+        return redirect("./", code=302) # Protect from CSRF attacks
+
+# POST: auth_type=sometype
+# Should be urlencoded if needed
+@authget_page.route('/authget', methods=['POST'])
+def authget():
+    if 'user' in request.cookies: # Logged in
+        user = valid_user(request.cookies.get('user'))
+            
+        if user != None:
+            if "auth_type" in request.form:
+                uid = psql_get_uid(user)                
+                auth_body = psql_check_auth(uid, unquote(request.form.get('auth_type')))
+                json_response = {}
+
+                json_response['type'] = request.form.get('auth_type')
+                json_response['body'] = auth_body
+
+                return json.dumps(json_response)
+        else: # Invalid Login Info
+            return "badlogin"
+    else: # Not Logged In
+        return redirect("./", code=302) # Protect from CSRF attacks
+
 # POST: user=$cookies['user']&op=$operation&param=$parameters
 @youtube_operation.route('/youtube', methods=['POST'])
 def youtube_ops():
@@ -127,7 +168,7 @@ def youtube_ops():
             op = unquote(request.form.get('op'))
             # playlist - unparameterized
             # songlist - POST parameterized as playlistid=c0dedeadbeef
-            # newlist - POST parameterized as name=cafebabe&desc=beefcode&access=PRIVATE&tracks=id-id-id-id
+            # newlist - POST parameterized as name=cafebabe&desc=beefcode&access=PRIVATE&tracks=id$id$id$id
             # searchsong - POST parameterized as title=beefbabe&artist=deadbee&misc=abadcafe}
             if op == "playlist": # Show playlist
                 return ytapi.show_playlist()
@@ -141,7 +182,7 @@ def youtube_ops():
                 # new_access = request.form.get('access')
                 new_tracks=[]
                 if "tracks" in request.form:
-                    new_tracks = unquote(request.form.get('tracks')).split('-')
+                    new_tracks = unquote(request.form.get('tracks')).split('$')
                 ret_tuple = ytapi.new_playlist(playlist_name=new_name, desc=new_desc, tracks=new_tracks)
                 if ret_tuple[0] == -1:
                     json_response['status'] = "fail"
@@ -165,6 +206,23 @@ def youtube_ops():
                 if "misc" in request.form:
                     misc = unquote(request.form.get('misc'))
                 return ytapi.search_song(song_title=title, song_artist=artist, song_misc=misc)
+            elif op == "addsong":
+                new_tracks=[]
+                if "tracks" in request.form and "playlistid" in request.form:
+                    new_tracks = unquote(request.form.get('tracks')).split('$')
+                    ret_tuple = ytapi.add_songs(request.form.get('playlistid'), new_tracks)
+                    if ret_tuple[0] == -2:
+                        json_response['status'] = "crash"
+                        json_response['message'] = "crashed in creation"
+                        return json.dumps(json_response)
+                    else:
+                        json_response['status'] = "success"
+                        json_response['message'] = ret_tuple[2]
+                        return json.dumps(json_response)
+                else:
+                    json_response['status'] = "fail"
+                    json_response['message'] = "parameters missing"
+                    return json.dumps(json_response)
             else:
                 json_response['status'] = "fail"
                 json_response['message'] = "unknown op"
