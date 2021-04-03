@@ -5,6 +5,15 @@
 ```
 POST https://playsync.me/youtube
 ```
+### Database Requirement
+In table `t_auth`:
+| uid      | auth_type | auth_body |
+| ----------- | ----------- | ----------- |
+| $uid_from_t_user      | ytmusic | $RAW_HEADER |
+
+
+#### Fetching Raw Header
+Please refer to: https://ytmusicapi.readthedocs.io/en/latest/setup.html#copy-authentication-headers and store the RAW HEADER (the one you copied from the browser) into the database.
 
 #### HTTP Request Parameters
 
