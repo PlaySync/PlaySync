@@ -38,5 +38,7 @@ $param2: parameter for a specific operation. Name may vary.
 - `newlist` Creates a new Playlist
     - Mandatory param: `name` name of the new playlist. 
     - Optional param: `desc` description of the param. Omitempty. 
-    - Optional param: `tracks` a series of id of songs to added to the new playlist, delimited by dash symbol `-`(THIS CAUSES PROBLEM, WILL CHANGE DELIMITER). Omitempty.
-- `addsong` Adds song to a playlist [IN DEVELOPMENT]
+    - Optional param: `tracks` a series of id of songs to added to the new playlist, delimited by dash symbol `$`. Omitempty.
+- `addsong` Adds song to a playlist
+    - Mandatory param: `playlistid` the ID of the playlist to add songs to
+    - Mandatory param: `tracks` a series of id of songs to added to the new playlist, delimited by dash symbol `$`.
