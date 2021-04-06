@@ -77,10 +77,24 @@ def playlists():
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     results = []
     for i in spotify.current_user_playlists()['items']:
-    	results.append(i['name'])
+    	#results[i['name']]=i['uri'].split(':')[-1]
+    	#results.append({i['name']: i['uri'].split(':')[-1]})
+    	results.append({'name': i['name'], 'id': i['uri'].split(':')[-1]})
     return json.dumps(results)
 
-
+@app.route('/songs/<pl_id>')
+def songs(pl_id):
+	print(pl_id)
+	cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+	auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+	if not auth_manager.validate_token(cache_handler.get_cached_token()):
+		return redirect('/')
+	spotify = spotipy.Spotify(auth_manager=auth_manager)
+	results = []
+	for i in spotify.playlist_items(pl_id, additional_types=['track'])['items']:
+		artists = [x['name'] for x in i['track']['artists']]
+		results.append({'track': i['track']['name'], 'artist': artists})
+	return json.dumps(results)
 
 @app.route('/current_user')
 def current_user():
