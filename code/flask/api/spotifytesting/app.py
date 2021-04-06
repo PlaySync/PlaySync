@@ -12,6 +12,7 @@ from flask_session import Session
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import uuid
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -33,7 +34,7 @@ def index():
         session['uuid'] = str(uuid.uuid4())
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
                                                 cache_handler=cache_handler, 
                                                 show_dialog=True)
 
@@ -74,7 +75,11 @@ def playlists():
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         return redirect('/')
     spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return (spotify.current_user_playlists())
+    results = []
+    for i in spotify.current_user_playlists()['items']:
+    	results.append(i['name'])
+    return json.dumps(results)
+
 
 
 @app.route('/current_user')
@@ -84,7 +89,7 @@ def current_user():
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         return redirect('/')
     spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return spotify.current_user()
+    return json.dumps(spotify.current_user())
 
 
 if __name__ == '__main__':
