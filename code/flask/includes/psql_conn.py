@@ -27,7 +27,7 @@ def psql_conn():
         params = config()
 
         # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
+        # print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -130,6 +130,46 @@ def psql_write_auth(uid: int, auth_type: str, auth_body: str):
     cur = conn.cursor()
     print("Inserting", uid, auth_type, auth_body)
     cur.execute('INSERT INTO t_auth(uid, auth_type, auth_body) VALUES (%s, %s, %s)', (uid, auth_type, auth_body))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None
+
+#
+def psql_write_syncpair(uid: int, orig_p: str, target_p: str, orig_id: str, target_id: str):
+    conn = psql_conn()
+    cur = conn.cursor()
+    cur.execute('INSERT INTO t_synclist(uid, from_platform, to_platform, from_listid, to_listid) VALUES (%s, %s, %s, %s, %s)', (uid, orig_p, target_p, orig_id, target_id))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None
+
+def psql_read_syncpair(uid: int = -1):
+    conn = psql_conn()
+    cur = conn.cursor()
+    if uid == -1: # cron worker calls it with uid==-1, show all pairs for worker
+        query = psycopg2.sql.SQL("SELECT uid,from_platform,to_platform,from_listid,to_listid FROM {tbl}").format(
+            tbl=sql.Identifier('t_synclist'))
+        cur.execute(query, ())
+    elif uid >= 0: # valid uid>=0
+        query = psycopg2.sql.SQL("SELECT uid,from_platform,to_platform,from_listid,to_listid FROM {tbl} WHERE {col1}=%s").format(
+            tbl=sql.Identifier('t_synclist'),
+            col1=sql.Identifier('uid'))
+        cur.execute(query, (uid, ))
+    else: # invalid uid < -1
+        cur.close()
+        conn.close()
+        return None
+    rows = cur.fetchall() # Check if at least 1 row (and should be at most one row as well...)
+    cur.close()
+    conn.close()
+    return rows # return all rows found.
+
+def psql_delete_syncpair(target_p: str, target_id: str):
+    conn = psql_conn()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM t_synclist WHERE to_platform=%s AND to_listid=%s", (target_p, target_id))
     conn.commit()
     cur.close()
     conn.close()

@@ -56,8 +56,8 @@ class youtube_music_tasker:
     #       }, 
     #       {
     #           "title": "name",
-    #           "artist": "any",
-    #           "album": "any"
+    #           "artist": "None",
+    #           "album": "None"
     #       }
     #   ]
     #
@@ -69,7 +69,7 @@ class youtube_music_tasker:
             if 'tracks' in pl_detail:
                 for track in pl_detail['tracks']:
                     if 'title' in track:
-                        new_track = {'title':track['title'], 'artist':'any', 'album':'any'}
+                        new_track = {'title':track['title'], 'artist':'None', 'album':'None'}
                         if 'artists' in track and len(track['artists'])>0:
                             new_track['artist'] = track['artists'][0]['name']
                         if 'album' in track and track['album'] != None and 'name' in track['album']:
@@ -116,6 +116,7 @@ class youtube_music_tasker:
         
         return json.dumps(song_list)
 
+    # tracks = [song1id, song2id, song3id ...]
     def add_songs(self, playlist_id:str, tracks=[]):
         try:
             status = self.api.add_playlist_items(playlist_id, tracks)
