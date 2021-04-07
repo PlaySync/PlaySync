@@ -13,6 +13,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import uuid
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -27,6 +28,16 @@ if not os.path.exists(caches_folder):
 def session_cache_path():
     return caches_folder + session.get('uuid')
 
+def get_spotify():
+	cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+	auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private playlist-modify-private',
+		cache_handler=cache_handler, 
+		show_dialog=True)
+	if not auth_manager.validate_token(cache_handler.get_cached_token()):
+		return redirect('/')
+	spotify = spotipy.Spotify(auth_manager=auth_manager)
+	return spotify
+
 @app.route('/')
 def index():
     if not session.get('uuid'):
@@ -34,7 +45,7 @@ def index():
         session['uuid'] = str(uuid.uuid4())
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private playlist-modify-private',
                                                 cache_handler=cache_handler, 
                                                 show_dialog=True)
 
@@ -67,44 +78,43 @@ def sign_out():
         print ("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/')
 
-
 @app.route('/playlists')
 def playlists():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-    if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    results = []
-    for i in spotify.current_user_playlists()['items']:
-    	#results[i['name']]=i['uri'].split(':')[-1]
-    	#results.append({i['name']: i['uri'].split(':')[-1]})
-    	results.append({'name': i['name'], 'id': i['uri'].split(':')[-1]})
-    return json.dumps(results)
+	spotify = get_spotify()
+	results = []
+	for i in spotify.current_user_playlists()['items']:
+		results.append({'name': i['name'], 'id': i['uri'].split(':')[-1]})
+	return json.dumps(results)
 
 @app.route('/songs/<pl_id>')
 def songs(pl_id):
-	print(pl_id)
-	cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-	auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-	if not auth_manager.validate_token(cache_handler.get_cached_token()):
-		return redirect('/')
-	spotify = spotipy.Spotify(auth_manager=auth_manager)
+	spotify = get_spotify()
 	results = []
 	for i in spotify.playlist_items(pl_id, additional_types=['track'])['items']:
-		artists = [x['name'] for x in i['track']['artists']]
+		artists = [x['name'] for x in i['track']['artists']][0]
 		results.append({'track': i['track']['name'], 'artist': artists})
 	return json.dumps(results)
 
 @app.route('/current_user')
 def current_user():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-    if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return json.dumps(spotify.current_user())
+	spotify = get_spotify()
+	return json.dumps(spotify.current_user())
 
+@app.route('/addPlaylist/<u_id>/<name>')
+def addPlaylist(u_id, name):
+	spotify = get_spotify()
+	spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
+	return 'done'
+
+@app.route('/addSong/<pl_id>/<artist>/<track>')
+def addSong(pl_id, artist, track):
+	spotify = get_spotify()
+	result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
+	#print(result['tracks']['items'][0]['id'])
+	if result['tracks']['total'] == 0:
+		return 'Failed to find track'	
+	spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
+	return json.dumps(result)
 
 if __name__ == '__main__':
     app.run(threaded=True, port=int(os.environ.get("PORT",
