@@ -58,6 +58,7 @@ function displayPlaylists(platform) { // platform will identify whether to call 
             console.log("Spotify Taskers not implemented.");
         } else if (platform == "YoutubeMusic") {
             console.log("Playlist Call Test w/ Full User");
+            var yMusic = "'YoutubeMusic'";
             $.ajax({
                 url: 'https://playsync.me/youtube',
                 type: 'POST',
@@ -70,7 +71,7 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                     console.log("Data(Playlist):", data);
                     data.forEach(function(info) {
                         console.log("Info:", info);
-                        $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(YoutubeMusic, ' + info.id + ')" id="' + info.id + '"></button><p class="pt-2 pl-2">' + info.title + '</p></div>');
+                        $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + info.id + ')" id="' + info.id + '"></button><p class="pt-2 pl-2">' + info.title + '</p></div>');
                     });
                 },
                 error: function(err) {
