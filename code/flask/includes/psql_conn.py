@@ -144,7 +144,7 @@ def psql_get_email(username: str):
     cur.execute(query, (username,))
     row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
     if row is not None: # found row
-        email = row[1]
+        email = row[0]
     cur.close()
     conn.close()
     return email
