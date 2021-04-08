@@ -264,6 +264,6 @@ def profile():
     else: # Not Logged In
         return redirect("./", code=302)
 
-@spotify_auth.route('/spotify')
-def spotify_auth():
-    return spotify_auth()
+# @spotify_auth.route('/spotify')
+# def spotify_auth():
+#     return spotify_auth()
