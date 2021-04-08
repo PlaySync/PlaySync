@@ -139,9 +139,8 @@ def psql_get_email(username: str):
     email = ""
     conn = psql_conn()
     cur = conn.cursor()
-    query = psycopg2.sql.SQL("SELECT emailaddr FROM {tbl} WHERE username={col1}").format(
-        tbl=sql.Identifier('t_user'),
-        col1=sql.Identifier('username'))
+    query = psycopg2.sql.SQL("SELECT emailaddr FROM {tbl} WHERE username=%s").format(
+        tbl=sql.Identifier('t_user'))
     cur.execute(query, (username,))
     row = cur.fetchone() # Check if at least 1 row (and should be at most one row as well...)
     if row is not None: # found row
