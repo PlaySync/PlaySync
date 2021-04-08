@@ -5,6 +5,7 @@ from urllib.parse import quote, unquote
 from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
+from includes.userprofile import *
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -254,8 +255,11 @@ def transfer_list():
 
 @profile_page.route('/profile')
 def profile():
+    email = ""
     if 'user' in request.cookies: # Logged in
         user = valid_user(request.cookies.get('user'))
-        return render_template('profile.html')
+        email = get_email(user)
+        return render_template('profile.html', email=email)
     else: # Not Logged In
         return redirect("./", code=302)
+
