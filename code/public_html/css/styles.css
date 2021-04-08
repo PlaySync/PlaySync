@@ -200,3 +200,104 @@ body {
 .registerContainer label {
   font-size: larger;
 }
+
+.valid {
+  color: #f7f6e7;
+}
+
+.invalid {
+  color: #f2a154;
+}
+
+.dropdownContainer {
+  padding: 10px;
+  display: flex;
+}
+
+.drop-button {
+  border-radius: 4px;
+  background-color: #e7e6e1;
+  border: none;
+  color: #314e52;
+  text-align: center;
+  padding: 7px;
+  width: 110px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.left {
+  width: 50%;
+  flex: 1;
+}
+
+.right {
+  width: 50%;
+  flex: 1;
+}
+
+.playlist-box {
+  border-radius: 25px;
+  border-color: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  height: 375px;
+  max-height: 375px;
+  overflow: auto;
+}
+
+.playlist-item {
+  display: inline-flex;
+  justify-content: center;
+  padding-top: 10px;
+  margin: auto;
+}
+
+.playselect-button {
+  border-radius: 4px;
+  background-color: #e7e6e1;
+  border: 2px solid #e7e6e1;
+  padding: 7px;
+  width: 30px;
+  height: 30px;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.status-box {
+  background-color: #131416;
+  border-radius: 25px;
+  border-color: 2px solid white;
+  height: 375px;
+  max-height: 375px;
+  overflow: auto;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-item {
+  display: inline-flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  margin: auto;
+}
+
+.fake-code {
+  font-family: monospace;
+}
+
+.psb-clicked {
+  border-radius: 4px;
+  background-color: #f2a154;
+  border: 2px solid #e7e6e1;
+  padding: 7px;
+  width: 30px;
+  height: 30px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
