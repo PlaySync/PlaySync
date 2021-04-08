@@ -17,6 +17,7 @@ about_page = Blueprint('about_page', __name__, template_folder='templates')
 youtube_operation = Blueprint('youtube_operation', __name__, template_folder='templates')
 authadd_page = Blueprint('authadd_page', __name__, template_folder='templates')
 authget_page = Blueprint('authget_page', __name__, template_folder='templates')
+transfer_page = Blueprint('transfer_page', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -229,3 +230,23 @@ def youtube_ops():
                 return json.dumps(json_response)
     else:
         abort(403)
+
+# POST: user=$cookies['user']&op=$operation&param=$parameters
+@transfer_page.route('/transfer')
+def transfer_list():
+    # if 'visited' in request.cookies: # Not new comer
+    if 'user' in request.cookies: # Logged in
+        user = valid_user(request.cookies.get('user'))
+            
+        if user != None:
+            return render_template('playlist_page.html', title='Authenticated User - PlaySync', username=user)
+        else: # Invalid Login Info
+            resp = make_response(render_template('login.html', title='Please log in - PlaySync'))
+            resp.set_cookie('user', expires=0)
+            return resp
+    else: # Not Logged In
+        return render_template('landing.html', title='Consider Log-In or Register - PlaySync', visitor_status="Returning Visitor")
+    # else:
+        # resp = make_response(render_template('landing.html', title='Welcome, first-time visitor - PlaySync', visitor_status="New Visitor"))
+        # resp.set_cookie('visited', '1')
+        # return resp
