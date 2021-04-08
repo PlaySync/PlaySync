@@ -69,12 +69,12 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                 url: 'https://playsync.me/youtube',
                 type: 'POST',
                 dataType: 'json',
-                user: userTEST,
-                op: 'playlist',
-                //data: {
-                //    user: userTEST,
-                //    op: 'playlist'
-                //},
+                //user: userTEST,
+                //op: 'playlist',
+                data: {
+                    user: userTEST,
+                    op: 'playlist'
+                },
                 success: function(data) {
                     console.log("Data(Playlist):", data);
                     data.forEach(function(info) {
