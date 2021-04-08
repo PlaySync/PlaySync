@@ -64,7 +64,7 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                 var playid = "'" + playlists[i].id + "'";
                 $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + playid + ')" id="' + playlists[i].id + '"></button><p class="pt-2 pl-2">' + playlists[i].title + '</p></div>');
             }
-            console.log("Playlist Call");
+            console.log("Playlist Call Update");
             $.ajax({
                 url: 'https://playsync.me/youtube',
                 type: 'POST',
