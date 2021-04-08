@@ -13,8 +13,6 @@ function getUserID() {
     if (id != '') {
         var value = id.split('=');
         id = value[1];
-        var value2 = id.split(':');
-        id = value2[0];
     }
     return id;
 }
@@ -59,18 +57,11 @@ function displayPlaylists(platform) { // platform will identify whether to call 
         if (platform == "Spotify") {
             console.log("Spotify Taskers not implemented.");
         } else if (platform == "YoutubeMusic") {
-            var yMusic = "'YoutubeMusic'";
-            for (var i = 0; i < playlists.length; i++) {
-                var playid = "'" + playlists[i].id + "'";
-                $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + playid + ')" id="' + playlists[i].id + '"></button><p class="pt-2 pl-2">' + playlists[i].title + '</p></div>');
-            }
             console.log("Playlist Call Test w/ Full User");
             $.ajax({
                 url: 'https://playsync.me/youtube',
                 type: 'POST',
                 dataType: 'json',
-                //user: userTEST,
-                //op: 'playlist',
                 data: {
                     user: userTEST,
                     op: 'playlist'
@@ -124,14 +115,16 @@ function displaySongs(platform, playlistID) {
             //    songs += '<tr><td style="text-align: left;" id="song-title">' + songOne[i].title + '</td><td style="text-align: left;">' + songOne[i].artist + '</td><td style="text-align: left;">' + songOne[i].album + '</td></tr>';
             //}
             //songs += '</table>';
-            console.log("Song Call");
+            console.log("Song Call Update");
             $.ajax({
                 url: `https://playsync.me/youtube`,
                 type: 'POST',
                 dataType: 'json',
-                user: userTEST,
-                op: 'songlist',
-                playlistid: playlistID,
+                data: {
+                    user: userTEST,
+                    op: 'songlist',
+                    playlistid: playlistID
+                },
                 success: function(data) {
                     console.log("Data(Song):", data);
                     var songs = '<table id="songTable">';
@@ -192,17 +185,17 @@ function confirm() {
                 
                 else if (platformTwo == "YoutubeMusic") {
                     // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var descp = "A brand new playlist using PlaySync."
                     console.log("Transfer");
                     $.ajax({
                         url: `https://playsync.me/youtube`,
                         type: 'POST',
                         dataType: 'json',
-                        user: userTEST,
-                        op: 'newlist',
-                        name: 'Placeholder',
-                        desc: descp,
-                        access: 'PRIVATE',
+                        data: {
+                            user: userTEST,
+                            op: 'newlist',
+                            desc: 'A brand new playlist using PlaySync.',
+                            access: 'PRIVATE'
+                        },
                         success: function(data) {
                             console.log(data);
                             for (var i = 0; i < sourceSongs.length; i++) {
@@ -211,9 +204,11 @@ function confirm() {
                                     url: `https://playsync.me/youtube`,
                                     type: 'POST',
                                     dataType: 'json',
-                                    user: userTEST,
-                                    op: 'addsong',
-                                    tracks: sourceSongs[i],
+                                    data: {
+                                        user: userTEST,
+                                        op: 'addsong',
+                                        tracks: sourceSongs[i]
+                                    },
                                     success: function(data) {
                                         console.log(data);
                                     },
@@ -242,7 +237,6 @@ function confirm() {
                 
                 else if (platformTwo == "YoutubeMusic") {
                     // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var desc = "A brand new playlist using PlaySync."
                     var tracklist = '';
                     for (var i = 0; i < sourceSongs.length; i++) {
                         if (i == sourceSongs.length - 1) {
@@ -256,12 +250,14 @@ function confirm() {
                         url: `https://playsync.me/youtube`,
                         type: 'POST',
                         dataType: 'json',
-                        user: userTEST,
-                        op: 'newlist',
-                        name: 'Placeholder',
-                        desc: descp,
-                        access: 'PRIVATE',
-                        tracks: sourceSongs,
+                        data: {
+                            user: userTEST,
+                            op: 'newlist',
+                            name: 'Placeholder',
+                            desc: 'A brand new playlist using PlaySync.',
+                            access: 'PRIVATE',
+                            tracks: tracklist
+                        },
                         success: function(data) {
                             console.log("Source:", data);
                             //data.forEach(function(item) {
