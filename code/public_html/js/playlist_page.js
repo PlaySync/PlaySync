@@ -1,12 +1,4 @@
-var playlists = [{title: "Playlist One", id: "abcd", thumbnail: "N/A"},
-                {title: "Playlist Two", id: "efgh", thumbnail: "N/A"},
-                {title: "Playlist Three", id: "ijkl", thumbnail: "N/A"}];
-
-var songOne = [{title: "Song One", artist: "Artist One", album: "Album One"},
-                {title: "Song Two", artist: "Artist Two", album: "Album Two"},
-                {title: "Song Threee", artist: "Artist Three", album: "Album Three"}];
-
-var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f:alpha_user";
+//var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f:alpha_user";
 // get the users cookie
 function getUserID() {
     var id = document.cookie;
@@ -50,9 +42,9 @@ function displayPlaylists(platform) { // platform will identify whether to call 
         playlistBox.removeChild(playlistBox.firstChild);
     }
 
-    var user = getUserID();
-    console.log(user);
-    //if (user != '') {
+    var userC = getUserID();
+    console.log(userC);
+    if (user != '') {
         // call the given platform's taskers to get the playlist information
         if (platform == "Spotify") {
             console.log("Spotify Taskers not implemented.");
@@ -64,7 +56,7 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    user: userTEST,
+                    user: userC,
                     op: 'playlist'
                 },
                 success: function(data) {
@@ -82,9 +74,9 @@ function displayPlaylists(platform) { // platform will identify whether to call 
         } else { // plat3
             console.log("Not implemented.");
         }
-    //} else {
-        //console.log("User not found.");
-    //}
+    } else {
+        console.log("User not found.");
+    }
 }
 
 // NOTE: function needs to be updated. parameters have been changed
@@ -105,8 +97,8 @@ function displaySongs(platform, playlistID) {
         songBox.removeChild(songBox.firstChild);
     }
 
-    var user = getUserID();
-    //if (user != '') {
+    var userC = getUserID();
+    if (userC != '') {
         // call the given platform's taskers to get the song information
         if (platform == "Spofity") {
             console.log("Spotify unfinished");
@@ -123,7 +115,7 @@ function displaySongs(platform, playlistID) {
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    user: userTEST,
+                    user: userC,
                     op: 'songlist',
                     playlistid: playlistID
                 },
@@ -144,9 +136,9 @@ function displaySongs(platform, playlistID) {
         } else { // plat 3
             console.log("Not implemented.");
         }
-    //} else {
-    //    console.log("User not found.");
-    //}
+    } else {
+        console.log("User not found.");
+    }
 }
 
 function confirm() {
@@ -172,139 +164,142 @@ function confirm() {
             }
 
             var sourceSongs = getSongs(playID);
-            var user = getUserID();
+            var userC = getUserID();
             //if (sourceSongs.length != 0) {
 
             //}
 
             console.log("Source Songs:", sourceSongs);
-
-            if (platformOne == "Spotify") {
-                console.log("Sptofiy not implemented");
-                if (platformTwo == "Spotify") {
-                    console.log("Spotify not implemented");
-                } 
-                
-                else if (platformTwo == "YoutubeMusic") {
-                    // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    console.log("Transfer");
-                    $.ajax({
-                        url: `https://playsync.me/youtube`,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            user: userTEST,
-                            op: 'newlist',
-                            desc: 'A brand new playlist using PlaySync.',
-                            access: 'PRIVATE'
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            for (var i = 0; i < sourceSongs.length; i++) {
-                                console.log("Add");
-                                $.ajax({
-                                    url: `https://playsync.me/youtube`,
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        user: userTEST,
-                                        op: 'addsong',
-                                        tracks: sourceSongs[i]
-                                    },
-                                    success: function(data) {
-                                        console.log(data);
-                                    },
-                                    error: function(err) {
-                                        console.log("There was an error:", err);
-                                    }
-                                })
+            if (userC != '') {
+                if (platformOne == "Spotify") {
+                    console.log("Sptofiy not implemented");
+                    if (platformTwo == "Spotify") {
+                        console.log("Spotify not implemented");
+                    } 
+                    
+                    else if (platformTwo == "YoutubeMusic") {
+                        // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        console.log("Transfer");
+                        $.ajax({
+                            url: `https://playsync.me/youtube`,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                user: userC,
+                                op: 'newlist',
+                                desc: 'A brand new playlist using PlaySync.',
+                                access: 'PRIVATE'
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                for (var i = 0; i < sourceSongs.length; i++) {
+                                    console.log("Add");
+                                    $.ajax({
+                                        url: `https://playsync.me/youtube`,
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            user: userC,
+                                            op: 'addsong',
+                                            tracks: sourceSongs[i]
+                                        },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        error: function(err) {
+                                            console.log("There was an error:", err);
+                                        }
+                                    })
+                                }
+                            },
+                            error: function(err) {
+                                console.log("There was an error:", err);
                             }
-                        },
-                        error: function(err) {
-                            console.log("There was an error:", err);
-                        }
-                    })
-                }
-    
-                else {
-                    console.log("Plat 3 not implemented.");
-                }
-            } 
-            
-            else if (platformOne == "YoutubeMusic") {
-
-                if (platformTwo == "Spotify") {
-                    console.log("Spotify not implemented");
-                } 
-                
-                else if (platformTwo == "YoutubeMusic") {
-                    // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var tracklist = '';
-                    for (var i = 0; i < sourceSongs.length; i++) {
-                        if (i == sourceSongs.length - 1) {
-                            tracklist += sourceSongs[i];
-                        } else {
-                            tracklist += sourceSongs[i] + '$';
-                        }
+                        })
                     }
-                    console.log("Tracks:", tracklist);
-                    $.ajax({
-                        url: `https://playsync.me/youtube`,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            user: userTEST,
-                            op: 'newlist',
-                            name: 'Placeholder',
-                            desc: 'A brand new playlist using PlaySync.',
-                            access: 'PRIVATE',
-                            tracks: tracklist
-                        },
-                        success: function(data) {
-                            console.log("Source:", data);
-                            //data.forEach(function(item) {
-                                //$('#status-box').append('<div class="status-item"></div>');
-                            //});
-                        },
-                        error: function(err) {
-                            console.log("There was an error:", err);
-                        }
-                    })
-                }
-    
-                else {
-                    console.log("Plat 3 not implemented.");
-                }
-            } 
-            
-            else {
-                console.log("Plat 3 not implemented.");
-                /*if (platformTwo == "Spotify") {
-                    console.log("Spotify not implemented");
+        
+                    else {
+                        console.log("Plat 3 not implemented.");
+                    }
                 } 
                 
-                else if (platformTwo == "YoutubeMusic") {
-                    // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var desc = "A brand new playlist using PlaySync."
-                    $.ajax({
-                        url: `https://playsync.me/youtube/user=${user}&op=newlist&name=Placeholder&desc=${desc}&access=PRIVATE&tracks=${sourceSongs}`,
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function(data) {
-                            console.log(data);
-                            data.forEach(function(item) {
-                                //$('#status-box').append('<div class="status-item"></div>');
-                            });
-                        },
-                        error: function(err) {
-                            console.log("There was an error:", err);
-                        }
-                    })
-                }
+                else if (platformOne == "YoutubeMusic") {
     
+                    if (platformTwo == "Spotify") {
+                        console.log("Spotify not implemented");
+                    } 
+                    
+                    else if (platformTwo == "YoutubeMusic") {
+                        // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        var tracklist = '';
+                        for (var i = 0; i < sourceSongs.length; i++) {
+                            if (i == sourceSongs.length - 1) {
+                                tracklist += sourceSongs[i];
+                            } else {
+                                tracklist += sourceSongs[i] + '$';
+                            }
+                        }
+                        console.log("Tracks:", tracklist);
+                        $.ajax({
+                            url: `https://playsync.me/youtube`,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                user: userC,
+                                op: 'newlist',
+                                name: 'Placeholder',
+                                desc: 'A brand new playlist using PlaySync.',
+                                access: 'PRIVATE',
+                                tracks: tracklist
+                            },
+                            success: function(data) {
+                                console.log("Source:", data);
+                                //data.forEach(function(item) {
+                                    //$('#status-box').append('<div class="status-item"></div>');
+                                //});
+                            },
+                            error: function(err) {
+                                console.log("There was an error:", err);
+                            }
+                        })
+                    }
+        
+                    else {
+                        console.log("Plat 3 not implemented.");
+                    }
+                } 
+                
                 else {
                     console.log("Plat 3 not implemented.");
-                }*/
+                    /*if (platformTwo == "Spotify") {
+                        console.log("Spotify not implemented");
+                    } 
+                    
+                    else if (platformTwo == "YoutubeMusic") {
+                        // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        var desc = "A brand new playlist using PlaySync."
+                        $.ajax({
+                            url: `https://playsync.me/youtube/user=${user}&op=newlist&name=Placeholder&desc=${desc}&access=PRIVATE&tracks=${sourceSongs}`,
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log(data);
+                                data.forEach(function(item) {
+                                    //$('#status-box').append('<div class="status-item"></div>');
+                                });
+                            },
+                            error: function(err) {
+                                console.log("There was an error:", err);
+                            }
+                        })
+                    }
+        
+                    else {
+                        console.log("Plat 3 not implemented.");
+                    }*/
+                }
+            } else {
+                console.log("User not found.");
             }
         }
     } else {
