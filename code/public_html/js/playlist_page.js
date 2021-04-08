@@ -13,12 +13,65 @@ function getSongs(playlistID) {
     var songList = [];
     var table = document.getElementById("songTable");
     for (var row = 0; row < table.rows.length; row++) {
-        if (table.rows[row].cells[0].id == 'song-title') {
-            songList.push(table.rows[row].cells[0].innerHTML);
-        }
+        var song = new Object();
+        song.title = table.rows[row].cells[0].innerHTML;
+        song.artist = table.rows[row].cells[1].innerHTML;
+        song.album = table.rows[row].cells[2].innerHTML;
+        songList.push(song);
+        //if (table.rows[row].cells[0].id == 'song-title') {
+        //    songList.push(table.rows[row].cells[0].innerHTML);
+        //}
     }
     return songList;
 }
+
+/*function searchSongs(platform, songTitle, songArtist, songDesc) {
+    var songs = [];
+    var userC = getUserID();
+    if (userC != '') {
+        if (platform == "Spotify") {
+            console.log("Not implemented");
+        }
+        else if (platform == "YoutubeMusic") {
+            $.ajax({
+                url: 'https://playsync.me/youtube',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    user: userC,
+                    op: 'searchsong',
+                    title: songTitle,
+                    artist: songArtist,
+                    misc: songDesc
+                },
+                success: function(data) {
+                    console.log("Data(SearchSong):", data);
+                    data.forEach(function(info) {
+                        console.log("Info:", info);
+                        var currentSong = new Object();
+                        currentSong.id = info.id;
+                        currentSong.title = info.title;
+                        currentSong.artist = info.artist;
+                        currentSong.album = info.album;
+                        currentSong.duration = info.duration;
+                        songs.push(currentSong);
+                        //songs += info.id + ',' + info.title + ',' + info.artist + ',' + info.album + ',' + info.duration + ',';
+                    });
+                },
+                error: function(err) {
+                    console.log("There was an error:", err);
+                }
+            })
+        }
+        else {
+            console.log("Not implemented.");
+        }
+    }
+    else {
+        console.log("User not found.");
+    }
+    return songs;
+}*/
 
 
 // update the button text based on the chosen platform
@@ -116,7 +169,7 @@ function displaySongs(platform, playlistID) {
                     var songs = '<table id="songTable">';
                     data.forEach(function(item) {
                         console.log(item);
-                        songs += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;">' + item.artist + '</td><td style="text-align: left;">' + item.album + '</td></tr>';
+                        songs += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td><td style="text-align: left;" id="song-album">' + item.album + '</td></tr>';
                     });
                     songs += '</table>';
                     $('#status-box').append(songs);
@@ -193,7 +246,7 @@ function confirm() {
                                         data: {
                                             user: userC,
                                             op: 'addsong',
-                                            tracks: sourceSongs[i]
+                                            tracks: sourceSongs[i].id
                                         },
                                         success: function(data) {
                                             console.log(data);
@@ -223,8 +276,9 @@ function confirm() {
                     
                     else if (platformTwo == "YoutubeMusic") {
                         // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        var tracklist = '';
+                        var tracklist = ''; //searchSongs("YoutubeMusic", , , );
                         for (var i = 0; i < sourceSongs.length; i++) {
+                            //var tempID = searchSongs("YoutubeMusic", sourceSongs[i].title, sourceSongs[i].artist, '');
                             if (i == sourceSongs.length - 1) {
                                 tracklist += sourceSongs[i];
                             } else {
