@@ -1,4 +1,3 @@
-//var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f:alpha_user";
 // get the users cookie
 function getUserID() {
     var id = document.cookie;
@@ -43,13 +42,12 @@ function displayPlaylists(platform) { // platform will identify whether to call 
     }
 
     var userC = getUserID();
-    console.log(userC);
-    if (user != '') {
+    if (userC != '') {
         // call the given platform's taskers to get the playlist information
         if (platform == "Spotify") {
             console.log("Spotify Taskers not implemented.");
         } else if (platform == "YoutubeMusic") {
-            console.log("Playlist Call Test w/ Full User");
+            //console.log("Playlist Call Test w/ Full User");
             var yMusic = "'YoutubeMusic'";
             $.ajax({
                 url: 'https://playsync.me/youtube',
@@ -103,13 +101,7 @@ function displaySongs(platform, playlistID) {
         if (platform == "Spofity") {
             console.log("Spotify unfinished");
         } else if (platform == "YoutubeMusic") {
-            //var songs = '<table id="songTable">';
-            //for (var i = 0; i < songOne.length; i++) {
-                //var playid = "'" + playlists[i].id + "'";
-            //    songs += '<tr><td style="text-align: left;" id="song-title">' + songOne[i].title + '</td><td style="text-align: left;">' + songOne[i].artist + '</td><td style="text-align: left;">' + songOne[i].album + '</td></tr>';
-            //}
-            //songs += '</table>';
-            console.log("Song Call Update");
+            //console.log("Song Call Update");
             $.ajax({
                 url: `https://playsync.me/youtube`,
                 type: 'POST',
