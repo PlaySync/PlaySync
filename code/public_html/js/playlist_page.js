@@ -71,7 +71,8 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                     console.log("Data(Playlist):", data);
                     data.forEach(function(info) {
                         console.log("Info:", info);
-                        $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + info.id + ')" id="' + info.id + '"></button><p class="pt-2 pl-2">' + info.title + '</p></div>');
+                        var id = "'" + info.id + "'";
+                        $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + id + ')" id="' + info.id + '"></button><p class="pt-2 pl-2">' + info.title + '</p></div>');
                     });
                 },
                 error: function(err) {
