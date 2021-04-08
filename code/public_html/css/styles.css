@@ -301,3 +301,55 @@ body {
   cursor: pointer;
   margin: 5px;
 }
+
+.profile-side-bar{
+  height: 100%;
+  
+}
+
+.profile-side-bar ul{
+  list-style-type: none;
+}
+
+.profile-side-bar button{
+  padding: 10px;
+  outline: none;
+  border: none;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  background-color: #e7e6e1;
+}
+
+.profile-side-bar button:hover{
+  background-color: #f2a154;
+}
+
+.profile-side-bar button.active{
+  background-color: #f2a154;
+}
+
+.sidebar-content {
+  font-size: 20px;
+}
+
+.sidebar-content input[type=submit] {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #e7e6e1;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.sidebar-content label {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.sidebar-content input:not([type=checkbox]):not([type=submit]){
+  width: 100%;
+  clear: right;
+}
+

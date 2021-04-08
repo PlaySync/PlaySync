@@ -1,53 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Note: I was planning on updating this page with the templates once the page was finished, which is why it doesn't have them yet! -->
-
-<!-- I used this website for the color design (https://colorhunt.co/palette/258333). We can could easily change it, but I think this one looks pretty nice. -->
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transfer Playlist</title>
-<!-- Maybe turn this orange(#f2a154) if we decide to keep the logo (https://icons.getbootstrap.com/icons/music-note-list/) -->
-    <link rel='icon' href='music-note-list.svg' type='image/svg'/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!-- Using Google Fonts API here, should prevent cross system issues? Using Abel, could change but I like this one -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="././css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script src="./js/playlist_page.js"></script>
-
-</head>
-
-<body>
-    <div class="mainContainer">
-        <div class="row">
-            <div class="col-sm-4 logo text-md-left text-sm-center">
-              <h1><i style="position: relative; top: -5px;" class="bi bi-music-note-list"></i><span style="position: relative;"> PlaySync </span></h1>
-            </div>
-      
-            <div class="col-sm-4 navBar text-sm-center">
-              <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#button">Button</a></li>
-                <li><a href="#about">About</a></li>
-              </ul>
-            </div>
-      
-            <div class="col-sm-4 login text-md-right text-sm-center">
-              <form style="display: inline" action="http://ourloginpage.com/" method="get">
-                <button class="button"><span>Login</span></button>
-              </form>
-            </div>
-        </div>
-        <hr style="border-top: 1px solid white">
-
+{% extends 'base.html' %}
+{% block content %}  
         <!-- Possibly update w/ JavaScript so that unauthorized platforms are disabled and all can be viewed at once? -->
         <div class="dropdownContainer">
             <div class="left">
@@ -196,10 +148,4 @@
                 </div>
             </div>
         </div>
-        <footer>
-            <hr style="border-top: 1px solid white">
-            <span>- Footer</span>
-        </footer>
-    </div>
-</body>
-</html>
+{% endblock %}

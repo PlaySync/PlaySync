@@ -18,6 +18,7 @@ youtube_operation = Blueprint('youtube_operation', __name__, template_folder='te
 authadd_page = Blueprint('authadd_page', __name__, template_folder='templates')
 authget_page = Blueprint('authget_page', __name__, template_folder='templates')
 transfer_page = Blueprint('transfer_page', __name__, template_folder='templates')
+profile_page = Blueprint('profile_page', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -250,3 +251,11 @@ def transfer_list():
         # resp = make_response(render_template('landing.html', title='Welcome, first-time visitor - PlaySync', visitor_status="New Visitor"))
         # resp.set_cookie('visited', '1')
         # return resp
+
+@profile_page.route('/profile')
+def profile():
+    if 'user' in request.cookies: # Logged in
+        user = valid_user(request.cookies.get('user'))
+        return render_template('profile.html')
+    else: # Not Logged In
+        return redirect("./", code=302)

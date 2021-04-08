@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}   
+
+        <div class="row profile-page"> 
+          <div class="col-sm-2 profile-side-bar" style="float: left; margin-left: -25px; padding: 0;">
+            <ul>
+              <button class="tablinks" onclick="openTab(event, 'personal-info')" id="defaultOpen">Personal Info</button>
+              <button class="tablinks" onclick="openTab(event, 'platform-a')">Youtube Music</button>
+              <button class="tablinks" onclick="openTab(event, 'platform-b')">Spotify</button>
+              <button class="tablinks" onclick="openTab(event, 'del-acc')">Delete Account</button>
+            </ul>
+          </div>
+          <div class="col-sm-9 offset-md-1 sidebar-content" style="outline: 1px solid white;">
+            <div id="personal-info" class="tabcontent" style="text-align: left; display: inline-block;">
+              <form class="email-update" action="#" method="post">
+                <h2>Current email:</h2>
+                
+                <label for="email">E-mail: </label>
+                <input type="email" id="usr-email" name="new-email">
+                <br>
+                <label for="mailing">Opt-in mailing list:</label>
+                <input type="checkbox" id="mailing-list">
+                <br>
+                <input type="submit" id="email-pref" value="Update">
+              </form>
+                <br>
+                <br>
+              <form action="#">  
+                <h2>Change Password</h2>
+                <label for="current-pw">Current Password:</label>
+                <input type="password" id="current-pw">
+                <label for="new-pw">New Password:</label>
+                <input type="password" id="new-pw">
+                <label for="new-pw">Confirm New Password:</label>
+                <input type="password" id="confirm-new-pw">
+                <input type="submit" id="pw-pref" value="Update">
+              </form>
+            </div>
+            <div id="platform-a" class="tabcontent" style="text-align: left; display: inline-block;">
+              <div class="platform-a-auto" style="text-align: center;" >
+                <form action="#">
+                  <input type="submit" id="login-platform-a" value="Login Using Platform A">
+                </form>
+                <p>Otherwise, enter manually below:</p>
+              </div>
+              <div class="platform-a-manual">
+                <form action="#">
+                  <p>Current User Identifier Token: none</p>
+                  <p>Current API Token: none</p>
+                  <label for="platform-a-auth">User Identifier Token: </label>
+                  <input type="text" id="platform-a-ident">
+                  <br>
+                  <label for="platform-a-auth">API Token: </label>
+                  <input type="text" id="platform-a-api">
+                  <br>
+                  <input type="submit" id="platform-a-submit" value="Update">
+                </form>
+              </div>
+            </div>
+            <div id="platform-b" class="tabcontent" style="text-align: left; display: inline-block;">
+              <div class="platform-b-auto" style="text-align: center;" >
+                <form action="./spotify_auth" method="get">
+                  <input type="submit" id="login-platform-b" value="Login Using Spotify">
+                </form>
+              </div>
+            </div>
+            <div id="del-acc" class="tabcontent" style="text-align: left; display: inline-block;">
+              <form action="#">
+                <h5>NOTE: THIS ACTION CANNOT BE UNDONE. All user information (playlist data, synchronization settings, etc) will be permanently deleted. We require password confirmation prior to account deletion.</h5>
+                <label for="current-pw">Current Password:</label>
+                <input type="password" id="current-pw">
+                <label for="confirm-current-pw">Confirm Password:</label>
+                <input type="password" id="current-pw">
+                <label for="del-acc">I understand that account deletion means all user data will be permanently lost</label>
+                <input type="checkbox" id="confirm-acc-del">
+                <br>
+                <input type="submit" id="del-acc-submit" value="Delete Account">
+              </form>
+            </div>
+          </div>
+        </div>       
+      <script>
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      document.getElementById("defaultOpen").click();
+      </script>
+{% endblock %}
