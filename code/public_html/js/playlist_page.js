@@ -6,13 +6,15 @@ var songOne = [{title: "Song One", artist: "Artist One", album: "Album One"},
                 {title: "Song Two", artist: "Artist Two", album: "Album Two"},
                 {title: "Song Threee", artist: "Artist Three", album: "Album Three"}];
 
-
+var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f";
 // get the users cookie
 function getUserID() {
     var id = document.cookie;
     if (id != '') {
         var value = id.split('=');
         id = value[1];
+        var value2 = id.split(':');
+        id = value2[0];
     }
     return id;
 }
