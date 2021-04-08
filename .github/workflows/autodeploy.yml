@@ -47,7 +47,7 @@ jobs:
         key: ${{ secrets.GITHUBUSERKEY }}
         port: 22
         script: |
-        sudo rm -rf /home/freesync/logs/flask.log && sudo rm -rf /home/freesync/logs/flask_err.log
-        sudo systemctl daemon-reload
-        sudo systemctl restart playsync
-        sudo systemctl restart nginx
+          sudo rm -rf /home/freesync/logs/flask.log && sudo rm -rf /home/freesync/logs/flask_err.log
+          sudo systemctl daemon-reload
+          sudo systemctl restart playsync
+          sudo systemctl restart nginx
