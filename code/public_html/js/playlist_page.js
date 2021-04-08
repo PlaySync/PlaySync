@@ -6,7 +6,7 @@ var songOne = [{title: "Song One", artist: "Artist One", album: "Album One"},
                 {title: "Song Two", artist: "Artist Two", album: "Album Two"},
                 {title: "Song Threee", artist: "Artist Three", album: "Album Three"}];
 
-var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f";
+var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f:alpha_user";
 // get the users cookie
 function getUserID() {
     var id = document.cookie;
@@ -64,7 +64,7 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                 var playid = "'" + playlists[i].id + "'";
                 $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + playid + ')" id="' + playlists[i].id + '"></button><p class="pt-2 pl-2">' + playlists[i].title + '</p></div>');
             }
-            console.log("Playlist Call Update");
+            console.log("Playlist Call Test w/ Full User");
             $.ajax({
                 url: 'https://playsync.me/youtube',
                 type: 'POST',
