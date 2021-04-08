@@ -3,10 +3,6 @@
 
 <!-- Note: I was planning on updating this page with the templates once the page was finished, which is why it doesn't have them yet! -->
 
-<!-- Author: Logan O'Brien
-     PlaySync Landing Page
-     2/19/2021 -->
-
 <!-- I used this website for the color design (https://colorhunt.co/palette/258333). We can could easily change it, but I think this one looks pretty nice. -->
 
 <head>
@@ -56,19 +52,17 @@
         <div class="dropdownContainer">
             <div class="left">
                 <div class="dropdown pt-1 pb-4">
-                    <button class="drop-button dropdown-toggle" type="button" id="sourceTransferButton" data-toggle="dropdown" aria-expanded="false">
-                        Platform 1
-                    </button>
+                    <button class="drop-button dropdown-toggle" type="button" id="sourceTransferButton" data-toggle="dropdown" aria-expanded="false">Platform 1</button>
                     <ul class="dropdown-menu" aria-labelledby="sourceTransferDropdownMenu">
                         <!-- Implement the search for each platform -->
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'Spotify')">Spotify</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'Youtube Music')">Youtube Music</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'Platform3')">Platform3</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'Spotify')" id="spotifySource">Spotify</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'YoutubeMusic')" id="youtubeSource">Youtube Music</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('source', 'Platform3')" id="plat3Source">Platform3</a></li>
                     </ul>
                 </div>
                 <h5>Select the playlists you want to transfer:</h5>
                 <div class="playlist-box" id="playlist-box">
-                    <div class="playlist-item">
+                    <!--<div class="playlist-item">
                         <button class="playselect-button" onclick="displaySongs(0)" id="playlist0"></button>
                         <p class="pt-2 pl-2">title of the 1st playlist</p>
                     </div>
@@ -105,52 +99,100 @@
                     <div class="playlist-item">
                         <button class="playselect-button"></button>
                         <p class="pt-2 pl-2">title of the 9th playlist</p>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <button class="signup-button" onclick="confirm()" style="margin: 20px; height: 45px; max-height: 45px; align-self: center;">Transfer</button>
             <div class="left">
                 <div class="dropdown pt-1 pb-4">
-                    <button class="drop-button dropdown-toggle" type="button" id="destinationTransferButton" data-toggle="dropdown" aria-expanded="false">
-                        Platform 2
-                    </button>
+                    <button class="drop-button dropdown-toggle" type="button" id="destinationTransferButton" data-toggle="dropdown" aria-expanded="false">Platform 2</button>
                     <ul class="dropdown-menu" aria-labelledby="destinationTransferDropdownMenu">
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Spotify')">Spotify</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Youtube Music')">Youtube Music</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Platform3')">Platform3</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Spotify')" id="spotifyDest">Spotify</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'YoutubeMusic')" id="youtubeDest">Youtube Music</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Platform3')" id="plat3Dest">Platform3</a></li>
                     </ul>
                 </div>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; background-color: #f2a154 !important;"></div>
                 </div>
                 <div class="status-box" id="status-box">
-                    <div class="status-item">
-                        <p style="padding-left: 5px; padding-right: 10px;">Title</p>
-                        <p style="padding-left: 10px; padding-right: 10px;">Artist</p>
-                        <p style="padding-left: 10px; padding-right: 5px;">Album</p>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; background-color: #f2a154 !important;"></div>
-                    </div>
-                    <div class="status-item">
-                        <p style="padding-left: 5px; padding-right: 10px;">A Really Long Title</p>
-                        <p style="padding-left: 10px; padding-right: 10px;">A Really Long Artist</p>
-                        <p style="padding-left: 10px; padding-right: 5px;">A Really Long Album</p>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
-                    </div>
-                    <!--<p class="fake-code">This is some dummy text to display the scrolling.</p>
-                    </br>
-                    <p class="fake-code">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ac tortor dignissim convallis aenean et tortor. Vel eros donec ac odio tempor orci dapibus. Varius vel pharetra vel turpis nunc. 
-                        Est placerat in egestas erat. Velit sed ullamcorper morbi tincidunt ornare massa eget egestas. Tincidunt augue interdum velit euismod in pellentesque massa placerat duis. 
-                        Mi in nulla posuere sollicitudin aliquam ultrices sagittis orci a. Morbi tristique senectus et netus. Egestas integer eget aliquet nibh praesent tristique magna.
-
-                        Feugiat in fermentum posuere urna nec tincidunt praesent semper. Quam quisque id diam vel quam. Bibendum est ultricies integer quis auctor. 
-                        Eu turpis egestas pretium aenean pharetra magna ac placerat. Quam viverra orci sagittis eu volutpat odio facilisis mauris. Etiam sit amet nisl purus in mollis nunc sed id. 
-                        Justo nec ultrices dui sapien eget mi proin. Nisl pretium fusce id velit ut tortor pretium viverra suspendisse. Nunc sed blandit libero volutpat sed cras ornare arcu dui. 
-                        Sit amet tellus cras adipiscing. Vel eros donec ac odio tempor orci dapibus. Felis eget nunc lobortis mattis aliquam faucibus purus in.</p>-->
+                    <!--<table>
+                        <tr>
+                            <td style="text-align: left;" id="titleID">Title</td>
+                            <td style="text-align: left;">Artist</td>
+                            <td style="text-align: left;">Album</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" id="titleID2">Long Title</td>
+                            <td style="text-align: left;">Long Artist</td>
+                            <td style="text-align: left;">Long Album</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">An Even Longer Title</td>
+                            <td style="text-align: left;">An Even Longer Artist</td>
+                            <td style="text-align: left;">An Even Longer Album</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">An Even Even Longer Title</td>
+                            <td style="text-align: left;">An Even Even Longer Artist</td>
+                            <td style="text-align: left;">An Even Even Longer Album</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>-->
+                    <table>
+                        <tr>
+                            <td style="text-align: left;">Title</td>
+                            <td style="text-align: left;">Artist</td>
+                            <td style="text-align: left;">Album</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Long Title</td>
+                            <td style="text-align: left;">Long Artist</td>
+                            <td style="text-align: left;">Long Album</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top: 10px;">
+                                <p>There was a problem finding this song.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">An Even Longer Title</td>
+                            <td style="text-align: left;">An Even Longer Artist</td>
+                            <td style="text-align: left;">An Even Longer Album</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">An Even Even Longer Title</td>
+                            <td style="text-align: left;">An Even Even Longer Artist</td>
+                            <td style="text-align: left;">An Even Even Longer Album</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
