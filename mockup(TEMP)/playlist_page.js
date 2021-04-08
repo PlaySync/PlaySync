@@ -6,6 +6,7 @@ var songOne = [{title: "Song One", artist: "Artist One", album: "Album One"},
                 {title: "Song Two", artist: "Artist Two", album: "Album Two"},
                 {title: "Song Threee", artist: "Artist Three", album: "Album Three"}];
 
+var userTEST = "64d96f030c409c53612e3afc1fcb54aae40f4242ea346aedc9e9633678670c0f:alpha_user";
 
 // get the users cookie
 function getUserID() {
@@ -34,6 +35,7 @@ function getSongs(playlistID) {
 function updateButton(src, platform) {
     if (src == "source") {
         document.getElementById("sourceTransferButton").innerHTML = platform;
+        console.log("hello");
         displayPlaylists(platform);
     } else if (src == "dest") {
         document.getElementById("destinationTransferButton").innerHTML = platform;
@@ -61,10 +63,17 @@ function displayPlaylists(platform) { // platform will identify whether to call 
                 var playid = "'" + playlists[i].id + "'";
                 $('#playlist-box').append('<div class="playlist-item"><button class="playselect-button" onclick="displaySongs(' + yMusic + ', ' + playid + ')" id="' + playlists[i].id + '"></button><p class="pt-2 pl-2">' + playlists[i].title + '</p></div>');
             }
+            console.log("Playlist Call");
             $.ajax({
-                url: `https://playsync.me/youtube/user=${user}&op=playlist`,
+                url: 'https://playsync.me/youtube',
                 type: 'POST',
                 dataType: 'json',
+                user: userTEST,
+                op: 'playlist',
+                //data: {
+                //    user: userTEST,
+                //    op: 'playlist'
+                //},
                 success: function(data) {
                     console.log(data);
                     data.forEach(function(info) {
@@ -107,22 +116,29 @@ function displaySongs(platform, playlistID) {
         if (platform == "Spofity") {
             console.log("Spotify unfinished");
         } else if (platform == "YoutubeMusic") {
-            var songs = '<table id="songTable">';
-            for (var i = 0; i < songOne.length; i++) {
+            //var songs = '<table id="songTable">';
+            //for (var i = 0; i < songOne.length; i++) {
                 //var playid = "'" + playlists[i].id + "'";
-                songs += '<tr><td style="text-align: left;" id="song-title">' + songOne[i].title + '</td><td style="text-align: left;">' + songOne[i].artist + '</td><td style="text-align: left;">' + songOne[i].album + '</td></tr>';
-            }
-            songs += '</table>';
-            $('#status-box').append(songs);
+            //    songs += '<tr><td style="text-align: left;" id="song-title">' + songOne[i].title + '</td><td style="text-align: left;">' + songOne[i].artist + '</td><td style="text-align: left;">' + songOne[i].album + '</td></tr>';
+            //}
+            //songs += '</table>';
+            //$('#status-box').append(songs);
+            console.log("Song Call");
             $.ajax({
-                url: `https://playsync.me/youtube/user=${user}&op=songlist&playlistid=${playlistID}`,
+                url: `https://playsync.me/youtube`,
                 type: 'POST',
                 dataType: 'json',
+                user: userTEST,
+                op: 'songlist',
+                playlistid: playlistID,
                 success: function(data) {
                     console.log(data);
+                    var songs = '<table id="songTable">';
                     data.forEach(function(item) {
-                        $('#status-box').append('<div class="status-item"><p id="song-title">' + item.title + '</p><p>' + item.artist + '</p><p>' + item.album + '</p></div>');
+                        songs += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;">' + item.artist + '</td><td style="text-align: left;">' + item.album + '</td></tr>';
                     });
+                    songs += '</table>';
+                    $('#status-box').append(songs);
                 },
                 error: function(err) {
                     console.log("There was an error:", err);
@@ -163,27 +179,37 @@ function confirm() {
             //if (sourceSongs.length != 0) {
 
             //}
-
+            console.log("Songs:", sourceSongs);
             if (platformOne == "Spotify") {
-                console.log("Sptofiy not implemented");
+                console.log("Spotify not implemented");
                 if (platformTwo == "Spotify") {
                     console.log("Spotify not implemented");
                 } 
                 
                 else if (platformTwo == "YoutubeMusic") {
                     // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var desc = "A brand new playlist using PlaySync."
+                    var descp = "A brand new playlist using PlaySync."
+                    console.log("Transfer");
                     $.ajax({
-                        url: `https://playsync.me/youtube/user=${user}&op=newlist&name=Placeholder&desc=${desc}&access=PRIVATE`,
+                        url: `https://playsync.me/youtube`,
                         type: 'POST',
                         dataType: 'json',
+                        user: userTEST,
+                        op: 'newlist',
+                        name: 'Placeholder',
+                        desc: descp,
+                        access: 'PRIVATE',
                         success: function(data) {
                             console.log(data);
                             for (var i = 0; i < sourceSongs.length; i++) {
+                                console.log("Add");
                                 $.ajax({
-                                    url: `https://playsync.me/youtube/user=${user}&op=addsong&tracks=${sourceSongs[i]}`,
+                                    url: `https://playsync.me/youtube`,
                                     type: 'POST',
                                     dataType: 'json',
+                                    user: userTEST,
+                                    op: 'addsong',
+                                    tracks: sourceSongs[i],
                                     success: function(data) {
                                         console.log(data);
                                     },
@@ -212,7 +238,7 @@ function confirm() {
                 
                 else if (platformTwo == "YoutubeMusic") {
                     // DONT FORGET TO MAKE THE USER CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    var desc = "A brand new playlist using PlaySync."
+                    var descp = "A brand new playlist using PlaySync."
                     var tracklist = '';
                     for (var i = 0; i < sourceSongs.length; i++) {
                         if (i == sourceSongs.length - 1) {
@@ -221,15 +247,22 @@ function confirm() {
                             tracklist += sourceSongs[i] + '$';
                         }
                     }
+                    console.log("Tracks:", tracklist);
                     $.ajax({
-                        url: `https://playsync.me/youtube/user=${user}&op=newlist&name=Placeholder&desc=${desc}&access=PRIVATE&tracks=${sourceSongs}`,
+                        url: `https://playsync.me/youtube`,
                         type: 'POST',
                         dataType: 'json',
+                        user: userTEST,
+                        op: 'newlist',
+                        name: 'Placeholder',
+                        desc: descp,
+                        access: 'PRIVATE',
+                        tracks: sourceSongs,
                         success: function(data) {
                             console.log(data);
-                            data.forEach(function(item) {
+                            //data.forEach(function(item) {
                                 //$('#status-box').append('<div class="status-item"></div>');
-                            });
+                            //});
                         },
                         error: function(err) {
                             console.log("There was an error:", err);
