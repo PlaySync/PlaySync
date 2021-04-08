@@ -92,10 +92,10 @@ class youtube_music_tasker:
                 else:
                     return (0, playlist_id, "NULL") # Creation successful, didn't add
             else: # Status message, means error in creation
-                return (-1, 0, 0)
+                return (-1, 0, playlist_id)
         except Exception as e:
             print("Unexpected Error in new_playlist:", e)
-            return (-2, 0, 0) # Didn't crash gracefully
+            return (-2, 0, e) # Didn't crash gracefully
 
     def search_song(self, song_title:str, song_artist:str="", song_misc:str=""):
         song_list = []

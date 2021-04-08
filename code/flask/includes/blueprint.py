@@ -189,11 +189,11 @@ def youtube_ops():
                 ret_tuple = ytapi.new_playlist(playlist_name=new_name, desc=new_desc, tracks=new_tracks)
                 if ret_tuple[0] == -1:
                     json_response['status'] = "fail"
-                    json_response['message'] = "creation failed"
+                    json_response['message'] = ret_tuple[2]
                     return json.dumps(json_response)
                 elif ret_tuple[0] == -2:
                     json_response['status'] = "crash"
-                    json_response['message'] = "crashed in creation"
+                    json_response['message'] = ret_tuple[2]
                     return json.dumps(json_response)
                 else:
                     json_response['status'] = "success"
