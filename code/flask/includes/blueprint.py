@@ -264,8 +264,9 @@ def profile():
     else: # Not Logged In
         return redirect("./", code=302)
 
-@youtube_auth.route('/youtube/<auth_body>')
-def youtube(auth_body):
+@youtube_auth.route('/youtube', methods=['POST'])
+def youtube():
+    auth_body = request.form['auth_body']
     user = valid_user(request.cookies.get('user'))
     addauth('user', auth_body)
     return redirect('./profile')
