@@ -22,7 +22,7 @@ jobs:
     - name: Deploy public_html
       uses: burnett01/rsync-deployments@4.1
       with:
-        switches: -avzr -O # --delete # don't delete
+        switches: -avzur # --delete # don't delete
         path: code/public_html/
         remote_path: /home/freesync/public_html
         remote_host: 128.199.7.254
@@ -32,7 +32,7 @@ jobs:
     - name: Deploy flask
       uses: burnett01/rsync-deployments@4.1
       with:
-        switches: -avzr # --delete # don't delete
+        switches: -avzur # --delete # don't delete
         path: code/flask/
         remote_path: /home/freesync/flask
         remote_host: 128.199.7.254
