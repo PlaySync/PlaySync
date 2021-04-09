@@ -128,8 +128,11 @@ def psql_check_auth(uid: int, auth_type: str):
 def psql_write_auth(uid: int, auth_type: str, auth_body: str):
     conn = psql_conn()
     cur = conn.cursor()
-    print("Inserting", uid, auth_type, auth_body)
-    cur.execute('INSERT INTO t_auth(uid, auth_type, auth_body) VALUES (%s, %s, %s)', (uid, auth_type, auth_body))
+    # print("Inserting", uid, auth_type, auth_body)
+    if psql_check_auth(uid, auth_type) == "":
+        cur.execute('INSERT INTO t_auth(uid, auth_type, auth_body) VALUES (%s, %s, %s)', (uid, auth_type, auth_body))
+    else:
+        cur.execute('UPDATE t_auth SET auth_body=%s WHERE uid=%s AND auth_type=%s', (auth_body, uid, auth_type))
     conn.commit()
     cur.close()
     conn.close()
