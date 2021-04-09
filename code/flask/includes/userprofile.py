@@ -14,4 +14,5 @@ def get_auth(user):
 	return auth_body
 
 def update_usr_email(user, email):
-	return psql_write_email(email, user)
+	uid = psql_get_uid(user)
+	return psql_write_email(email, uid)
