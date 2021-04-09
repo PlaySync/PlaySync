@@ -152,3 +152,9 @@ def psql_get_email(username: str):
     cur.close()
     conn.close()
     return email
+
+def psql_write_email(email :str, username :string):
+    conn = psql_conn()
+    cur = conn.cursor()
+    cur.execute('UPDATE t_user SET emailaddr=%s WHERE uid=%s', (email, username))
+    return None
