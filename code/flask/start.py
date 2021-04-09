@@ -14,6 +14,7 @@ app.register_blueprint(authadd_page)
 app.register_blueprint(authget_page)
 app.register_blueprint(transfer_page)
 app.register_blueprint(profile_page)
+app.register_blueprint(youtube_auth)
 
 # @app.route('/')
 # def index():
