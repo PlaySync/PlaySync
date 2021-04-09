@@ -13,5 +13,5 @@ def get_auth(user):
 	auth_body = psql_check_auth(uid, 'ytmusic')
 	return auth_body
 
-def update_email(user, email):
+def update_usr_email(user, email):
 	return psql_write_email(email, user)
