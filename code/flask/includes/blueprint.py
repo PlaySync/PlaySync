@@ -274,7 +274,7 @@ def youtubeAuth():
     return redirect('./profile')
 
 @update_email.route('/updatemail', methods=['POST'])
-    def updateEmail():
+def updateEmail():
         email = request.form['email']
         user = valid_user(request.cookies.get('user'))
         update_email(user, email)
