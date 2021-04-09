@@ -263,6 +263,13 @@ def profile():
     else: # Not Logged In
         return redirect("./", code=302)
 
+@youtube_auth.route('/youtube/<auth_body>')
+def youtube_auth(auth_body):
+    user = valid_user(request.cookies.get('user'))
+    addauth('user', auth_body)
+    return redirect(./profile)
+
+
 # @spotify_auth.route('/spotify')
 # def spotify_auth():
 #     return spotify_auth()

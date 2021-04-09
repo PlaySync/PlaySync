@@ -37,21 +37,10 @@
               </form>
             </div>
             <div id="platform-a" class="tabcontent" style="text-align: left; display: inline-block;">
-              <div class="platform-a-auto" style="text-align: center;" >
-                <form action="#">
-                  <input type="submit" id="login-platform-a" value="Login Using Platform A">
-                </form>
-                <p>Otherwise, enter manually below:</p>
-              </div>
               <div class="platform-a-manual">
-                <form action="#">
-                  <p>Current User Identifier Token: none</p>
-                  <p>Current API Token: none</p>
-                  <label for="platform-a-auth">User Identifier Token: </label>
-                  <input type="text" id="platform-a-ident">
-                  <br>
-                  <label for="platform-a-auth">API Token: </label>
-                  <input type="text" id="platform-a-api">
+                <form action="./youtube/<raw_header>">
+                  <p>Enter raw header</p>
+                  <textarea name="raw_header" cols="40" rows="10"></textarea>
                   <br>
                   <input type="submit" id="platform-a-submit" value="Update">
                 </form>
