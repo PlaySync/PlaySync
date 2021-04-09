@@ -257,10 +257,12 @@ def transfer_list():
 @profile_page.route('/profile')
 def profile():
     email = ""
+    auth_body= ""
     if 'user' in request.cookies: # Logged in
         user = valid_user(request.cookies.get('user'))
         email = get_email(user)
-        return render_template('profile.html', email=email)
+        auth_body = get_auth(user)
+        return render_template('profile.html', email=email, auth_body=auth_body)
     else: # Not Logged In
         return redirect("./", code=302)
 
@@ -268,7 +270,7 @@ def profile():
 def youtubeAuth():
     auth_body = request.form['auth_body']
     user = valid_user(request.cookies.get('user'))
-    addauth(user, auth_body)
+    add_auth(user, auth_body)
     return redirect('./profile')
 
 
