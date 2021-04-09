@@ -268,7 +268,7 @@ def profile():
 def youtubeAuth():
     auth_body = request.form['auth_body']
     user = valid_user(request.cookies.get('user'))
-    addauth('user', auth_body)
+    addauth(user, auth_body)
     return redirect('./profile')
 
 
