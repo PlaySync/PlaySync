@@ -20,7 +20,7 @@ authadd_page = Blueprint('authadd_page', __name__, template_folder='templates')
 authget_page = Blueprint('authget_page', __name__, template_folder='templates')
 transfer_page = Blueprint('transfer_page', __name__, template_folder='templates')
 profile_page = Blueprint('profile_page', __name__, template_folder='templates')
-youtube_auth = Blueprint('/youtube/<auth_body>', __name__, template_folder='templates')
+youtube_auth = Blueprint('youtube_auth', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -264,8 +264,8 @@ def profile():
     else: # Not Logged In
         return redirect("./", code=302)
 
-@youtube_auth.route('/youtube', methods=['POST'])
-def youtube():
+@youtube_auth.route('/youtubeauth', methods=['POST'])
+def youtubeAuth():
     auth_body = request.form['auth_body']
     user = valid_user(request.cookies.get('user'))
     addauth('user', auth_body)
