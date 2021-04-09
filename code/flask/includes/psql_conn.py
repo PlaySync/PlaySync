@@ -157,4 +157,7 @@ def psql_write_email(email :str, uid :int):
     conn = psql_conn()
     cur = conn.cursor()
     cur.execute('UPDATE t_user SET emailaddr=%s WHERE uid=%s', (email, uid))
+    conn.commit()
+    cur.close()
+    conn.close()
     return None
