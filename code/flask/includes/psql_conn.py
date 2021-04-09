@@ -128,6 +128,7 @@ def psql_check_auth(uid: int, auth_type: str):
 def psql_write_auth(uid: int, auth_type: str, auth_body: str):
     conn = psql_conn()
     cur = conn.cursor()
+    auth_body.replace("\r", "")
     # print("Inserting", uid, auth_type, auth_body)
     if psql_check_auth(uid, auth_type) == "":
         cur.execute('INSERT INTO t_auth(uid, auth_type, auth_body) VALUES (%s, %s, %s)', (uid, auth_type, auth_body))
