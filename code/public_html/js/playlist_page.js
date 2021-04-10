@@ -103,7 +103,9 @@ function displayYouTubePlaylists() {
                 op: 'playlist'
             },
             success: function(data) {
+                console.log(data);
                 data.forEach(function(info) {
+                    console.log(info);
                     var id = "'" + info.id + "'";
                     html += '<div class="playlist-item"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
