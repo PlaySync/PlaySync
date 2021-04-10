@@ -107,13 +107,13 @@ function displayYouTubePlaylists() {
                     var id = "'" + info.id + "'";
                     html += '<div class="playlist-item"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
+                    $('#playlist-box').append(html);
                     console.log("HTML:", html);
-                    var songHTML = displayYouTubeSongs(info.id);
+                    displayYouTubeSongs(info.id);
                     console.log("SONGHTML:", songHTML);
-                    html += String(songHTML);
+                    //html += String(songHTML);
                     //console.log("NEWHTML:", html);
                 });
-                $('#playlist-box').append(html);
             },
             error: function(err) {
                 console.log("There was an error accessing the user's playlists:", err);
@@ -139,7 +139,6 @@ function displayYouTubeSongs(playlistID) {
     var userC = getUserID();
     if (userC != '') {
         var html = '';
-        var songError = false;
         $.ajax({
             url: `https://playsync.me/youtube`,
             type: 'POST',
@@ -157,23 +156,14 @@ function displayYouTubeSongs(playlistID) {
                 });
                 html += '</table></div>';
                 console.log(html);
+                $('#playlist-box').append(html);
             },
             error: function(err) {
                 console.log("There was an error finding the songs in the user's playlist:", err);
-                songError = true;
             }
         })
     } else {
         console.log("User not found.");
-        return ''; // Shouldn't ever reach this line, since displayYouTubeSongs isn't called unless getUserID is successful
-    }
-
-    // Return HTML if there wasn't an error finding the songs in a playlist
-    if (!songError) {
-        console.log("Song Success:", html);
-        return html;
-    } else {
-        return '';
     }
 }
 
