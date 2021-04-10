@@ -113,6 +113,7 @@ function displayYouTubePlaylists() {
                     html += String(songHTML);
                     console.log("NEWHTML:", html);
                 });
+                $('#playlist-box').append(html);
             },
             error: function(err) {
                 console.log("There was an error accessing the user's playlists:", err);
@@ -123,7 +124,6 @@ function displayYouTubePlaylists() {
         // Append HTML containing every playlist and all of its songs in a collapsable element if there wasn't an error
         if (!playlistError) {
             console.log("Success:", html);
-            $('#playlist-box').append(html);
             updateDestinationButton(true);
         }
     } else {
