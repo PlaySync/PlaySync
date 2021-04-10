@@ -3,10 +3,6 @@ from flask_session import Session
 from includes.blueprint import *
 import os
 
-SPOTIPY_CLIENT_ID='ae468ff1f96549b28044be8d0419677d'
-SPOTIPY_CLIENT_SECRET='c033909b0caf46069a4ee7cbb9169b15'
-SPOTIPY_REDIRECT_URI='https://playsync.me/profile'
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'

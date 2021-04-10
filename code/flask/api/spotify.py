@@ -6,6 +6,10 @@ import uuid
 import json
 from datetime import datetime
 
+SPOTIPY_CLIENT_ID='ae468ff1f96549b28044be8d0419677d'
+SPOTIPY_CLIENT_SECRET='c033909b0caf46069a4ee7cbb9169b15'
+SPOTIPY_REDIRECT_URI='https://playsync.me/profile'
+
 caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
