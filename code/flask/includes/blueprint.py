@@ -23,7 +23,7 @@ transfer_page = Blueprint('transfer_page', __name__, template_folder='templates'
 profile_page = Blueprint('profile_page', __name__, template_folder='templates')
 youtube_auth = Blueprint('youtube_auth', __name__, template_folder='templates')
 update_email = Blueprint('update_email', __name__, template_folder='templates')
-spotofy_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
+spotify_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -284,5 +284,5 @@ def updateEmail():
         return redirect('./profile')
 
 @spotify_auth.route('/spotify')
-def spotify_auth():
+def spotifyAuth():
     return get_spotify()
