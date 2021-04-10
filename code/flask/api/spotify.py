@@ -17,7 +17,6 @@ def get_spotify():
     SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
     SPOTIPY_CLIENT_SECRET= os.getenv('SPOTIPY_CLIENT_SECRET')
     SPOTIPY_REDIRECT_URI= os.getenv('SPOTIPY_REDIRECT_URI')
-    print(SPOTIPY_CLIENT_ID)
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
@@ -28,14 +27,12 @@ def get_spotify():
         redirect_uri='https://playsync.me/profile',
         cache_handler=cache_handler, 
         show_dialog=True)
-    if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
-
-    if request.args.get("code"):
-        #Being redirected from Spotify auth page
-        auth_manager.get_access_token(request.args.get("code"))
-        return redirect('/profile')
-
+    
+    # if request.args.get("code"):
+    #     #Being redirected from Spotify auth page
+    #     auth_manager.get_access_token(request.args.get("code"))
+    #     return redirect('/profile')
+    
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         #Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
