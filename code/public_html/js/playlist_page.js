@@ -138,7 +138,7 @@ function displayYouTubeSongs(playlistID) {
 
     var userC = getUserID();
     if (userC != '') {
-        var html = '<div class="song-item collapse" id="playlistCollapse' + playlistID + '"><table style="padding-left: 20px; width: 100%;" id="songsFrom' + playlistID + '">';
+        var html = '';
         var songError = false;
         $.ajax({
             url: `https://playsync.me/youtube`,
@@ -151,6 +151,7 @@ function displayYouTubeSongs(playlistID) {
             },
             success: function(data) {
                 console.log("hello");
+                html += '<div class="song-item collapse" id="playlistCollapse' + playlistID + '"><table style="padding-left: 20px; width: 100%;" id="songsFrom' + playlistID + '">';
                 data.forEach(function(item) {
                     html += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td><td style="text-align: left;" id="song-album">' + item.album + '</td></tr>';
                 });
