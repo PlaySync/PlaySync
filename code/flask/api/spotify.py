@@ -23,9 +23,9 @@ def get_spotify():
         session['uuid'] = str(uuid.uuid4())
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
-        client_id= SPOTIPY_CLIENT_ID,
-        client_secret= SPOTIPY_CLIENT_SECRET,
-        redirect_uri = SPOTIPY_REDIRECT_URI,
+        client_id='ae468ff1f96549b28044be8d0419677d',
+        client_secret='c033909b0caf46069a4ee7cbb9169b15',
+        redirect_uri='https://playsync.me/profile',
         cache_handler=cache_handler, 
         show_dialog=True)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
