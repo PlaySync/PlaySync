@@ -17,11 +17,15 @@ def get_spotify():
     SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
     SPOTIPY_CLIENT_SECRET= os.getenv('SPOTIPY_CLIENT_SECRET')
     SPOTIPY_REDIRECT_URI= os.getenv('SPOTIPY_REDIRECT_URI')
+    print(SPOTIPY_CLIENT_ID)
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
+        client_id= SPOTIPY_CLIENT_ID,
+        client_secret= SPOTIPY_CLIENT_SECRET,
+        redirect_uri = SPOTIPY_REDIRECT_URI,
         cache_handler=cache_handler, 
         show_dialog=True)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
