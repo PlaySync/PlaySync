@@ -14,137 +14,25 @@
                 </div>
                 <h5>Select the playlists you want to transfer:</h5>
                 <div class="playlist-box" id="playlist-box">
-                    <!--<div class="playlist-item">
-                        <button class="playselect-button" onclick="displaySongs(0)" id="playlist0"></button>
-                        <p class="pt-2 pl-2">title of the 1st playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button" onclick="displaySongs(1)" id="playlist1"></button>
-                        <p class="pt-2 pl-2">title of the 2nd playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button" onclick="displaySongs(2)" id="playlist2"></button>
-                        <p class="pt-2 pl-2">title of the 3rd playlist</p>
-                    </div>
-
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 4th playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 5th playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 6th playlist</p>
-                    </div>
-
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 7th playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 8th playlist</p>
-                    </div>
-                    <div class="playlist-item">
-                        <button class="playselect-button"></button>
-                        <p class="pt-2 pl-2">title of the 9th playlist</p>
-                    </div>-->
                 </div>
             </div>
-            <button class="signup-button" onclick="confirm()" style="margin: 20px; height: 45px; max-height: 45px; align-self: center;">Transfer</button>
+            <button class="signup-button signup-button-disabled disabled" onclick="confirm()" style="margin: 20px; height: 45px; max-height: 45px; align-self: center;" id="confirmTransferButton">Transfer</button>
             <div class="left">
                 <div class="dropdown pt-1 pb-4">
-                    <button class="drop-button dropdown-toggle" type="button" id="destinationTransferButton" data-toggle="dropdown" aria-expanded="false">Platform 2</button>
+                    <button class="drop-button dropdown-toggle drop-button-disabled disabled" type="button" id="destinationTransferButton" data-toggle="dropdown" aria-expanded="false">Platform 2</button>
                     <ul class="dropdown-menu" aria-labelledby="destinationTransferDropdownMenu">
                         <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Spotify')" id="spotifyDest">Spotify</a></li>
                         <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'YoutubeMusic')" id="youtubeDest">Youtube Music</a></li>
                         <li><a class="dropdown-item" href="#" onclick="updateButton('dest', 'Platform3')" id="plat3Dest">Platform3</a></li>
                     </ul>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; background-color: #f2a154 !important;"></div>
+                <div class="container" id="progressContainer">
+                    <h5 id="headerSelectTextTwo">You must select a valid playlist before choosing the destination platform.</h5>
+                    <!--<div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; background-color: #f2a154 !important;"></div>
+                    </div>-->
                 </div>
                 <div class="status-box" id="status-box">
-                    <!--<table>
-                        <tr>
-                            <td style="text-align: left;" id="titleID">Title</td>
-                            <td style="text-align: left;">Artist</td>
-                            <td style="text-align: left;">Album</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;" id="titleID2">Long Title</td>
-                            <td style="text-align: left;">Long Artist</td>
-                            <td style="text-align: left;">Long Album</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">An Even Longer Title</td>
-                            <td style="text-align: left;">An Even Longer Artist</td>
-                            <td style="text-align: left;">An Even Longer Album</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">An Even Even Longer Title</td>
-                            <td style="text-align: left;">An Even Even Longer Artist</td>
-                            <td style="text-align: left;">An Even Even Longer Album</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color: #f2a154 !important;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>-->
-                    <table>
-                        <tr>
-                            <td style="text-align: left;">Title</td>
-                            <td style="text-align: left;">Artist</td>
-                            <td style="text-align: left;">Album</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">Long Title</td>
-                            <td style="text-align: left;">Long Artist</td>
-                            <td style="text-align: left;">Long Album</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-top: 10px;">
-                                <p>There was a problem finding this song.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">An Even Longer Title</td>
-                            <td style="text-align: left;">An Even Longer Artist</td>
-                            <td style="text-align: left;">An Even Longer Album</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">An Even Even Longer Title</td>
-                            <td style="text-align: left;">An Even Even Longer Artist</td>
-                            <td style="text-align: left;">An Even Even Longer Album</td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </div>

@@ -187,6 +187,11 @@ body {
   margin: 5px;
 }
 
+.signup-button-disabled {
+  background-color: #69aeb3;
+  color: #dbdbd3;
+}
+
 .signup-button:hover {
   background-color: #69aeb3;
 }
@@ -227,6 +232,11 @@ body {
   margin: 5px;
 }
 
+.drop-button-disabled {
+  background-color: #b1b1b1;
+  color: #505f61;
+}
+
 .left {
   width: 50%;
   flex: 1;
@@ -249,9 +259,8 @@ body {
 
 .playlist-item {
   display: inline-flex;
-  justify-content: center;
+  justify-content: left;
   padding-top: 10px;
-  margin: auto;
 }
 
 .playselect-button {
@@ -267,27 +276,30 @@ body {
 }
 
 .status-box {
-  background-color: #131416;
+  /*background-color: #131416;*/
   border-radius: 25px;
-  border-color: 2px solid white;
+  /*border-color: 2px solid white;*/
   height: 375px;
   max-height: 375px;
   overflow: auto;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   margin-top: 20px;
-  display: flex;
-  flex-direction: column;
 }
 
 .status-item {
-  display: inline-flex;
-  justify-content: space-between;
-  padding-top: 10px;
-  margin: auto;
+  background-color: #e7e6e1 !important;
+  color: #314e52 !important;
+  border: 1px solid #a8a7a0 !important;
 }
 
 .fake-code {
   font-family: monospace;
+}
+
+.selected {
+  background-color: #f2a154 !important;
+  color: #314e52 !important;
+  border: 1px solid #c07a39 !important;
 }
 
 .psb-clicked {
