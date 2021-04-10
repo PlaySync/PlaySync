@@ -6,10 +6,6 @@ import uuid
 import json
 from datetime import datetime
 
-SPOTIPY_CLIENT_ID='ae468ff1f96549b28044be8d0419677d'
-SPOTIPY_CLIENT_SECRET='c033909b0caf46069a4ee7cbb9169b15'
-SPOTIPY_REDIRECT_URI='https://playsync.me/profile'
-
 caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
@@ -18,6 +14,9 @@ def session_cache_path():
     return caches_folder + session.get('uuid')
 
 def get_spotify():
+    SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
+    SPOTIPY_CLIENT_SECRET= os.getenv('SPOTIPY_CLIENT_SECRET')
+    SPOTIPY_REDIRECT_URI= os.getenv('SPOTIPY_REDIRECT_URI')
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
