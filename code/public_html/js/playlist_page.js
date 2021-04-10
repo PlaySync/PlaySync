@@ -119,6 +119,7 @@ function displayYouTubePlaylists() {
 
         // Append HTML containing every playlist and all of its songs in a collapsable element if there wasn't an error
         if (!playlistError) {
+            console.log("Success:", html);
             $('#playlist-box').append(html);
             updateDestinationButton(true);
         }
@@ -163,6 +164,7 @@ function displayYouTubeSongs(playlistID) {
 
     // Return HTML if there wasn't an error finding the songs in a playlist
     if (!songError) {
+        console.log("Song Success:", html);
         return html;
     } else {
         return '';
