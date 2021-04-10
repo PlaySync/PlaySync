@@ -1,25 +1,9 @@
-"""
-Prerequisites
-    pip3 install spotipy Flask Flask-Session
-    export SPOTIPY_CLIENT_ID=client_id_here
-    export SPOTIPY_CLIENT_SECRET=client_secret_here
-    export SPOTIPY_REDIRECT_URI='http://127.0.0.1:5000
-"""
-
 import os
-from flask import Flask, session, request, redirect
-from flask_session import Session
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import uuid
 import json
 from datetime import datetime
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(64)
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = './.flask_session/'
-Session(app)
 
 caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
@@ -29,24 +13,15 @@ def session_cache_path():
     return caches_folder + session.get('uuid')
 
 def get_spotify():
+    if not session.get('uuid'):
+        #Visitor is unknown, give random ID
+        session['uuid'] = str(uuid.uuid4())
 	cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-	auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private playlist-modify-private',
+	auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
 		cache_handler=cache_handler, 
 		show_dialog=True)
 	if not auth_manager.validate_token(cache_handler.get_cached_token()):
 		return redirect('/')
-	spotify = spotipy.Spotify(auth_manager=auth_manager)
-	return spotify
-
-def spotify_auth():
-    if not session.get('uuid'):
-        #Visitor is unknown, give random ID
-        session['uuid'] = str(uuid.uuid4())
-
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private playlist-modify-private',
-                                                cache_handler=cache_handler, 
-                                                show_dialog=True)
 
     if request.args.get("code"):
         #Being redirected from Spotify auth page
@@ -56,11 +31,33 @@ def spotify_auth():
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         #Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
-        return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+        return redirect(auth_url)
 
-    #Signed in, display data
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return spotify
+	spotify = spotipy.Spotify(auth_manager=auth_manager)
+	return spotify
+
+# def spotify_auth():
+#     if not session.get('uuid'):
+#         #Visitor is unknown, give random ID
+#         session['uuid'] = str(uuid.uuid4())
+
+#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+#     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
+#                                                 cache_handler=cache_handler, 
+#                                                 show_dialog=True)
+
+#     if request.args.get("code"):
+#         #Being redirected from Spotify auth page
+#         auth_manager.get_access_token(request.args.get("code"))
+#         return redirect('/profile')
+
+#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
+#         #Display sign in link when no token
+#         auth_url = auth_manager.get_authorize_url()
+#         return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+
+#     spotify = spotipy.Spotify(auth_manager=auth_manager)
+#     return spotify
 
 def sign_out():
     try:

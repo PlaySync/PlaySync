@@ -16,6 +16,7 @@ app.register_blueprint(transfer_page)
 app.register_blueprint(profile_page)
 app.register_blueprint(youtube_auth)
 app.register_blueprint(update_email)
+app.register_blueprint(spotify_auth)
 
 # @app.route('/')
 # def index():
