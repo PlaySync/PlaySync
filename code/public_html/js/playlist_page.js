@@ -111,7 +111,7 @@ function displayYouTubePlaylists() {
                     var songHTML = displayYouTubeSongs(info.id);
                     console.log("SONGHTML:", songHTML);
                     html += String(songHTML);
-                    console.log("NEWHTML:", html);
+                    //console.log("NEWHTML:", html);
                 });
                 $('#playlist-box').append(html);
             },
@@ -123,7 +123,7 @@ function displayYouTubePlaylists() {
 
         // Append HTML containing every playlist and all of its songs in a collapsable element if there wasn't an error
         if (!playlistError) {
-            console.log("Success:", html);
+            //console.log("Success:", html);
             updateDestinationButton(true);
         }
     } else {
@@ -150,10 +150,12 @@ function displayYouTubeSongs(playlistID) {
                 playlistid: playlistID
             },
             success: function(data) {
+                console.log("hello");
                 data.forEach(function(item) {
                     html += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td><td style="text-align: left;" id="song-album">' + item.album + '</td></tr>';
                 });
                 html += '</table></div>';
+                console.log(html);
             },
             error: function(err) {
                 console.log("There was an error finding the songs in the user's playlist:", err);
