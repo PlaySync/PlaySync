@@ -108,12 +108,9 @@ function displayYouTubePlaylists() {
                     html += '<div class="playlist-item"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
                     $('#playlist-box').append(html);
-                    console.log("HTML:", html);
                     displayYouTubeSongs(info.id);
-                    console.log("SONGHTML:", songHTML);
-                    //html += String(songHTML);
-                    //console.log("NEWHTML:", html);
                 });
+                updateDestinationButton(true);
             },
             error: function(err) {
                 console.log("There was an error accessing the user's playlists:", err);
@@ -122,10 +119,9 @@ function displayYouTubePlaylists() {
         })
 
         // Append HTML containing every playlist and all of its songs in a collapsable element if there wasn't an error
-        if (!playlistError) {
-            //console.log("Success:", html);
-            updateDestinationButton(true);
-        }
+        //if (!playlistError) {
+        //    updateDestinationButton(true);
+        //}
     } else {
         console.log("User not found.");
     }
