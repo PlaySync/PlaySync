@@ -21,10 +21,11 @@ def get_spotify():
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
-        client_id='ae468ff1f96549b28044be8d0419677d',
+    auth_manager = spotipy.oauth2.SpotifyOAuth(client_id='ae468ff1f96549b28044be8d0419677d',
         client_secret='c033909b0caf46069a4ee7cbb9169b15',
         redirect_uri='https://playsync.me/profile',
+        scope='playlist-read-private playlist-modify-private',
+        cache_path=session_cache_path(),
         cache_handler=cache_handler, 
         show_dialog=True)
     
