@@ -6,7 +6,7 @@ import uuid
 import json
 from datetime import datetime
 
-caches_folder = './.spotify_caches/'
+caches_folder = '/tmp/spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
