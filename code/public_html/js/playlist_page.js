@@ -107,8 +107,11 @@ function displayYouTubePlaylists() {
                     var id = "'" + info.id + "'";
                     html += '<div class="playlist-item"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
+                    console.log("HTML:", html);
                     var songHTML = displayYouTubeSongs(info.id);
+                    console.log("SONGHTML:", songHTML);
                     html += String(songHTML);
+                    console.log("NEWHTML:", html);
                 });
             },
             error: function(err) {
