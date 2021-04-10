@@ -39,7 +39,7 @@ def get_spotify():
         return redirect(auth_url)
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return f'<h2>Hi {spotify.me()["display_name"]}
+    return None
 
 # def spotify_auth():
 #     if not session.get('uuid'):
