@@ -28,18 +28,18 @@ def get_spotify():
         cache_handler=cache_handler, 
         show_dialog=True)
     
-    # if request.args.get("code"):
-    #     #Being redirected from Spotify auth page
-    #     auth_manager.get_access_token(request.args.get("code"))
-    #     return redirect('/profile')
+    if request.args.get("code"):
+        #Being redirected from Spotify auth page
+        auth_manager.get_access_token(request.args.get("code"))
+        return redirect('/profile')
     
-    # if not auth_manager.validate_token(cache_handler.get_cached_token()):
-    #     #Display sign in link when no token
-    #     auth_url = auth_manager.get_authorize_url()
-    #     return redirect(auth_url)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        #Display sign in link when no token
+        auth_url = auth_manager.get_authorize_url()
+        return redirect(auth_url)
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return None
+    return f'<h2>Hi {spotify.me()["display_name"]}
 
 # def spotify_auth():
 #     if not session.get('uuid'):
