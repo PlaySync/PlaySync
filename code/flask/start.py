@@ -24,6 +24,7 @@ app.register_blueprint(youtube_auth)
 app.register_blueprint(update_email)
 app.register_blueprint(spotify_auth)
 app.register_blueprint(spotify_playlist)
+app.register_blueprint(spotify_auth_callback)
 
 # @app.route('/')
 # def index():

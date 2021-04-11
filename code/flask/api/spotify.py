@@ -13,6 +13,12 @@ if not os.path.exists(caches_folder):
 def session_cache_path():
     return caches_folder + session.get('uuid')
 
+def spotify_callback():
+    if request.args.get("code"):
+    #Being redirected from Spotify auth page
+    auth_manager.get_access_token(request.args.get("code"))
+    return redirect('/profile')
+
 def get_spotify():
     SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
     SPOTIPY_CLIENT_SECRET= os.getenv('SPOTIPY_CLIENT_SECRET')
@@ -25,20 +31,14 @@ def get_spotify():
         cache_handler=cache_handler, 
         client_id='ae468ff1f96549b28044be8d0419677d',
         client_secret='c033909b0caf46069a4ee7cbb9169b15',
-        redirect_uri='https://playsync.me/',
+        redirect_uri='https://playsync.me/spotifycallback/',
         show_dialog=True)
-    
-    if request.args.get("code"):
-        #Being redirected from Spotify auth page
-        auth_manager.get_access_token(request.args.get("code"))
-        return redirect('/profile')
     
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         #Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
-
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    
     return None
 
 # def spotify_auth():
