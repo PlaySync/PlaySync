@@ -73,7 +73,7 @@ def sign_out():
         session.clear()
     except OSError as e:
         print ("Error: %s - %s." % (e.filename, e.strerror))
-    return redirect('/')
+    return redirect('/profile')
 
 def playlists():
     spotify = get_spotify()
