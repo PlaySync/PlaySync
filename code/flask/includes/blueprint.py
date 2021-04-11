@@ -6,7 +6,7 @@ from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
 from includes.userprofile import *
-from api.spotify import get_spotify
+from api.spotify import get_spotify, playlists
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -24,6 +24,7 @@ profile_page = Blueprint('profile_page', __name__, template_folder='templates')
 youtube_auth = Blueprint('youtube_auth', __name__, template_folder='templates')
 update_email = Blueprint('update_email', __name__, template_folder='templates')
 spotify_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
+spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -286,3 +287,7 @@ def updateEmail():
 @spotify_auth.route('/spotify')
 def spotifyAuth():
     return get_spotify()
+
+@spotify_playlist.route('/spotifyPlaylist')
+def getPlaylists():
+    return playlists()
