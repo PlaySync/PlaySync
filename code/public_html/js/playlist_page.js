@@ -49,7 +49,7 @@ function updateButton(src, platform) {
             console.log("PlaylistID:", playlistid);
             // If there is no selected playlist, do not call YouTube API.
             if (playlistid != '') {
-                $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>');
+                $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled" id="listHeader">Select which songs to transfer:</a>');
                 var songTableID = "songsFrom" + playlistid;
                 var songTable = document.getElementById(songTableID);
                 var userError = false;
@@ -187,7 +187,7 @@ function searchYouTubeSongs(songTitle, songArtist, songDesc, songCount) {
                         }
                     }
                 }
-                $('#status-box').append(html);
+                $(html).insertAfter('#listHeader');
             },
             error: function(err) {
                 console.log("There was an error searching for the song on YouTubeMusic:", err);
