@@ -155,7 +155,7 @@ function displayYouTubeSongs(playlistID) {
                 html += '</table></div>';
                 console.log(html);
                 var dest = '#' + playlistID;
-                $(html).insertBefore(dest);
+                $(html).insertAfter(dest);
             },
             error: function(err) {
                 console.log("There was an error finding the songs in the user's playlist:", err);
