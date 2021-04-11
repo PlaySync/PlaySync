@@ -11,10 +11,10 @@ if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
 def session_cache_path(user):
-    if not session.get('uuid'):
-        #Visitor is unknown, give random ID
-        session['uuid'] = str(uuid.uuid4())
-    return caches_folder + session.get('uuid') + user
+    # if not session.get('uuid'):
+    #     #Visitor is unknown, give random ID
+    #     session['uuid'] = str(uuid.uuid4())
+    return caches_folder + user
 
 def get_spotify(user):
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path(user))
