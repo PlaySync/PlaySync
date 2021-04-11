@@ -32,7 +32,6 @@ function updateButton(src, platform) {
         if (platform == "Spotify") {
             console.log("Spotify");
         } else if (platform == "YoutubeMusic") {
-            console.log("YouTubeMusic");
             // Remove all songs from a previous playlist, if there are any
             removeChildrenElements("status-box");
 
@@ -46,7 +45,6 @@ function updateButton(src, platform) {
                 }
             }
 
-            console.log("PlaylistID:", playlistid);
             // If there is no selected playlist, do not call YouTube API.
             if (playlistid != '') {
                 $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled" id="listHeader">Select which songs to transfer:</a>');
@@ -303,7 +301,7 @@ function confirm() {
                                     tracklist += sourceSongs[i] + '$';
                                 }
                             }
-                            console.log("Tracks:", tracklist);
+
                             $.ajax({
                                 url: `https://playsync.me/youtube`,
                                 type: 'POST',
@@ -317,10 +315,7 @@ function confirm() {
                                     tracks: tracklist
                                 },
                                 success: function(data) {
-                                    console.log("Source:", data);
-                                    //data.forEach(function(item) {
-                                        //$('#status-box').append('<div class="status-item"></div>');
-                                    //});
+                                    alert("Congratulations! Your new playlist has been created.")
                                 },
                                 error: function(err) {
                                     console.log("There was an error:", err);
@@ -370,7 +365,6 @@ function updateSelectedPlaylist(playlistID) {
     var numPlaylists = document.getElementById("playlist-box").childElementCount;
     if (numPlaylists != 0) {
         for (var i = 0; i < numPlaylists; i++) {
-            console.log(document.getElementById("playlist-box").children[i].children[0]);
             document.getElementById("playlist-box").children[i].children[0].classList.remove("psb-clicked");
         }
         btn.classList.add("psb-clicked");
@@ -423,18 +417,13 @@ function getSelectedSongs() {
     var id = [];
     var statusbox = document.getElementById("status-box");
     if (statusbox.firstElementChild) {
-        console.log("Success");
         var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
-            console.log("Test0: ", statusbox.children[0].children[i]);
             if (statusbox.children[0].children[i].tagName == 'DIV') {
-                console.log("DIV: ", statusbox.children[0].children[i].tagName);
                 for (var j = 0; j < statusbox.children[0].children[i].childElementCount; j++) {
                     // children[0].children[i].children[j] catches the alternate songs listed in a collapsable
-                    console.log("Test1:", statusbox.children[0].children[i].children[j]);
                     if (statusbox.children[0].children[i].children[j].classList.contains("selected")) {
-                        console.log("Success!!!");
                         id.push(statusbox.children[0].children[i].children[j].id);
                     }
                 }
@@ -442,11 +431,9 @@ function getSelectedSongs() {
 
             // catches the songs with no alternatives
             if (statusbox.children[0].children[i].classList.contains("selected")) {
-                console.log("Test2: ", statusbox.children[0].children[i]);
                 id.push(statusbox.children[0].children[i].id);
             }
         }
     }
-    console.log(id);
     return id;
 }
