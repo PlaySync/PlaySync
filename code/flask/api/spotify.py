@@ -66,7 +66,11 @@ def callback():
 
 def get_name():
     spotify = get_spotify()
-    return spotify.me()['display_name']
+    user = ''
+    user = spotify.me()['display_name']
+    if user = "":
+        return 'None'
+    return user
 
 def sign_out():
     try:
