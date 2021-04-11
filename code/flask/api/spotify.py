@@ -66,9 +66,10 @@ def callback():
 
 def get_name():
     spotify = get_spotify()
-    user = ''
-    user = spotify.me()['display_name']
-    if user = "":
+    user = ""
+    try:
+        user = spotify.me()['display_name']
+    if user == "":
         return 'None'
     return user
 
