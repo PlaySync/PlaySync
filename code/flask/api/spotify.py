@@ -58,7 +58,8 @@ def callback(user):
     return redirect('/profile')
 
 def get_name():
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     user = "Not connected"
     try:  
         user = spotify.me()['display_name']
@@ -67,7 +68,8 @@ def get_name():
     return user
 
 def get_uid():
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     u_id = ""
     try:  
         u_id = spotify.current_user()['id']
@@ -85,14 +87,16 @@ def sign_out():
     return redirect('/profile')
 
 def playlists():
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     results = []
     for i in spotify.current_user_playlists()['items']:
         results.append({'name': i['name'], 'id': i['uri'].split(':')[-1]})
     return json.dumps(results)
 
 def songs(pl_id):
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     results = []
     for i in spotify.playlist_items(pl_id, additional_types=['track'])['items']:
         artists = [x['name'] for x in i['track']['artists']][0]
@@ -100,17 +104,20 @@ def songs(pl_id):
     return json.dumps(results)
 
 def current_user():
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     return json.dumps(spotify.current_user())
 
 def addPlaylist(name):
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
     return 'done'
 
 def addSong(pl_id, artist, track):
-    spotify = get_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    spotify = get_spotify(user)
     result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
     #print(result['tracks']['items'][0]['id'])
     if result['tracks']['total'] == 0:
