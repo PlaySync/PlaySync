@@ -427,11 +427,12 @@ function getSelectedSongs() {
         var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
+            console.log("Test0: ", statusbox.children[0].children[i]);
             if (statusbox.children[0].children[i].tagName == 'DIV') {
                 console.log("DIV: ", statusbox.children[0].children[i].tagName);
                 for (var j = 0; j < statusbox.children[0].children[i].childElementCount; j++) {
                     // children[0].children[i].children[j] catches the alternate songs listed in a collapsable
-                    console.log("Test:", statusbox.children[0].children[i].children[j]);
+                    console.log("Test1:", statusbox.children[0].children[i].children[j]);
                     if (statusbox.children[0].children[i].children[j].classList.contains("selected")) {
                         console.log("Success!!!");
                         id.push(statusbox.children[0].children[i].children[j].id);
