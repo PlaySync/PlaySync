@@ -307,13 +307,13 @@ def getPlaylists():
     return playlists()
 
 @spotify_songs.route('/spotifySongs/<pl_id>')
-def spotifySongs():
-    return songs()
+def spotifySongs(pl_id):
+    return songs(pl_id)
 
 @spotify_add_pl.route('/spotifyAddPl/<name>')
 def spotifyAddPl(name):
-    return addPlaylist()
+    return addPlaylist(name)
 
 @spotify_add_sg.route('/spotifyAddSg/<pl_id>/<artist>/<track>')
 def spotifyAddPl(pl_id, artist, track):
-    return addSong()
+    return addSong(pl_id, artist, track)
