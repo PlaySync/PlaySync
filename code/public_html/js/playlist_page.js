@@ -107,7 +107,7 @@ function displayYouTubePlaylists() {
                 data.forEach(function(info) {
                     console.log(info);
                     var id = "'" + info.id + "'";
-                    html += '<div class="playlist-item"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
+                    html += '<div class="playlist-item" id="divPlaylistCollapse' + info.id + '"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
                     $('#playlist-box').append(html);
                     displayYouTubeSongs(info.id);
@@ -154,7 +154,7 @@ function displayYouTubeSongs(playlistID) {
                 });
                 html += '</table></div>';
                 console.log(html);
-                var dest = '#' + playlistID;
+                var dest = '#divPlaylistCollapse' + playlistID;
                 $(html).insertAfter(dest);
             },
             error: function(err) {
