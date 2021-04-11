@@ -69,7 +69,7 @@ def get_name():
     user = ""
     try:
         user = spotify.me()['display_name']
-    if not user:
+    if (len(user) == 0):
         return 'None'
     return user
 
