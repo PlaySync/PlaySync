@@ -25,6 +25,7 @@ app.register_blueprint(update_email)
 app.register_blueprint(spotify_auth)
 app.register_blueprint(spotify_playlist)
 app.register_blueprint(spotify_callback)
+app.register_blueprint(spotify_remove)
 
 # @app.route('/')
 # def index():
