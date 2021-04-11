@@ -49,7 +49,7 @@ function updateButton(src, platform) {
             console.log("PlaylistID:", playlistid);
             // If there is no selected playlist, do not call YouTube API.
             if (playlistid != '') {
-                var html = '<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>';
+                //var html = '<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>';
                 $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>');
                 var songTableID = "songsFrom" + playlistid;
                 var songTable = document.getElementById(songTableID);
@@ -58,13 +58,13 @@ function updateButton(src, platform) {
                 // Search YouTubeMusic for each song in the songTable
                 for (var i = 0; i < songTable.rows.length; i++) {
                     searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
-                    if (tempHTML != '') { // Only empty when searchYouTubeSongs encounters an error.
+                    /*if (tempHTML != '') { // Only empty when searchYouTubeSongs encounters an error.
                         searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
                     } else {
                         userError = true;
-                    }
+                    }*/
                 }
-                html += '</div>';
+                //html += '</div>';
                 $('#status-box').append('</div>');
 
                 // Append the HTML and update the transfer button if there were no errors.
