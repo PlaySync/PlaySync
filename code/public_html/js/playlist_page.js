@@ -32,6 +32,7 @@ function updateButton(src, platform) {
         if (platform == "Spotify") {
             console.log("Spotify");
         } else if (platform == "YoutubeMusic") {
+            console.log("YouTubeMusic");
             // Remove all songs from a previous playlist, if there are any
             removeChildrenElements("status-box");
 
@@ -45,23 +46,26 @@ function updateButton(src, platform) {
                 }
             }
 
+            console.log("PlaylistID:", playlistid);
             // If there is no selected playlist, do not call YouTube API.
             if (playlistid != '') {
                 var html = '<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>';
+                $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled">Select which songs to transfer:</a>');
                 var songTableID = "songsFrom" + playlistid;
                 var songTable = document.getElementById(songTableID);
                 var userError = false;
 
                 // Search YouTubeMusic for each song in the songTable
                 for (var i = 0; i < songTable.rows.length; i++) {
-                    var tempHTML = searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
+                    searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
                     if (tempHTML != '') { // Only empty when searchYouTubeSongs encounters an error.
-                        html += searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
+                        searchYouTubeSongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, '', i);
                     } else {
                         userError = true;
                     }
                 }
                 html += '</div>';
+                $('#status-box').append('</div>');
 
                 // Append the HTML and update the transfer button if there were no errors.
                 if (!userError) {
@@ -69,7 +73,8 @@ function updateButton(src, platform) {
                     document.getElementById("confirmTransferButton").classList.remove("signup-button-disabled");
                     document.getElementById("confirmTransferButton").classList.remove("disabled");
                 } else {
-                    alert("There was an error accessing YouTubeMusic. Check that your account is authorized.");
+                    console.log("There was an error accessing YouTubeMusic.");
+                    //alert("There was an error accessing YouTubeMusic. Check that your account is authorized.");
                 }
             } else {
                 console.log("No playlist found.");
@@ -93,7 +98,6 @@ function displayYouTubePlaylists() {
     var userC = getUserID();
     if (userC != '') {
         var html = '';
-        var playlistError = false;
         $.ajax({
             url: 'https://playsync.me/youtube',
             type: 'POST',
@@ -103,9 +107,7 @@ function displayYouTubePlaylists() {
                 op: 'playlist'
             },
             success: function(data) {
-                console.log(data);
                 data.forEach(function(info) {
-                    console.log(info);
                     var id = "'" + info.id + "'";
                     html += '<div class="playlist-item" id="divPlaylistCollapse' + info.id + '"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
                     html += '<p class="pt-2 pl-2">' + info.title + '</p></div>';
@@ -116,14 +118,8 @@ function displayYouTubePlaylists() {
             },
             error: function(err) {
                 console.log("There was an error accessing the user's playlists:", err);
-                playlistError = true;
             }
         })
-
-        // Append HTML containing every playlist and all of its songs in a collapsable element if there wasn't an error
-        //if (!playlistError) {
-        //    updateDestinationButton(true);
-        //}
     } else {
         console.log("User not found.");
     }
@@ -147,13 +143,11 @@ function displayYouTubeSongs(playlistID) {
                 playlistid: playlistID
             },
             success: function(data) {
-                console.log("hello");
                 html += '<div class="song-item collapse" id="playlistCollapse' + playlistID + '"><table style="padding-left: 20px; width: 100%;" id="songsFrom' + playlistID + '">';
                 data.forEach(function(item) {
                     html += '<tr><td style="text-align: left;" id="song-title">' + item.title + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td><td style="text-align: left;" id="song-album">' + item.album + '</td></tr>';
                 });
                 html += '</table></div>';
-                console.log(html);
                 var dest = '#divPlaylistCollapse' + playlistID;
                 $(html).insertAfter(dest);
             },
@@ -177,7 +171,6 @@ function searchYouTubeSongs(songTitle, songArtist, songDesc, songCount) {
     var userC = getUserID();
     if (userC != '') {
         var html = '';
-        var searchYouTubeError = false;
         $.ajax({
             url: 'https://playsync.me/youtube',
             type: 'POST',
@@ -202,24 +195,16 @@ function searchYouTubeSongs(songTitle, songArtist, songDesc, songCount) {
                         }
                     }
                 }
+                $('#status-box').append(html);
             },
             error: function(err) {
                 console.log("There was an error searching for the song on YouTubeMusic:", err);
-                searchYouTubeError = true;
             }
         })
     }
 
     else {
         console.log("User not found.");
-        return ''; // Shouldn't reach this line, since getUserID must be successful to enable the destination dropdown button
-    }
-
-    // Return HTML if there wasn't an error searching for the song on YouTubeMusic
-    if (!searchYouTubeError) {
-        return html;
-    } else {
-        return '';
     }
 }
 
