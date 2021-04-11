@@ -6,7 +6,7 @@ from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
 from includes.userprofile import *
-from api.spotify import get_spotify, playlists, spotifyCallback
+from api.spotify import get_spotify, playlists, callback, get_name
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -267,7 +267,8 @@ def profile():
         user = valid_user(request.cookies.get('user'))
         email = get_email(user)
         auth_body = get_auth(user)
-        return render_template('profile.html', email=email, auth_body=auth_body)
+        spotifyName = get_name()
+        return render_template('profile.html', email=email, auth_body=auth_body, spotifyName = spotifyName)
     else: # Not Logged In
         return redirect("./", code=302)
 
