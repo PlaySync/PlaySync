@@ -77,25 +77,23 @@ def get_uid():
         return
     return u_id
 
-def sign_out():
+def sign_out(user):
     try:
         # Remove the CACHE file (.cache-test) so that a new user can authorize.
-        os.remove(session_cache_path())
+        os.remove(session_cache_path(user))
         session.clear()
     except OSError as e:
         print ("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/profile')
 
-def playlists():
-    user = request.cookies.get('user').split(':')[1]
+def playlists(user):
     spotify = get_spotify(user)
     results = []
     for i in spotify.current_user_playlists()['items']:
         results.append({'name': i['name'], 'id': i['uri'].split(':')[-1]})
     return json.dumps(results)
 
-def songs(pl_id):
-    user = request.cookies.get('user').split(':')[1]
+def songs(user, pl_id):
     spotify = get_spotify(user)
     results = []
     for i in spotify.playlist_items(pl_id, additional_types=['track'])['items']:
@@ -103,20 +101,17 @@ def songs(pl_id):
         results.append({'track': i['track']['name'], 'artist': artists})
     return json.dumps(results)
 
-def current_user():
-    user = request.cookies.get('user').split(':')[1]
+def current_user(user):
     spotify = get_spotify(user)
     return json.dumps(spotify.current_user())
 
-def addPlaylist(name):
-    user = request.cookies.get('user').split(':')[1]
+def addPlaylist(user, name):
     spotify = get_spotify(user)
     u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
     return 'done'
 
-def addSong(pl_id, artist, track):
-    user = request.cookies.get('user').split(':')[1]
+def addSong(user, pl_id, artist, track):
     spotify = get_spotify(user)
     result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
     #print(result['tracks']['items'][0]['id'])
