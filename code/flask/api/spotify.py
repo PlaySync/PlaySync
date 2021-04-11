@@ -10,11 +10,11 @@ caches_folder = '/tmp/spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
-def session_cache_path():
+def session_cache_path(user):
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
-    return caches_folder + session.get('uuid')
+    return caches_folder + session.get('uuid') + user
 
 def get_spotify():
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
@@ -29,8 +29,8 @@ def get_spotify():
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     return spotify
 
-def auth_spotify():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+def auth_spotify(user):
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path(user))
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
         cache_handler=cache_handler, 
         client_id='ae468ff1f96549b28044be8d0419677d',
