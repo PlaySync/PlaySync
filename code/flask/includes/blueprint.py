@@ -291,7 +291,7 @@ def spotifyAuth():
 
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
-    return spotify_callback()
+    return spotifyCallback()
     
 @spotify_playlist.route('/spotifyPlaylist')
 def getPlaylists():

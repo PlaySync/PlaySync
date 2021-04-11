@@ -35,7 +35,7 @@ def get_spotify():
     
     return None
 
-def spotify_callback():
+def spotifyCallback():
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
