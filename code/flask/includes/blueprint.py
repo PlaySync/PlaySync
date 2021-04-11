@@ -301,21 +301,26 @@ def spotifycallback():
     return callback(user)
 
 @spotify_remove.route('/spotifyRemove')
-def spotifyRemove():
-    return sign_out()
+def spotifyRemove(user):
+    user = request.cookies.get('user').split(':')[1]
+    return sign_out(user)
     
 @spotify_playlist.route('/spotifyPlaylist')
-def getPlaylists():
-    return playlists()
+def getPlaylists(user):
+    user = request.cookies.get('user').split(':')[1]
+    return playlists(user)
 
 @spotify_songs.route('/spotifySongs/<pl_id>')
-def spotifySongs(pl_id):
+def spotifySongs(user, pl_id):
+    user = request.cookies.get('user').split(':')[1]
     return songs(pl_id)
 
 @spotify_add_pl.route('/spotifyAddPl/<name>')
-def spotifyAddPl(name):
+def spotifyAddPl(user, name):
+    user = request.cookies.get('user').split(':')[1]
     return addPlaylist(name)
 
 @spotify_add_sg.route('/spotifyAddSg/<pl_id>/<artist>/<track>')
-def spotifyAddPl(pl_id, artist, track):
+def spotifyAddPl(user, pl_id, artist, track):
+    user = request.cookies.get('user').split(':')[1]
     return addSong(pl_id, artist, track)
