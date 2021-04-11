@@ -70,7 +70,7 @@ def get_uid():
     spotify = get_spotify()
     u_id = ""
     try:  
-        user = spotify.current_user()['id']
+        u_id = spotify.current_user()['id']
     except:
         return
     return u_id
