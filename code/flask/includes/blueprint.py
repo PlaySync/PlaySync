@@ -25,7 +25,7 @@ youtube_auth = Blueprint('youtube_auth', __name__, template_folder='templates')
 update_email = Blueprint('update_email', __name__, template_folder='templates')
 spotify_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
 spotify_auth_callback = Blueprint('spotify_auth', __name__, template_folder='templates')
-spotify_playlist = Blueprint('spotify_auth_callback', __name__, template_folder='templates')
+spotify_playlist = Blueprint('spotify_callback', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -289,7 +289,7 @@ def updateEmail():
 def spotifyAuth():
     return get_spotify()
 
-@spotify_auth_callback.route('/spotifycallback')
+@spotify_callback.route('/spotifycallback')
 def spotifycallback():
     return spotify_callback()
     
