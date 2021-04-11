@@ -268,7 +268,7 @@ def profile():
         email = get_email(user)
         auth_body = get_auth(user)
         spotifyName = get_name()
-        return render_template('profile.html', email=email, auth_body=auth_body, spotifyName = spotifyName)
+        return render_template('profile.html', email=email, auth_body=auth_body)
     else: # Not Logged In
         return redirect("./", code=302)
 
