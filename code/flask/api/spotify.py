@@ -97,6 +97,7 @@ def current_user():
 def addPlaylist(u_id, name):
     spotify = get_spotify()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
+    return 'done'
 
 def addSong(pl_id, artist, track):
     spotify = get_spotify()
@@ -105,5 +106,5 @@ def addSong(pl_id, artist, track):
     if result['tracks']['total'] == 0:
         return 'Failed to find track'	
     spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
-    return json.dumps(result)
+    return 'done'
 

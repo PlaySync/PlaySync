@@ -6,7 +6,7 @@ from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
 from includes.userprofile import *
-from api.spotify import get_spotify, playlists, callback, auth_spotify, get_name, sign_out
+from api.spotify import get_spotify, playlists, callback, auth_spotify, get_name, sign_out, songs, addPlaylist, addSong
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -27,6 +27,8 @@ spotify_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
 spotify_callback = Blueprint('spotify_callback', __name__, template_folder='templates')
 spotify_remove = Blueprint('spotify_remove', __name__, template_folder='templates')
 spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='templates')
+spotify_songs = Blueprint('spotify_songs', __name__, template_folder='templates')
+spotify_add_pl = Blueprint('spotify_add_pl', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -302,3 +304,15 @@ def spotifyRemove():
 @spotify_playlist.route('/spotifyPlaylist')
 def getPlaylists():
     return playlists()
+
+@spotify_songs.route('/spotifySongs/<pl_id>')
+def spotifySongs():
+    return songs()
+
+@spotify_add_pl.route('/spotifyAddPl/<u_id>/<name>')
+def spotifyAddPl(u_id, name):
+    return addPlaylist()
+
+@spotify_add_sg.route('/spotifyAddSg/<pl_id>/<artist>/<track>')
+def spotifyAddPl(pl_id, artist, track):
+    return addSong()

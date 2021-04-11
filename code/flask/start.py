@@ -26,6 +26,11 @@ app.register_blueprint(spotify_auth)
 app.register_blueprint(spotify_playlist)
 app.register_blueprint(spotify_callback)
 app.register_blueprint(spotify_remove)
+app.register_blueprint(spotify_songs)
+app.register_blueprint(spotify_add_pl)
+app.register_blueprint(spotify_add_sg)
+
+
 
 # @app.route('/')
 # def index():
