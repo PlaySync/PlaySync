@@ -16,8 +16,8 @@ def session_cache_path(user):
         session['uuid'] = str(uuid.uuid4())
     return caches_folder + session.get('uuid') + user
 
-def get_spotify():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+def get_spotify(user):
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path(user))
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
         cache_handler=cache_handler, 
         client_id='ae468ff1f96549b28044be8d0419677d',
@@ -45,8 +45,8 @@ def auth_spotify(user):
     
     return redirect('./profile')
 
-def callback():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+def callback(user):
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path(user))
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
     cache_handler=cache_handler, 
     client_id='ae468ff1f96549b28044be8d0419677d',

@@ -292,11 +292,13 @@ def updateEmail():
 
 @spotify_auth.route('/spotify')
 def spotifyAuth():
-    return auth_spotify()
+    user = request.cookies.get('user').split(':')[1]
+    return auth_spotify(user)
 
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
-    return callback()
+    user = request.cookies.get('user').split(':')[1]
+    return callback(user)
 
 @spotify_remove.route('/spotifyRemove')
 def spotifyRemove():
