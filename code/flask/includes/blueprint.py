@@ -6,7 +6,7 @@ from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
 from includes.userprofile import *
-from api.spotify import get_spotify, playlists
+from api.spotify import get_spotify, playlists, spotifyCallback
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
