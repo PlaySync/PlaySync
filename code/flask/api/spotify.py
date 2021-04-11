@@ -14,6 +14,19 @@ def session_cache_path():
     return caches_folder + session.get('uuid')
 
 def get_spotify():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
+        cache_handler=cache_handler, 
+        client_id='ae468ff1f96549b28044be8d0419677d',
+        client_secret='c033909b0caf46069a4ee7cbb9169b15',
+        redirect_uri='https://playsync.me/spotifycallback',
+        show_dialog=True)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    return spotify
+
+def auth_spotify():
     SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
     SPOTIPY_CLIENT_SECRET= os.getenv('SPOTIPY_CLIENT_SECRET')
     SPOTIPY_REDIRECT_URI= os.getenv('SPOTIPY_REDIRECT_URI')
@@ -33,9 +46,9 @@ def get_spotify():
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
     
-    return None
+    return redirect('/profile')
 
-def spotifyCallback():
+def callback():
     if not session.get('uuid'):
         #Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
@@ -51,28 +64,9 @@ def spotifyCallback():
         auth_manager.get_access_token(request.args.get("code"))
         return redirect('/profile')
 
-# def spotify_auth():
-#     if not session.get('uuid'):
-#         #Visitor is unknown, give random ID
-#         session['uuid'] = str(uuid.uuid4())
-
-#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-read-private playlist-modify-private',
-#                                                 cache_handler=cache_handler, 
-#                                                 show_dialog=True)
-
-#     if request.args.get("code"):
-#         #Being redirected from Spotify auth page
-#         auth_manager.get_access_token(request.args.get("code"))
-#         return redirect('/profile')
-
-#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-#         #Display sign in link when no token
-#         auth_url = auth_manager.get_authorize_url()
-#         return f'<h2><a href="{auth_url}">Sign in</a></h2>'
-
-#     spotify = spotipy.Spotify(auth_manager=auth_manager)
-#     return spotify
+def get_name():
+    spotify = get_spotify()
+    return spotify.me()['display_name']
 
 def sign_out():
     try:

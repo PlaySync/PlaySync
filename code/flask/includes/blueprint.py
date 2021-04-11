@@ -287,11 +287,11 @@ def updateEmail():
 
 @spotify_auth.route('/spotify')
 def spotifyAuth():
-    return get_spotify()
+    return auth_spotify()
 
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
-    return spotifyCallback()
+    return callback()
     
 @spotify_playlist.route('/spotifyPlaylist')
 def getPlaylists():
