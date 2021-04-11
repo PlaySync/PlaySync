@@ -25,7 +25,7 @@ def get_spotify():
         cache_handler=cache_handler, 
         client_id='ae468ff1f96549b28044be8d0419677d',
         client_secret='c033909b0caf46069a4ee7cbb9169b15',
-        redirect_uri='https://playsync.me/spotifycallback/',
+        redirect_uri='https://playsync.me/spotifycallback',
         show_dialog=True)
     
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
@@ -44,7 +44,7 @@ def spotify_callback():
     cache_handler=cache_handler, 
     client_id='ae468ff1f96549b28044be8d0419677d',
     client_secret='c033909b0caf46069a4ee7cbb9169b15',
-    redirect_uri='https://playsync.me/spotifycallback/',
+    redirect_uri='https://playsync.me/spotifycallback',
     show_dialog=True)
     if request.args.get("code"):
         #Being redirected from Spotify auth page
