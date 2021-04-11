@@ -46,7 +46,7 @@ def auth_spotify():
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
     
-    return redirect('/profile')
+    return "already added"
 
 def callback():
     if not session.get('uuid'):
