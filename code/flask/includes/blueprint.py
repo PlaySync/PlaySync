@@ -310,8 +310,8 @@ def getPlaylists():
 def spotifySongs():
     return songs()
 
-@spotify_add_pl.route('/spotifyAddPl/<u_id>/<name>')
-def spotifyAddPl(u_id, name):
+@spotify_add_pl.route('/spotifyAddPl/<name>')
+def spotifyAddPl(name):
     return addPlaylist()
 
 @spotify_add_sg.route('/spotifyAddSg/<pl_id>/<artist>/<track>')

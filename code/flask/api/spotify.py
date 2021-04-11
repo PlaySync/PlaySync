@@ -66,6 +66,15 @@ def get_name():
         return
     return user
 
+def get_uid():
+    spotify = get_spotify()
+    u_id = ""
+    try:  
+        user = spotify.me()['id']
+    except:
+        return
+    return u_id
+
 def sign_out():
     try:
         # Remove the CACHE file (.cache-test) so that a new user can authorize.
@@ -94,8 +103,9 @@ def current_user():
     spotify = get_spotify()
     return json.dumps(spotify.current_user())
 
-def addPlaylist(u_id, name):
+def addPlaylist(name):
     spotify = get_spotify()
+    u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
     return 'done'
 
