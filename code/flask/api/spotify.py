@@ -59,16 +59,18 @@ def callback():
     client_secret='c033909b0caf46069a4ee7cbb9169b15',
     redirect_uri='https://playsync.me/spotifycallback',
     show_dialog=True)
-    request.args.get("code"):
     #Being redirected from Spotify auth page
     auth_manager.get_access_token(request.args.get("code"))
     return redirect('/profile')
 
-# def get_name():
-#     spotify = get_spotify()
-#     user = "Not connected"
-#     user = spotify.me()['display_name']
-#     return user
+def get_name():
+    spotify = get_spotify()
+    user = "Not connected"
+    try:  
+        user = spotify.me()['display_name']
+    except:
+        return
+    return user
 
 def sign_out():
     try:
