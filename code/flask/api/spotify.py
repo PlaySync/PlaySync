@@ -11,6 +11,9 @@ if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
 def session_cache_path():
+    if not session.get('uuid'):
+        #Visitor is unknown, give random ID
+        session['uuid'] = str(uuid.uuid4())
     return caches_folder + session.get('uuid')
 
 def get_spotify():
