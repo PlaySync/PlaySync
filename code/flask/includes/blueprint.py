@@ -29,6 +29,7 @@ spotify_remove = Blueprint('spotify_remove', __name__, template_folder='template
 spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='templates')
 spotify_songs = Blueprint('spotify_songs', __name__, template_folder='templates')
 spotify_add_pl = Blueprint('spotify_add_pl', __name__, template_folder='templates')
+spotify_add_sg = Blueprint('spotify_add_sg', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
