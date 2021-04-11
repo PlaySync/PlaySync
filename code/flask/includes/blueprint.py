@@ -318,9 +318,9 @@ def spotifySongs(pl_id):
 @spotify_add_pl.route('/spotifyAddPl/<name>')
 def spotifyAddPl(name):
     user = request.cookies.get('user').split(':')[1]
-    return addPlaylist(user, name)
+    return add_playlist(user, name)
 
 @spotify_add_sg.route('/spotifyAddSg/<pl_id>/<artist>/<track>')
-def spotifyAddPl(pl_id, artist, track):
+def spotifyAddSg(pl_id, artist, track):
     user = request.cookies.get('user').split(':')[1]
-    return addSong(user, pl_id, artist, track)
+    return add_song(user, pl_id, artist, track)
