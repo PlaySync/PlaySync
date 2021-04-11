@@ -228,7 +228,7 @@ function confirm() {
                 // sourceSongs = [id, id, id, id];
                 var sourceSongs = getSelectedSongs();
                 // Check that there are actually songs that are selected
-                if (sourceSongs.length == 0) {
+                if (sourceSongs.length != 0) {
 
                     // Methods for when the source platform is Spotify
                     if (platformOne == "Spotify") {
@@ -423,13 +423,17 @@ function getSelectedSongs() {
     var id = [];
     var statusbox = document.getElementById("status-box");
     if (statusbox.firstElementChild) {
+        console.log("Success");
         var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
             if (statusbox.children[0].children[i].tagName == 'DIV') {
+                console.log("DIV: ", statusbox.children[0].children[i].tagName);
                 for (var j = 0; j < statusbox.children[0].children[i].childElementCount; j++) {
                     // children[0].children[i].children[j] catches the alternate songs listed in a collapsable
+                    console.log("Test:", statusbox.children[0].children[i].children[j]);
                     if (statusbox.children[0].children[i].children[j].classList.contains("selected")) {
+                        console.log("Success!!!");
                         id.push(statusbox.children[0].children[i].children[j].id);
                     }
                 }
@@ -437,10 +441,11 @@ function getSelectedSongs() {
 
             // catches the songs with no alternatives
             if (statusbox.children[0].children[i].classList.contains("selected")) {
+                console.log("Test2: ", statusbox.children[0].children[i]);
                 id.push(statusbox.children[0].children[i].id);
             }
         }
     }
-    //console.log(id);
+    console.log(id);
     return id;
 }
