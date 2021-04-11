@@ -296,7 +296,7 @@ def spotifycallback():
     return callback()
 
 @spotify_remove.route('/spotifyRemove')
-def spotifyRemove:
+def spotifyRemove():
     return sign_out()
     
 @spotify_playlist.route('/spotifyPlaylist')
