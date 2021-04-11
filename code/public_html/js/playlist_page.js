@@ -228,7 +228,7 @@ function confirm() {
                 // sourceSongs = [id, id, id, id];
                 var sourceSongs = getSelectedSongs();
                 // Check that there are actually songs that are selected
-                if (sourceSongs.length != 0) {
+                if (sourceSongs.length == 0) {
 
                     // Methods for when the source platform is Spotify
                     if (platformOne == "Spotify") {
