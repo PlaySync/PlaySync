@@ -63,13 +63,13 @@ def callback():
         #Being redirected from Spotify auth page
         auth_manager.get_access_token(request.args.get("code"))
         return redirect('/profile')
+    return None
 
-def get_name():
-    spotify = get_spotify()
-    user = "Not connected"
-    try:
-        user = spotify.me()['display_name']
-    return user
+# def get_name():
+#     spotify = get_spotify()
+#     user = "Not connected"
+#     user = spotify.me()['display_name']
+#     return user
 
 def sign_out():
     try:
