@@ -109,7 +109,7 @@ def add_playlist(user, name):
     spotify = get_spotify(user)
     u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
-    return 'done'
+    return playlist(user)['id']
 
 def search_song(user, artist, track):
     spotify = get_spotify(user)
