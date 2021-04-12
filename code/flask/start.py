@@ -29,6 +29,7 @@ app.register_blueprint(spotify_remove)
 app.register_blueprint(spotify_songs)
 app.register_blueprint(spotify_add_pl)
 app.register_blueprint(spotify_add_sg)
+app.register_blueprint(spotify_search)
 
 
 

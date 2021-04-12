@@ -6,7 +6,7 @@ from includes.userauth import *
 from includes.api_auth import *
 from includes.tasker import *
 from includes.userprofile import *
-from api.spotify import get_spotify, playlists, callback, auth_spotify, get_name, sign_out, songs, add_playlist, add_song
+from api.spotify import get_spotify, playlists, callback, auth_spotify, get_name, sign_out, songs, add_playlist, add_song, search_song
 import hashlib
 
 landing_page = Blueprint('landing_page', __name__, template_folder='templates')
@@ -30,6 +30,7 @@ spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='temp
 spotify_songs = Blueprint('spotify_songs', __name__, template_folder='templates')
 spotify_add_pl = Blueprint('spotify_add_pl', __name__, template_folder='templates')
 spotify_add_sg = Blueprint('spotify_add_sg', __name__, template_folder='templates')
+spotify_search = Blueprint('spotify_search', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -315,6 +316,11 @@ def spotifySongs(pl_id):
     user = request.cookies.get('user').split(':')[1]
     return songs(user, pl_id)
 
+@spotify_search.route('/spotifySearch/<artist>/<track>')
+def searchSong(artist, track):
+    user = request.cookies.get('user').split(':')[1]
+    return search_song(user, artist, track)
+    
 @spotify_add_pl.route('/spotifyAddPl/<name>')
 def spotifyAddPl(name):
     user = request.cookies.get('user').split(':')[1]

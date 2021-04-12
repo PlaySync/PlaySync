@@ -111,6 +111,13 @@ def add_playlist(user, name):
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
     return 'done'
 
+def search_song(user, artist, track):
+    spotify = get_spotify(user)
+    result = result = spotify.search(q=f'{artist} {track}', limit=5, type='track')
+    if result['tracks']['total'] == 0:
+        return 'Failed to find track'
+    return json.dumps(result)
+
 def add_song(user, pl_id, artist, track):
     spotify = get_spotify(user)
     result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
