@@ -119,7 +119,7 @@ def search_song(user, artist, track):
         song_list.append({'uri': result['tracks']['items'][i]['uri'], 'song': result['tracks']['items'][i]['name'], 'artist': result['tracks']['items'][i]['artists'][0]['name']})
     if result['tracks']['total'] == 0:
         return 'Failed to find track'
-    return json.dumps(result)
+    return json.dumps(song_list)
 
 def add_song(user, pl_id, artist, track):
     spotify = get_spotify(user)
