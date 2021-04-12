@@ -47,6 +47,7 @@ function updateButton(src, platform) {
 
             // If there is no selected playlist, do not call YouTube API.
             if (playlistid != '') {
+                $('#status-box').append('<form><div class="form-group"><label for="playlistName">Playlist Name</label><input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter a name for your new playlist (Optional)"></div><div class="form-group"><label for="playlistDesc">Playlist Description</label><input type="text" class="form-control" id="playlistDesc" placeholder="Enter a description for your new playlist (Optional)"></div></form>');
                 $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled" id="listHeader">Select which songs to transfer:</a>');
                 var songTableID = "songsFrom" + playlistid;
                 var songTable = document.getElementById(songTableID);
@@ -228,6 +229,8 @@ function confirm() {
                 // Check that there are actually songs that are selected
                 if (sourceSongs.length != 0) {
 
+                    var playlistName = document.getElementById('playlistName').value;
+                    var playlistDesc = document.getElementById('playlistDesc').value;
                     // Methods for when the source platform is Spotify
                     if (platformOne == "Spotify") {
                         console.log("Sptofiy not implemented");
@@ -368,6 +371,7 @@ function updateSelectedPlaylist(playlistID) {
             document.getElementById("playlist-box").children[i].children[0].classList.remove("psb-clicked");
         }
         btn.classList.add("psb-clicked");
+        $('.song-item.show').collapse('hide');
     }
 
     // remove all songs from a previous playlist, if there are any
@@ -384,6 +388,9 @@ function updateSelectedPlaylist(playlistID) {
 function updateSelect(songID) {
     var x = document.getElementById(songID);
     if (x.classList.contains("selected")) {
+        if (x.getAttribute("href") != '#') {
+            x.removeAttribute("data-toggle");
+        }
         document.getElementById(songID).classList.remove("selected");
     } else {
         document.getElementById(songID).classList.add("selected");
