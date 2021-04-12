@@ -24,14 +24,15 @@ transfer_page = Blueprint('transfer_page', __name__, template_folder='templates'
 profile_page = Blueprint('profile_page', __name__, template_folder='templates')
 youtube_auth = Blueprint('youtube_auth', __name__, template_folder='templates')
 update_email = Blueprint('update_email', __name__, template_folder='templates')
+spotify_api = Blueprint('spotify_api', __name__, template_folder='templates')
 spotify_auth = Blueprint('spotify_auth', __name__, template_folder='templates')
 spotify_callback = Blueprint('spotify_callback', __name__, template_folder='templates')
 spotify_remove = Blueprint('spotify_remove', __name__, template_folder='templates')
-spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='templates')
-spotify_songs = Blueprint('spotify_songs', __name__, template_folder='templates')
-spotify_add_pl = Blueprint('spotify_add_pl', __name__, template_folder='templates')
-spotify_add_sg = Blueprint('spotify_add_sg', __name__, template_folder='templates')
-spotify_search = Blueprint('spotify_search', __name__, template_folder='templates')
+# spotify_playlist = Blueprint('spotify_playlist', __name__, template_folder='templates')
+# spotify_songs = Blueprint('spotify_songs', __name__, template_folder='templates')
+# spotify_add_pl = Blueprint('spotify_add_pl', __name__, template_folder='templates')
+# spotify_add_sg = Blueprint('spotify_add_sg', __name__, template_folder='templates')
+# spotify_search = Blueprint('spotify_search', __name__, template_folder='templates')
 
 @landing_page.route('/')
 @landing_page.route('/landing')
@@ -292,8 +293,8 @@ def updateEmail():
         update_usr_email(user, email)
         return redirect('./profile')
 
-@spotify_auth.route('/spotify', methods=['POST'])
-def spotifyAuth():
+@spotify_api.route('/spotify', methods=['POST'])
+def spotifyapi():
     json_response = {}
     user = unquote(request.form.get('user'))
     uname = valid_user(user)
@@ -361,7 +362,10 @@ def spotifyAuth():
             elif op == "addsong":
                 new_tracks=[]
                 if "tracks" in request.form and "playlistid" in request.form:
+                    playlist_id = unquote(request.form.get('playlistid'))
                     new_tracks = unquote(request.form.get('tracks')).split('$')
+                    json_response['status'] = "success"
+                    json_response['playlistid'] = playlist_id
                     ##################### TO-DO: CHOOSE ONE ######################
                     for track in new_tracks:
                         status = spotify.add_song(uname, playlist_id, track) # if add_song accepts one ID (string) at a time
@@ -385,15 +389,20 @@ def spotifyAuth():
     else:
         abort(403)
 
+@spotify_auth.route('/spotifyauth')
+def spotifyAuth():
+    user = request.cookies.get('user').split(':')[1]
+    return auth_spotify(user)
+
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
     user = request.cookies.get('user').split(':')[1]
     return spotify.callback(user)
 
-# @spotify_remove.route('/spotifyRemove')
-# def spotifyRemove():
-#     user = request.cookies.get('user').split(':')[1]
-#     return sign_out(user)
+@spotify_remove.route('/spotifyRemove')
+def spotifyRemove():
+    user = request.cookies.get('user').split(':')[1]
+    return sign_out(user)
     
 # @spotify_playlist.route('/spotifyPlaylist')
 # def getPlaylists():
