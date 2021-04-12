@@ -114,6 +114,9 @@ def add_playlist(user, name):
 def search_song(user, artist, track):
     spotify = get_spotify(user)
     result = result = spotify.search(q=f'{artist} {track}', limit=5, type='track')
+    song_list = []
+    for i in range(5):
+        song_list.append({'uri': result['tracks']['items'][i]['uri'], 'song': result['tracks']['items'][i]['name'], 'artist': result['tracks']['items'][i]['artists'][0]['name']})
     if result['tracks']['total'] == 0:
         return 'Failed to find track'
     return json.dumps(result)
