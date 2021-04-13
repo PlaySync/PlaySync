@@ -303,9 +303,9 @@ def spotifyapi():
         uid = get_uid(uname)
         # Get header saved in db
         auth_body = psql_check_auth(uid, "spotify")
-        if auth_body == "":
+        if auth_body != "Authorized":
             json_response['status'] = "fail"
-            json_response['message'] = "invalid auth"
+            json_response['message'] = "Not Authorized"
             return json.dumps(json_response)
         else:
             # Handling POST requests
@@ -313,6 +313,8 @@ def spotifyapi():
             #   - uname: username of the user
             #   - uid: uid of the user
 
+            #Spotify authorization is currently not initiated and removed on use, therefore, if we are authorized then no steps need to be taken to grant access.
+            
             # Handle the operation
             op = unquote(request.form.get('op'))
             # playlist - unparameterized, return a JSON string of playlists owned by user
@@ -335,7 +337,7 @@ def spotifyapi():
 
                 # TO-DO: this func return a Dict containing at least playlistID
                 add_list_result = spotify.add_playlist(uname, new_name)
-                playlist_id = add_list_result['playlistID']
+                playlist_id = add_list_result
 
                 ##################### TO-DO: CHOOSE ONE ######################
                 for track in new_tracks:
@@ -346,11 +348,11 @@ def spotifyapi():
                         add_list_result['message'] = "error in adding song"
                         break
                 ########################### OR ###############################
-                if len(new_tracks)>0:
-                    status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
-                    if status != 'done':
-                        add_list_result['status'] = "fail"
-                        add_list_result['message'] = "error in adding song"
+                # if len(new_tracks)>0:
+                #     status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
+                #     if status != 'done':
+                #         add_list_result['status'] = "fail"
+                #         add_list_result['message'] = "error in adding song"
                 ###############################################################
                 return son.dumps(add_list_result)
             elif op == "searchsong":
@@ -375,11 +377,11 @@ def spotifyapi():
                             json_response['message'] = "error in adding song"
                             break
                     ########################### OR ###############################
-                    if len(new_tracks)>0:
-                        status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
-                        if status != 'done':
-                            json_response['status'] = "fail"
-                            json_response['message'] = "error in adding song"
+                    # if len(new_tracks)>0:
+                    #     status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
+                    #     if status != 'done':
+                    #         json_response['status'] = "fail"
+                    #         json_response['message'] = "error in adding song"
                     ###############################################################
                     return json.dumps(json_response)
             else:
@@ -397,11 +399,13 @@ def spotifyAuth():
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
     user = request.cookies.get('user').split(':')[1]
+    add_spotify_auth(user)
     return spotify.callback(user)
 
-@spotify_remove.route('/spotifyRemove')
+@spotify_remove.route('/spotifyremove')
 def spotifyRemove():
     user = request.cookies.get('user').split(':')[1]
+    remove_spotify_auth(user)
     return sign_out(user)
     
 # @spotify_playlist.route('/spotifyPlaylist')

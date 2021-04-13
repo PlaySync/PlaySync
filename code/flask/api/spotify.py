@@ -79,7 +79,6 @@ def get_uid():
 
 def sign_out(user):
     try:
-        # Remove the CACHE file (.cache-test) so that a new user can authorize.
         os.remove(session_cache_path(user))
         session.clear()
     except OSError as e:
@@ -109,21 +108,26 @@ def add_playlist(user, name):
     spotify = get_spotify(user)
     u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
-    return 'done'
+    pl_id = spotify.current_user_playlists()['items'][0]['uri'].split(':')[-1]
+    return pl_id
 
 def search_song(user, artist, track):
     spotify = get_spotify(user)
     result = result = spotify.search(q=f'{artist} {track}', limit=5, type='track')
+    song_list = []
+    for i in range(5):
+        song_list.append({'uri': result['tracks']['items'][i]['uri'], 'song': result['tracks']['items'][i]['name'], 'artist': result['tracks']['items'][i]['artists'][0]['name']})
     if result['tracks']['total'] == 0:
         return 'Failed to find track'
-    return json.dumps(result)
+    return json.dumps(song_list)
 
-def add_song(user, pl_id, artist, track):
+def add_song(user, pl_id, track):
     spotify = get_spotify(user)
-    result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
+    # result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
     #print(result['tracks']['items'][0]['id'])
-    if result['tracks']['total'] == 0:
-        return 'Failed to find track'	
-    spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
+    # if result['tracks']['total'] == 0:
+    #     return 'Failed to find track'	
+    # spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
+    spotify.playlist_add_items(pl_id, track)
     return 'done'
 
