@@ -394,7 +394,7 @@ def spotifyapi():
 @spotify_auth.route('/spotifyauth')
 def spotifyAuth():
     user = request.cookies.get('user').split(':')[1]
-    return auth_spotify(user)
+    return spotify.auth_spotify(user)
 
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
