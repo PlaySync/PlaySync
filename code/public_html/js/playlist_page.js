@@ -694,7 +694,7 @@ function getSelectedSongs() {
     var id = [];
     var statusbox = document.getElementById("status-box");
     if (statusbox.firstElementChild) {
-        console.log("Hi:", statusbox.children[0]);
+        console.log("Hi:", statusbox.children[1]);
         var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
