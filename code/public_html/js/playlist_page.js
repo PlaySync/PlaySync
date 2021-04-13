@@ -18,7 +18,8 @@ function updateButton(src, platform) {
         document.getElementById("sourceTransferButton").innerHTML = platform;
         if (platform == "Spotify") {
             console.log("Spotify");
-            updateDestinationButton(false);
+            displaySpotifyPlaylists();
+            //updateDestinationButton(false);
         } else if (platform == "YoutubeMusic") {
             displayYouTubePlaylists();
         } else {
@@ -31,6 +32,46 @@ function updateButton(src, platform) {
         document.getElementById("destinationTransferButton").innerHTML = platform;
         if (platform == "Spotify") {
             console.log("Spotify");
+
+            // Remove all songs from a previous playlist, if there are any
+            removeChildrenElements("status-box");
+
+            // Get the selected playlist by its classes
+            var playbox = document.getElementById("playlist-box");
+            var playlistid = '';
+            var numPlaylists = document.getElementById("playlist-box").childElementCount;
+            for (var i = 0; i < numPlaylists; i++) {
+                if (playbox.children[i].children[0].classList.contains("psb-clicked")) {
+                    playlistid = playbox.children[i].children[0].id;
+                }
+            }
+
+            // If there is no selected playlist, do not call Spotify API.
+            if (playlistid != '') {
+                $('#status-box').append('<form><div class="form-group"><label for="playlistName">Playlist Name</label><input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter a name for your new playlist (Optional)"></div><div class="form-group"><label for="playlistDesc">Playlist Description</label><input type="text" class="form-control" id="playlistDesc" placeholder="Enter a description for your new playlist (Optional)"></div></form>');
+                $('#status-box').append('<div class="list-group"><a class="status-item list-group-item disabled" id="listHeader">Select which songs to transfer:</a>');
+                var songTableID = "songsFrom" + playlistid;
+                var songTable = document.getElementById(songTableID);
+                var userError = false;
+
+                // Search Spotify for each song in the songTable
+                for (var i = 0; i < songTable.rows.length; i++) {
+                    searchSpotifySongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, i);
+                }
+                $('#status-box').append('</div>');
+
+                // Append the HTML and update the transfer button if there were no errors.
+                if (!userError) {
+                    document.getElementById("confirmTransferButton").classList.remove("signup-button-disabled");
+                    document.getElementById("confirmTransferButton").classList.remove("disabled");
+                } else {
+                    console.log("There was an error accessing Spotify.");
+                    //alert("There was an error accessing Spotify. Check that your account is authorized.");
+                }
+            } else {
+                console.log("No playlist found.");
+            }
+
         } else if (platform == "YoutubeMusic") {
             // Remove all songs from a previous playlist, if there are any
             removeChildrenElements("status-box");
@@ -80,6 +121,124 @@ function updateButton(src, platform) {
     }
 }
 
+// SPOTIFY FUNCTIONS
+
+// Function that calls the Spotify playlist API function
+function displaySpotifyPlaylists() {
+
+    // Remove all playlists from a previous platform, if there are any
+    removeChildrenElements("playlist-box");
+
+    var userC = getUserID();
+    if (userC != '') {
+        var html = '';
+        $.ajax({
+            url: 'https://playsync.me/spotify',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                user: userC,
+                op: 'playlist'
+            },
+            success: function(data) {
+                console.log("Success");
+                console.log(data);
+                data.forEach(function(info) {
+                    var id = "'" + info.id + "'";
+                    html += '<div class="playlist-item" id="divPlaylistCollapse' + info.id + '"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
+                    html += '<p class="pt-2 pl-2">' + info.name + '</p></div>';
+                    displaySpotifySongs(info.id);
+                });
+                $('#playlist-box').append(html);
+                updateDestinationButton(true);
+            },
+            error: function(err) {
+                console.log("There was an error accessing the user's playlists:", err);
+            }
+        });
+    } else {
+        console.log("User not found.");
+    }
+}
+
+// When Spotify is selected as a source platform, this function returns the songs in each playlist.
+// Args: playlistID -- the ID of the Spotify playlist to be searched
+// Appends a string containing the information from each song put in a table after the matching playlistID
+function displaySpotifySongs(playlistID) {
+
+    var userC = getUserID();
+    if (userC != '') {
+        var html = '';
+        $.ajax({
+            url: `https://playsync.me/spotify`,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                user: userC,
+                op: 'songlist',
+                playlistid: playlistID
+            },
+            success: function(data) {
+                console.log(data);
+                html += '<div class="song-item collapse" id="playlistCollapse' + playlistID + '"><table style="padding-left: 20px; width: 100%;" id="songsFrom' + playlistID + '">';
+                data.forEach(function(item) {
+                    html += '<tr><td style="text-align: left;" id="song-title">' + item.track + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td></tr>'; /*'</td><td style="text-align: left;" id="song-album">' + item.album + */
+                });
+                html += '</table></div>';
+                var dest = '#divPlaylistCollapse' + playlistID;
+                $(html).insertAfter(dest);
+            },
+            error: function(err) {
+                console.log("There was an error finding the songs in the user's playlist:", err);
+            }
+        })
+    } else {
+        console.log("User not found.");
+    }
+}
+
+function searchSpotifySongs(songTitle, songArtist, songCount) {
+    
+    var userC = getUserID();
+    if (userC != '') {
+        var html = '';
+        $.ajax({
+            url: 'https://playsync.me/spotify',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                user: userC,
+                op: 'searchsong',
+                title: songTitle,
+                artist: songArtist
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.length == 0) {
+                    html += '<a class="status-item list-group-item" data-toggle="collapse" href="#" id="UnavailableSong">' + songTitle + ' was not found.</a>';
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        var id = "'" + data[i].uri + "'";
+                        if (i == 0) {
+                            html += '<a class="status-item list-group-item" data-toggle="collapse" href="#songCollapse' + songCount + '" onclick="updateSelect(' + id + ')" id="' + data[0].uri + '">' + data[0].song + ': ' + data[0].artist + '</a>';
+                        } else {
+                            html += '<div class="collapse" id="songCollapse' + songCount + '"><a class="status-item list-group-item" href="#" onclick="updateSelect(' + id + ')" id="' + data[i].uri + '">' + data[i].song + ': ' + data[i].artist + '</a></div>';
+                        }
+                    }
+                }
+                $(html).insertAfter('#listHeader');
+            },
+            error: function(err) {
+                console.log("There was an error searching for the song on Spotify:", err);
+            }
+        })
+    } else {
+        console.log("User not found.");
+    }
+}
+
+// YOUTUBE FUNCTIONS
+
 // Function that calls the YouTubeMusic playlist API function
 function displayYouTubePlaylists() {
 
@@ -118,7 +277,7 @@ function displayYouTubePlaylists() {
 
 // When YouTube is selected as a source platform, this function returns the songs in each playlist.
 // Args: playlistID -- the ID of the YouTubeMusic playlist to be searched
-// Returns: a string containing the information from each song put in a table to be appended to the playlist's information
+// Appends a string containing the information from each song put in a table after the matching playlistID
 function displayYouTubeSongs(playlistID) {
 
     var userC = getUserID();
@@ -231,13 +390,114 @@ function confirm() {
 
                     var playlistName = document.getElementById('playlistName').value;
                     var playlistDesc = document.getElementById('playlistDesc').value;
+
+                    // Turn the array of ids into a string with delimiter $
+                    var tracklist = '';
+                    for (var i = 0; i < sourceSongs.length; i++) {
+                        if (i == sourceSongs.length - 1) {
+                            tracklist += sourceSongs[i];
+                        } else {
+                            tracklist += sourceSongs[i] + '$';
+                        }
+                    }
+
+                    if (platformTwo == "Spotify") {
+                        $.ajax({
+                            url: `https://playsync.me/spotify`,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                user: userC,
+                                op: 'newlist',
+                                name: playlistName,
+                                desc: playlistDesc,
+                                access: 'PRIVATE',
+                                tracks: tracklist
+                            },
+                            success: function(data) {
+                                console.log("Playlist Made");
+                                console.log(data);
+                            },
+                            error: function(err) {
+                                console.log("There was an error:", err);
+                            }
+                        })
+                    }
+
+                    else if (platformTwo == "YouTubeMusic") {
+                        $.ajax({
+                            url: `https://playsync.me/youtube`,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                user: userC,
+                                op: 'newlist',
+                                name: playlistName,
+                                desc: playlistDesc,
+                                access: 'PRIVATE',
+                                tracks: tracklist
+                            },
+                            success: function(data) {
+                                alert("Congratulations! Your new playlist has been created.")
+                            },
+                            error: function(err) {
+                                console.log("There was an error:", err);
+                            }
+                        })
+                    }
+
+                    else {
+                        console.log("No valid platform selected.");
+                    }
+
+
+
+                    /*
+
                     // Methods for when the source platform is Spotify
                     if (platformOne == "Spotify") {
-                        console.log("Sptofiy not implemented");
+                        console.log("Source Platform: Spotify");
 
                         // Method for Spotify -> Spotify
                         if (platformTwo == "Spotify") {
-                            console.log("Spotify not implemented");
+                            $.ajax({
+                                url: `https://playsync.me/spotify`,
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    user: userC,
+                                    op: 'newlist',
+                                    name: playlistName
+                                    //desc: playlistDesc,
+                                    //access: 'PRIVATE'
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    for (var i = 0; i < sourceSongs.length; i++) {
+                                        console.log("Add");
+                                        $.ajax({
+                                            url: `https://playsync.me/spotify`,
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            data: {
+                                                user: userC,
+                                                op: 'addsong',
+                                                playlistid: data,
+                                                tracks: tracklist
+                                            },
+                                            success: function(data) {
+                                                console.log(data);
+                                            },
+                                            error: function(err) {
+                                                console.log("There was an error:", err);
+                                            }
+                                        })
+                                    }
+                                },
+                                error: function(err) {
+                                    console.log("There was an error:", err);
+                                }
+                            })
                         } 
                         
                         // Method for Spotify -> YouTubeMusic
@@ -291,20 +551,30 @@ function confirm() {
 
                         // Method for YouTubeMusic -> Spotify
                         if (platformTwo == "Spotify") {
-                            console.log("Spotify not implemented");
+                            //console.log("Spotify not implemented");
+                            $.ajax({
+                                url: `https://playsync.me/spotify`,
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    user: userC,
+                                    op: 'newlist',
+                                    name: playlistName,
+                                    desc: playlistDesc,
+                                    access: 'PRIVATE',
+                                    tracks: tracklist
+                                },
+                                success: function(data) {
+                                    alert("Congratulations! Your new playlist has been created.")
+                                },
+                                error: function(err) {
+                                    console.log("There was an error:", err);
+                                }
+                            })
                         } 
                         
                         // Method for YouTubeMusic -> YouTubeMusic
                         else if (platformTwo == "YoutubeMusic") {
-                            var tracklist = '';
-                            for (var i = 0; i < sourceSongs.length; i++) {
-                                if (i == sourceSongs.length - 1) {
-                                    tracklist += sourceSongs[i];
-                                } else {
-                                    tracklist += sourceSongs[i] + '$';
-                                }
-                            }
-
                             $.ajax({
                                 url: `https://playsync.me/youtube`,
                                 type: 'POST',
@@ -335,7 +605,7 @@ function confirm() {
                     // Methods for Platform 3
                     else {
                         console.log("Plat 3 not implemented.");
-                    }
+                    }*/
 
                 // sourceSongs length == 0
                 } else {
