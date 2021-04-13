@@ -108,15 +108,15 @@ def add_playlist(user, name):
     spotify = get_spotify(user)
     u_id = get_uid()
     spotify.user_playlist_create(u_id, name, public=False, collaborative=False, description="A playlist created by PlaySync on "+str(datetime.today().strftime('%Y-%m-%d')))
-    pl_id = spotify.current_user_playlists()['items'][0]['uri'].split(':')[-1]
-    return pl_id
+    pl_id = {'playlistid': spotify.current_user_playlists()['items'][0]['uri'].split(':')[-1]}
+    return json.dumps(pl_id)
 
 def search_song(user, artist, track):
     spotify = get_spotify(user)
     result = result = spotify.search(q=f'{artist} {track}', limit=5, type='track')
     song_list = []
     for i in range(5):
-        song_list.append({'uri': result['tracks']['items'][i]['uri'], 'song': result['tracks']['items'][i]['name'], 'artist': result['tracks']['items'][i]['artists'][0]['name']})
+        song_list.append({'uri': result['tracks']['items'][i]['uri'].split(':')[-1], 'song': result['tracks']['items'][i]['name'], 'artist': result['tracks']['items'][i]['artists'][0]['name']})
     if result['tracks']['total'] == 0:
         return 'Failed to find track'
     return json.dumps(song_list)
