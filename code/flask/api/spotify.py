@@ -79,7 +79,6 @@ def get_uid():
 
 def sign_out(user):
     try:
-        # Remove the CACHE file (.cache-test) so that a new user can authorize.
         os.remove(session_cache_path(user))
         session.clear()
     except OSError as e:
@@ -122,12 +121,13 @@ def search_song(user, artist, track):
         return 'Failed to find track'
     return json.dumps(song_list)
 
-def add_song(user, pl_id, artist, track):
+def add_song(user, pl_id, track):
     spotify = get_spotify(user)
-    result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
+    # result = spotify.search(q=f'{artist} {track}', limit=1, type='track')
     #print(result['tracks']['items'][0]['id'])
-    if result['tracks']['total'] == 0:
-        return 'Failed to find track'	
-    spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
+    # if result['tracks']['total'] == 0:
+    #     return 'Failed to find track'	
+    # spotify.playlist_add_items(pl_id, [result['tracks']['items'][0]['uri']])
+    spotify.playlist_add_items(pl_id, track)
     return 'done'
 
