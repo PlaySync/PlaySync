@@ -153,10 +153,10 @@ def psql_get_email(username: str):
     conn.close()
     return email
 
-def psql_write_email(email :str, uid :int):
+def psql_write_email(email :str, uid :int, mailing_list :str):
     conn = psql_conn()
     cur = conn.cursor()
-    cur.execute('UPDATE t_user SET emailaddr=%s WHERE uid=%s', (email, uid))
+    cur.execute('UPDATE t_user SET emailaddr=%s, mail_optin=%s WHERE uid=%s', (email, mailing_list, uid))
     conn.commit()
     cur.close()
     conn.close()

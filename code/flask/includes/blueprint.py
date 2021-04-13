@@ -289,8 +289,10 @@ def youtubeAuth():
 @update_email.route('/updatemail', methods=['POST'])
 def updateEmail():
         email = request.form['email']
+        mailing_list = 'f'
+        mailing_list = request.form['mailing-list']
         user = valid_user(request.cookies.get('user'))
-        update_usr_email(user, email)
+        update_usr_email(user, email, mailing_list)
         return redirect('./profile')
 
 @spotify_api.route('/spotify', methods=['POST'])
