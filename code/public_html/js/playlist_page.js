@@ -16,10 +16,13 @@ function updateButton(src, platform) {
     // Update the source button and call the given platform's user-playlist and user-songs API functions
     if (src == "source") {
         document.getElementById("sourceTransferButton").innerHTML = platform;
+
+        // Remove all songs from a previous playlist, if there are any
+        removeChildrenElements("playlist-box");
+        removeChildrenElements("status-box");
+
         if (platform == "Spotify") {
-            console.log("Spotify");
             displaySpotifyPlaylists();
-            //updateDestinationButton(false);
         } else if (platform == "YoutubeMusic") {
             displayYouTubePlaylists();
         } else {
@@ -31,7 +34,6 @@ function updateButton(src, platform) {
     } else if (src == "dest") {
         document.getElementById("destinationTransferButton").innerHTML = platform;
         if (platform == "Spotify") {
-            console.log("Spotify");
 
             // Remove all songs from a previous playlist, if there are any
             removeChildrenElements("status-box");
@@ -372,15 +374,6 @@ function confirm() {
 
             var userC = getUserID();
             if (userC != '') {
-                // Get the ID of the currently selected playlist
-                /*var playlistBox = document.getElementById("playlist-box").children;
-                var numPlaylists = document.getElementById("playlist-box").childElementCount;
-                var playID = '';
-                for (var i = 0; i < numPlaylists; i++) {
-                    if (playlistBox[i].children[0].classList.contains("psb-clicked")) {
-                        playID = playlistBox[i].children[0].id;
-                    }
-                }*/
 
                 // sourceSongs = [id, id, id, id];
                 var sourceSongs = getSelectedSongs();
@@ -400,9 +393,6 @@ function confirm() {
                         }
                     }
 
-                    console.log("Tracklist:", tracklist);
-                    console.log("Platform2:", platformTwo);
-
                     if (platformTwo == "Spotify") {
                         $.ajax({
                             url: `https://playsync.me/spotify`,
@@ -417,8 +407,7 @@ function confirm() {
                                 tracks: tracklist
                             },
                             success: function(data) {
-                                console.log("Playlist Made");
-                                console.log(data);
+                                alert("Congratulations! Your new playlist has been created.");
                             },
                             error: function(err) {
                                 console.log("There was an error:", err);
@@ -426,7 +415,7 @@ function confirm() {
                         })
                     }
 
-                    else if (platformTwo == "YouTubeMusic") {
+                    else if (platformTwo == "YoutubeMusic") {
                         $.ajax({
                             url: `https://playsync.me/youtube`,
                             type: 'POST',
@@ -440,7 +429,7 @@ function confirm() {
                                 tracks: tracklist
                             },
                             success: function(data) {
-                                alert("Congratulations! Your new playlist has been created.")
+                                alert("Congratulations! Your new playlist has been created.");
                             },
                             error: function(err) {
                                 console.log("There was an error:", err);
