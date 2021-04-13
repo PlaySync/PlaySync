@@ -353,7 +353,7 @@ def spotifyapi():
                         add_list_result['status'] = "fail"
                         add_list_result['message'] = "error in adding song"
                 ###############################################################
-                return son.dumps(add_list_result)
+                return json.dumps(add_list_result)
             elif op == "searchsong":
                 title = unquote(request.form.get('title'))
                 artist = ""
