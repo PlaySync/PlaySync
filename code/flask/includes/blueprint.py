@@ -274,7 +274,7 @@ def profile():
         user = valid_user(request.cookies.get('user'))
         email = get_email(user)
         auth_body = get_auth(user)
-        spotifyName = get_name()
+        spotifyName = spotify.get_name()
         return render_template('profile.html', email=email, auth_body=auth_body, spotifyName=spotifyName)
     else: # Not Logged In
         return redirect("./", code=302)
@@ -394,7 +394,7 @@ def spotifyapi():
 @spotify_auth.route('/spotifyauth')
 def spotifyAuth():
     user = request.cookies.get('user').split(':')[1]
-    return auth_spotify(user)
+    return spotify.auth_spotify(user)
 
 @spotify_callback.route('/spotifycallback')
 def spotifycallback():
@@ -406,7 +406,7 @@ def spotifycallback():
 def spotifyRemove():
     user = request.cookies.get('user').split(':')[1]
     remove_spotify_auth(user)
-    return sign_out(user)
+    return spotify.sign_out(user)
     
 # @spotify_playlist.route('/spotifyPlaylist')
 # def getPlaylists():
