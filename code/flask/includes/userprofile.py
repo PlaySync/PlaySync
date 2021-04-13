@@ -13,7 +13,7 @@ def get_auth(user):
     auth_body = psql_check_auth(uid, 'ytmusic')
     return auth_body
 
-def update_usr_email(user, email):
+def update_usr_email(user, email, mailing_list):
     uid = psql_get_uid(user)
     psql_write_email(email, uid, mailing_list)
     return "added"
