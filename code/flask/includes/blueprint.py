@@ -337,8 +337,8 @@ def spotifyapi():
 
                 # TO-DO: this func return a Dict containing at least playlistID
                 add_list_result = spotify.add_playlist(uname, new_name)
-                playlist_id = json.loads(add_list_result)['playlistid']
-
+                add_list_result['status'] = "success"
+                playlist_id = add_list_result['playlistid']
                 ##################### TO-DO: CHOOSE ONE ######################
                 # status = spotify.add_song(uname, playlist_id, new_tracks) # if add_song accepts one ID (string) at a time
                 # # check for status, abort if any error
