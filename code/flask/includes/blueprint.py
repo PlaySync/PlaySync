@@ -274,7 +274,7 @@ def profile():
         user = valid_user(request.cookies.get('user'))
         email = get_email(user)
         auth_body = get_auth(user)
-        spotifyName = get_name()
+        spotifyName = spotify.get_name()
         return render_template('profile.html', email=email, auth_body=auth_body, spotifyName=spotifyName)
     else: # Not Logged In
         return redirect("./", code=302)
