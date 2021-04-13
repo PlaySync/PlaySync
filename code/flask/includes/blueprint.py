@@ -290,9 +290,9 @@ def youtubeAuth():
 def updateEmail():
         email = request.form['email']
         mailing_list = request.form['mailing-list']
-        mailing_bool = False
-        if mailing_list == 'True':
-            mailing_bool = True
+        mailing_bool = 'FALSE'
+        if mailing_list == 'TRUE':
+            mailing_bool = "TRUE"
         user = valid_user(request.cookies.get('user'))
         update_usr_email(user, email, mailing_bool)
         return redirect('./profile')
