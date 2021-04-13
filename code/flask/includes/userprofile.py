@@ -16,10 +16,7 @@ def get_auth(user):
 def update_usr_email(user, email, mailing_bool):
     uid = psql_get_uid(user)
     psql_write_email(email, uid)
-    if mailing_bool == 'TRUE':
-        psql_write_email_pref('TRUE', uid)
-    else:
-        psql_write_email_pref('FALSE', uid)
+    psql_write_email_pref(mailing_bool, uid)
     return "added"
 
 def add_spotify_auth(user):
