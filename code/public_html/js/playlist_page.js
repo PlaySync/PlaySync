@@ -56,6 +56,8 @@ function updateButton(src, platform) {
 
                 // Search Spotify for each song in the songTable
                 for (var i = 0; i < songTable.rows.length; i++) {
+                    console.log("Title:", songTable.rows[i].cells[0].innerHTML);
+                    console.log("Artist:", songTable.rows[i].cells[1].innerHTML);
                     searchSpotifySongs(songTable.rows[i].cells[0].innerHTML, songTable.rows[i].cells[1].innerHTML, i);
                 }
                 $('#status-box').append('</div>');
@@ -141,8 +143,6 @@ function displaySpotifyPlaylists() {
                 op: 'playlist'
             },
             success: function(data) {
-                console.log("Success");
-                console.log(data);
                 data.forEach(function(info) {
                     var id = "'" + info.id + "'";
                     html += '<div class="playlist-item" id="divPlaylistCollapse' + info.id + '"><button class="playselect-button" onclick="updateSelectedPlaylist(' + id + ')" type="button" data-toggle="collapse" data-target="#playlistCollapse' + info.id + '" aria-expanded="false" aria-controls="playlistCollapse" id="' + info.id + '"></button>';
@@ -179,7 +179,6 @@ function displaySpotifySongs(playlistID) {
                 playlistid: playlistID
             },
             success: function(data) {
-                console.log(data);
                 html += '<div class="song-item collapse" id="playlistCollapse' + playlistID + '"><table style="padding-left: 20px; width: 100%;" id="songsFrom' + playlistID + '">';
                 data.forEach(function(item) {
                     html += '<tr><td style="text-align: left;" id="song-title">' + item.track + '</td><td style="text-align: left;" id="song-artist">' + item.artist + '</td></tr>'; /*'</td><td style="text-align: left;" id="song-album">' + item.album + */
@@ -401,6 +400,7 @@ function confirm() {
                         }
                     }
 
+                    console.log("Tracklist:", tracklist);
                     if (platformTwo == "Spotify") {
                         $.ajax({
                             url: `https://playsync.me/spotify`,
@@ -694,13 +694,16 @@ function getSelectedSongs() {
     var id = [];
     var statusbox = document.getElementById("status-box");
     if (statusbox.firstElementChild) {
+        console.log("Hi:", statusbox.children[0]);
         var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
+            console.log("Test:", statusbox.children[0].children[i]);
             if (statusbox.children[0].children[i].tagName == 'DIV') {
                 for (var j = 0; j < statusbox.children[0].children[i].childElementCount; j++) {
                     // children[0].children[i].children[j] catches the alternate songs listed in a collapsable
                     if (statusbox.children[0].children[i].children[j].classList.contains("selected")) {
+                        console.log("Test2:", statusbox.children[0].children[i].children[j]);
                         id.push(statusbox.children[0].children[i].children[j].id);
                     }
                 }
@@ -712,5 +715,6 @@ function getSelectedSongs() {
             }
         }
     }
+    console.log("Track IDs", id);
     return id;
 }
