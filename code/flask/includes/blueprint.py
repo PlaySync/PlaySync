@@ -406,7 +406,7 @@ def spotifycallback():
 def spotifyRemove():
     user = request.cookies.get('user').split(':')[1]
     remove_spotify_auth(user)
-    return sign_out(user)
+    return spotify.sign_out(user)
     
 # @spotify_playlist.route('/spotifyPlaylist')
 # def getPlaylists():
