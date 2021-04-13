@@ -340,19 +340,18 @@ def spotifyapi():
                 playlist_id = add_list_result
 
                 ##################### TO-DO: CHOOSE ONE ######################
-                for track in new_tracks:
-                    status = spotify.add_song(uname, playlist_id, track) # if add_song accepts one ID (string) at a time
-                    # check for status, abort if any error
+                # status = spotify.add_song(uname, playlist_id, new_tracks) # if add_song accepts one ID (string) at a time
+                # # check for status, abort if any error
+                # if status != 'done':
+                #     add_list_result['status'] = "fail"
+                #     add_list_result['message'] = "error in adding song"
+                #     break
+                ########################### OR ###############################
+                if len(new_tracks)>0:
+                    status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
                     if status != 'done':
                         add_list_result['status'] = "fail"
                         add_list_result['message'] = "error in adding song"
-                        break
-                ########################### OR ###############################
-                # if len(new_tracks)>0:
-                #     status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
-                #     if status != 'done':
-                #         add_list_result['status'] = "fail"
-                #         add_list_result['message'] = "error in adding song"
                 ###############################################################
                 return son.dumps(add_list_result)
             elif op == "searchsong":
@@ -369,19 +368,18 @@ def spotifyapi():
                     json_response['status'] = "success"
                     json_response['playlistid'] = playlist_id
                     ##################### TO-DO: CHOOSE ONE ######################
-                    for track in new_tracks:
-                        status = spotify.add_song(uname, playlist_id, track) # if add_song accepts one ID (string) at a time
-                        # check for status, abort if any error
-                        if status != 'done':
-                            json_response['status'] = "fail"
-                            json_response['message'] = "error in adding song"
-                            break
-                    ########################### OR ###############################
-                    # if len(new_tracks)>0:
-                    #     status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
+                    #     status = spotify.add_song(uname, playlist_id, new_tracks) # if add_song accepts one ID (string) at a time
+                    #     # check for status, abort if any error
                     #     if status != 'done':
                     #         json_response['status'] = "fail"
                     #         json_response['message'] = "error in adding song"
+                    #         break
+                    ########################### OR ###############################
+                    if len(new_tracks)>0:
+                        status = spotify.add_song(uname, playlist_id, new_tracks) # if accepts list of ID (string)
+                        if status != 'done':
+                            json_response['status'] = "fail"
+                            json_response['message'] = "error in adding song"
                     ###############################################################
                     return json.dumps(json_response)
             else:
