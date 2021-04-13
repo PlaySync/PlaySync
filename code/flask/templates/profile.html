@@ -19,7 +19,7 @@
                 <input type="email" id="email" name="email" value="{{email}}">
                 <br>
                 <label for="mailing">Opt-in mailing list:</label>
-                <input type="checkbox" id="mailing-list" name="mailing-list" value='TRUE'>
+                <input type="checkbox" id="mailing-list" name="mailing-list" value="TRUE">
                 <br>
                 <input type="submit" id="email-pref" value="Update">
               </form>
@@ -27,13 +27,32 @@
                 <br>
               <form action="#">  
                 <h2>Change Password</h2>
-                <label for="current-pw">Current Password:</label>
-                <input type="password" id="current-pw">
+                <!-- <label for="current-pw">Current Password:</label>
+                <input type="password" id="current-pw" name="current-pw">
                 <label for="new-pw">New Password:</label>
-                <input type="password" id="new-pw">
+                <input type="password" id="new-pw" name="current-pw">
                 <label for="new-pw">Confirm New Password:</label>
-                <input type="password" id="confirm-new-pw">
-                <input type="submit" id="pw-pref" value="Update">
+                <input type="password" id="confirm-new-pw" name="confirm-new-pw">
+                <input type="submit" id="pw-pref" value="Update"> -->
+                <body onload="valid()">
+                  <div class="registerContainer">
+                          <div class="form-group mb-3 row">
+                              <label for="registerPass" class="form-label">Password</label>
+                              <input type="password" class="form-control" name="psw" id="registerPass" placeholder="Password">
+                              <p class="form-text">Password must contain:</p>
+                              <p id="lower" class="form-text invalid">&nbsp;A lowercase letter,</p>
+                              <p id="upper" class="form-text invalid">&nbsp;an uppercase letter,</p>
+                              <p id="number" class="form-text invalid">&nbsp;a number,</p>
+                              <p id="length" class="form-text invalid">&nbsp;and at least 8 characters.</p>
+                          </div>
+                          <div class="form-group mb-3 row">
+                              <label for="confirmPass" class="form-label">Confirm Password</label>
+                              <input type="password" class="form-control" name="confirmPass" id="confirmPass" placeholder="Confirm Password">
+                              <p id="match" class="form-text invalid">Password and confirm password must match.</p>
+                          </div>
+                          <button style="display: inline" id="signupRegisterButton" class="signup-button" disabled >Update</button>
+                      </form>
+                  </div>
               </form>
             </div>
             <div id="platform-a" class="tabcontent" style="text-align: left; display: inline-block;">
