@@ -695,23 +695,23 @@ function getSelectedSongs() {
     var statusbox = document.getElementById("status-box");
     if (statusbox.firstElementChild) {
         console.log("Hi:", statusbox.children[1]);
-        var statusChildren = statusbox.children[0].childElementCount; // children[0] is the <ul></ul> group
+        var statusChildren = statusbox.children[1].childElementCount; // children[1] is the <ul></ul> group
         for (var i = 0; i < statusChildren; i++) {
             // In the <ul> group, children elements are <div> or <a>, and <div> indicates alternate songs that need to be caught
-            console.log("Test:", statusbox.children[0].children[i]);
-            if (statusbox.children[0].children[i].tagName == 'DIV') {
-                for (var j = 0; j < statusbox.children[0].children[i].childElementCount; j++) {
-                    // children[0].children[i].children[j] catches the alternate songs listed in a collapsable
-                    if (statusbox.children[0].children[i].children[j].classList.contains("selected")) {
-                        console.log("Test2:", statusbox.children[0].children[i].children[j]);
-                        id.push(statusbox.children[0].children[i].children[j].id);
+            console.log("Test:", statusbox.children[1].children[i]);
+            if (statusbox.children[1].children[i].tagName == 'DIV') {
+                for (var j = 0; j < statusbox.children[1].children[i].childElementCount; j++) {
+                    // children[1].children[i].children[j] catches the alternate songs listed in a collapsable
+                    if (statusbox.children[1].children[i].children[j].classList.contains("selected")) {
+                        console.log("Test2:", statusbox.children[1].children[i].children[j]);
+                        id.push(statusbox.children[1].children[i].children[j].id);
                     }
                 }
             }
 
             // catches the songs with no alternatives
-            if (statusbox.children[0].children[i].classList.contains("selected")) {
-                id.push(statusbox.children[0].children[i].id);
+            if (statusbox.children[1].children[i].classList.contains("selected")) {
+                id.push(statusbox.children[1].children[i].id);
             }
         }
     }
