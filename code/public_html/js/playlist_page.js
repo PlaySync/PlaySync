@@ -117,6 +117,9 @@ function updateButton(src, platform) {
             }
         } else {
             console.log("Platform does not exist.");
+
+            removeChildrenElements("playlist-box");
+            removeChildrenElements("status-box");
         }
     
     // Should never happen: each element is hardcoded to include 'source' or 'dest'
