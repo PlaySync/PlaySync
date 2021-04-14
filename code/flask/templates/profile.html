@@ -167,7 +167,7 @@
                   equals.classList.remove("valid");
                   equals.classList.add("invalid");
               }
-              enableSignup(lower, upper, number, length, equals, nameCheck);
+              enableSignup(lower, upper, number, length, equals);
           }
 
           /*match for value on confirm password*/
@@ -179,11 +179,11 @@
                   equals.classList.remove("valid");
                   equals.classList.add("invalid");
               }
-              enableSignup(lower, upper, number, length, equals, nameCheck);
+              enableSignup(lower, upper, number, length, equals);
           }
       }
 
-      function enableSignup(lower, upper, number, length, equals, nameCheck) {
+      function enableSignup(lower, upper, number, length, equals) {
           var button = document.getElementById("signupRegisterButton");
           if (lower.classList.contains("valid") && upper.classList.contains("valid") && number.classList.contains("valid") && length.classList.contains("valid") && equals.classList.contains("valid")) {
               button.disabled = false;
