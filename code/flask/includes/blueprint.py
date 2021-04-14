@@ -288,7 +288,16 @@ def updatePw():
     compressed_cookie = new_pw+':'+user
     psql_update_pw(uid, new_pw)
     return redirect('/profile')
-    
+
+@profile_page_delete_acc.route('/delete', methods=["POST"])
+def removeAcc():
+    user = valid_user(request.cookies.get('user'))
+    uid = psql_get_uid(user)
+    pw = hashlib.sha256(request.form.get('psw').encode('utf-8')).hexdigest()
+    if psql_read_user_psw(user, pw):
+        psql_remove_acc(uid)
+        return redirect('/')
+    return redirect('/profile')
 
 @youtube_auth.route('/youtubeauth', methods=['POST'])
 def youtubeAuth():

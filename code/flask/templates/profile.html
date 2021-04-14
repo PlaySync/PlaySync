@@ -77,14 +77,10 @@
               </div>
             </div>
             <div id="del-acc" class="tabcontent" style="text-align: left; display: inline-block;">
-              <form action="#">
+              <form action="/delete", method="POST">
                 <h5>NOTE: THIS ACTION CANNOT BE UNDONE. All user information (playlist data, synchronization settings, etc) will be permanently deleted. We require password confirmation prior to account deletion.</h5>
-                <label for="current-pw">Current Password:</label>
-                <input type="password" id="current-pw">
                 <label for="confirm-current-pw">Confirm Password:</label>
-                <input type="password" id="current-pw">
-                <label for="del-acc">I understand that account deletion means all user data will be permanently lost</label>
-                <input type="checkbox" id="confirm-acc-del">
+                <input type="password" name="psw" id="current-pw">
                 <br>
                 <input type="submit" id="del-acc-submit" value="Delete Account">
               </form>

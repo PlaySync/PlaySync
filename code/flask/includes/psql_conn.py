@@ -179,3 +179,12 @@ def psql_update_pw(uid :int, new_pw :str):
     cur.close()
     conn.close()
     return None
+
+def psql_remove_acc(uid :int):
+    conn = psql_conn()
+    cur = conn.cursor()
+    cur.execute('DELETE FROM t_user WHERE uid=%s', (uid))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None
