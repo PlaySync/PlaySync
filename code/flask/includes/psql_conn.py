@@ -170,3 +170,12 @@ def psql_write_email_pref(mailing_bool :str, uid :int):
     cur.close()
     conn.close()
     return None
+
+def psql_update_pw(uid :int, new_pw :str):
+    conn = psql_conn()
+    cur = conn.cursor()
+    cur.execute('UPDATE t_user SET passwd_sha256=%s WHERE uid=%s', (new_pw, uid))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return None

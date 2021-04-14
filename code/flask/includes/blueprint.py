@@ -278,6 +278,16 @@ def profile():
         return render_template('profile.html', email=email, auth_body=auth_body, spotifyName=spotifyName)
     else: # Not Logged In
         return redirect("./", code=302)
+    
+@profile_page_password.route('/updatepw')
+def updatePw():
+    user = valid_user(request.cookies.get('user'))
+    uid = psql_get_uid(user) 
+    new_pw = hashlib.sha256(request.form.get('psw').encode('utf-8')).hexdigest()
+    compressed_cookie = login_passwd+':'+login_name
+    psql_update_pw(new_pw, uid)
+    return redirect('/profile')
+    
 
 @youtube_auth.route('/youtubeauth', methods=['POST'])
 def youtubeAuth():
@@ -295,6 +305,10 @@ def updateEmail():
         user = valid_user(request.cookies.get('user'))
         update_usr_email(user, email, mailing_bool)
         return redirect('./profile')
+
+@update_pw.route('/updatepw', methods=['POST'])
+def updatePw():
+    
 
 @spotify_api.route('/spotify', methods=['POST'])
 def spotifyapi():
