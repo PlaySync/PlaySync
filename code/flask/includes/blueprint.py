@@ -304,11 +304,7 @@ def updateEmail():
             mailing_bool = "TRUE"
         user = valid_user(request.cookies.get('user'))
         update_usr_email(user, email, mailing_bool)
-        return redirect('./profile')
-
-@update_pw.route('/updatepw', methods=['POST'])
-def updatePw():
-    
+        return redirect('./profile')    
 
 @spotify_api.route('/spotify', methods=['POST'])
 def spotifyapi():
