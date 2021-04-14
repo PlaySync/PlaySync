@@ -280,13 +280,13 @@ def profile():
     else: # Not Logged In
         return redirect("./", code=302)
     
-@profile_page_password.route('/updatepw')
+@profile_page_password.route('/updatepw', methods=["POST"])
 def updatePw():
     user = valid_user(request.cookies.get('user'))
-    uid = psql_get_uid(user) 
+    uid = psql_get_uid(user)
     new_pw = hashlib.sha256(request.form.get('psw').encode('utf-8')).hexdigest()
-    compressed_cookie = login_passwd+':'+login_name
-    psql_update_pw(new_pw, uid)
+    compressed_cookie = new_pw+':'+user
+    psql_update_pw(uid, new_pw)
     return redirect('/profile')
     
 

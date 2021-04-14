@@ -25,7 +25,7 @@
               </form>
                 <br>
                 <br>
-              <form action="#">  
+              <form action="/updatepw", method="POST">  
                 <h2>Change Password</h2>
                 <!-- <label for="current-pw">Current Password:</label>
                 <input type="password" id="current-pw" name="current-pw">
@@ -117,17 +117,6 @@
           var length = document.getElementById("length");
           var equals = document.getElementById("match");
         
-          name.onkeyup = function() {
-              if (name.value.length > 0) {
-                  nameCheck.classList.remove("invalid");
-                  nameCheck.classList.add("valid");
-              } else {
-                  nameCheck.classList.remove("valid");
-                  nameCheck.classList.add("invalid");
-              }
-              enableSignup(lower, upper, number, length, equals, nameCheck);
-          }
-        
         psw.onkeyup = function() {
               var lowerCase = /[a-z]/g;
               var upperCase = /[A-Z]/g;
@@ -196,7 +185,7 @@
 
       function enableSignup(lower, upper, number, length, equals, nameCheck) {
           var button = document.getElementById("signupRegisterButton");
-          if (lower.classList.contains("valid") && upper.classList.contains("valid") && number.classList.contains("valid") && length.classList.contains("valid") && equals.classList.contains("valid") && nameCheck.classList.contains("valid")) {
+          if (lower.classList.contains("valid") && upper.classList.contains("valid") && number.classList.contains("valid") && length.classList.contains("valid") && equals.classList.contains("valid")) {
               button.disabled = false;
           } else {
               button.disabled = true;
