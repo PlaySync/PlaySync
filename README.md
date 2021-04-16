@@ -1,7 +1,9 @@
 # Team PlaySync
 
 Building a cross-platform Playlist Synchronization Toolset
+
 Use the Playsync tool at https://playsync.me/
+
 
 ### Description
 
