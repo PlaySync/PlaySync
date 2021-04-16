@@ -12,11 +12,11 @@ The software will allow users to sync their playlists across platforms. Other fe
 
 *Playsync is not responsible for any lost music during playlist transfer. By allowing platform authentication, the user allows Playsync access to all public and private playlists as well as access to read/write to the user's music library*.
 
-##### Spotify Authentication:
+#### Spotify Authentication:
 
 Once the user is registered and logged in, navigate to the Profile Page > Spotify tab on the left-hand side. Select 'Login Using Spotify' then login with a registered Spotify account. Playsync will request access to the account. Select 'Allow'. The Spotify account is now registered. 
 
-##### YoutubeMusic Authentication:
+#### YoutubeMusic Authentication:
 
 Once the user is registered and logged in, navigate to the Profile Page > Youtube Music tab on the left-hand side. In another tab, login with a registered YoutubeMusic account. Nagivage to the Library page, then right-click the page and select 'Inspect'. Select the 'Network' tab on the top of the page, then select 'Headers'. Scroll down to the 'Request Headers' section and copy all of the text below 'accept: */*'. Paste this code in the 'Raw Header' text box on the Profile Page > Youtube Music page. The YoutubeMusic account is now registered. 
 
