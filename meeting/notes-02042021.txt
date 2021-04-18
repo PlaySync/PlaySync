@@ -1,5 +1,0 @@
-### TA meeting
-
-- Apple Developer Account could be tricky, secure 3+ open-access API first.
-- Clearly define `Synchronize` and `Transfer`
-- More Actors, Use cases

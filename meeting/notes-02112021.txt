@@ -1,8 +1,0 @@
-### TA meeting
-
-Updating:
-- YoutubeAPI (Python) found by Gaukas
-- Apple Music API by Logan, blocking on Professor for Apple Dev Account (iTunes Search API might not work)
-- More APIs to come...
-- Work on Milestone2 
-- Milestone 1 looks good
