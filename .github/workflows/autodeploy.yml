@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     tags:
-     - 'RELEASE*'
+     - 'PRODUCTION*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,8 +24,8 @@ jobs:
       with:
         switches: -avzur # --delete # don't delete
         path: code/public_html/
-        remote_path: /home/freesync/public_html
-        remote_host: 128.199.7.254
+        remote_path: ${{ secrets.APPPATH }}/public_html
+        remote_host: ${{ secrets.HOST }}
         remote_user: github
         remote_key: ${{ secrets.GITHUBUSERKEY }}
     
@@ -34,20 +34,20 @@ jobs:
       with:
         switches: -avzur # --delete # don't delete
         path: code/flask/
-        remote_path: /home/freesync/flask
-        remote_host: 128.199.7.254
+        remote_path: ${{ secrets.APPPATH }}/flask
+        remote_host: ${{ secrets.HOST }}
         remote_user: github
         remote_key: ${{ secrets.GITHUBUSERKEY }}
       
     - name: Restart Flask
       uses: appleboy/ssh-action@master
       with:
-        host: 128.199.7.254
+        host: ${{ secrets.HOST }}
         username: github
         key: ${{ secrets.GITHUBUSERKEY }}
-        port: 22
+        port: ${{ secrets.SSHPORT }}
         script: |
-          sudo rm -rf /home/freesync/logs/flask.log && sudo rm -rf /home/freesync/logs/flask_err.log
+          sudo rm -rf ${{ secrets.LOGPATH }}/flask.log && sudo rm -rf ${{ secrets.LOGPATH }}/flask_err.log
           sudo systemctl daemon-reload
           sudo systemctl restart playsync
           sudo systemctl restart nginx
